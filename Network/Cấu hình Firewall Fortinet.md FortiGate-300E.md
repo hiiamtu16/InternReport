@@ -79,11 +79,11 @@
 
 ### 3.4. Tạo SD-WAN Rule
 
-![Create Rule](https://github.com/hiiamtu16/InternReport/blob/a94800db588edccf287be1bdccd4bfc1429ced56/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ADnh%20Firewall%20Fortinet%20FortiGate-300E/create%20rule.png?raw=1)
+![Create Rule](https://github.com/hiiamtu16/InternReport/blob/cc0fef1e318dd398635100c0f8139f8aae04e96c/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20Firewall%20Fortinet%20FortiGate-300E/create%20rule.png?raw=1)
 
-![Priority Rule](https://github.com/hiiamtu16/InternReport/blob/a94800db588edccf287be1bdccd4bfc1429ced56/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ADnh%20Firewall%20Fortinet%20FortiGate-300E/priority%20rule.png?raw=1)
+![Priority Rule](https://github.com/hiiamtu16/InternReport/blob/cc0fef1e318dd398635100c0f8139f8aae04e96c/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20Firewall%20Fortinet%20FortiGate-300E/priority%20rule.png?raw=1)
 
-![Priority Rule 2](https://github.com/hiiamtu16/InternReport/blob/a94800db588edccf287be1bdccd4bfc1429ced56/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ADnh%20Firewall%20Fortinet%20FortiGate-300E/priority%20rule%202.png?raw=1)
+![Priority Rule 2](https://github.com/hiiamtu16/InternReport/blob/cc0fef1e318dd398635100c0f8139f8aae04e96c/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20Firewall%20Fortinet%20FortiGate-300E/priority%20rule%202.png?raw=1)
 
 ---
 
@@ -93,9 +93,9 @@
 Mỗi Firewall Policy chỉ áp dụng cho **một IP Loopback**.  
 Nếu muốn áp dụng **cả dải Loopback /29** → cần tạo nhiều Policy tương ứng.
 
-![Policy List](https://github.com/hiiamtu16/InternReport/blob/a94800db588edccf287be1bdccd4bfc1429ced56/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ADnh%20Firewall%20Fortinet%20FortiGate-300E/Firewall%20Policy.png?raw=1)
+![Policy List](https://github.com/hiiamtu16/InternReport/blob/cc0fef1e318dd398635100c0f8139f8aae04e96c/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20Firewall%20Fortinet%20FortiGate-300E/Firewall%20Policy.png?raw=1)
 
-![Edit Policy](https://github.com/hiiamtu16/InternReport/blob/a94800db588edccf287be1bdccd4bfc1429ced56/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ADnh%20Firewall%20Fortinet%20FortiGate-300E/edit%20policy.png?raw=1)
+![Edit Policy](https://github.com/hiiamtu16/InternReport/blob/cc0fef1e318dd398635100c0f8139f8aae04e96c/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20Firewall%20Fortinet%20FortiGate-300E/edit%20policy.png?raw=1)
 
 ![Edit Policy 2](https://github.com/hiiamtu16/InternReport/blob/a94800db588edccf287be1bdccd4bfc1429ced56/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20Firewall%20Fortinet%20FortiGate-300E/edit%20policy%202.png?raw=1)
 
