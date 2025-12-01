@@ -97,6 +97,7 @@ Nếu muốn áp dụng **cả dải Loopback /29** → cần tạo nhiều Poli
 
 ![Edit Policy](https://github.com/hiiamtu16/InternReport/blob/a94800db588edccf287be1bdccd4bfc1429ced56/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ADnh%20Firewall%20Fortinet%20FortiGate-300E/edit%20policy.png?raw=1)
 
-![Edit Policy 2](https://github.com/hiiamtu16/InternReport/blob/a94800db588edccf287be1bdccd4bfc1429ced56/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ADnh%20Firewall%20Fortinet%20FortiGate-300E/edit%20policy%202.png?raw=1)
+![Edit Policy 2](https://github.com/hiiamtu16/InternReport/blob/a94800db588edccf287be1bdccd4bfc1429ced56/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20Firewall%20Fortinet%20FortiGate-300E/edit%20policy%202.png?raw=1)
+
 
 
