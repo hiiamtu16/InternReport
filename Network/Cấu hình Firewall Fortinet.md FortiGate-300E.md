@@ -100,4 +100,13 @@ Nếu muốn áp dụng **cả dải Loopback /29** → cần tạo nhiều Poli
 ![Edit Policy 2](https://github.com/hiiamtu16/InternReport/blob/a94800db588edccf287be1bdccd4bfc1429ced56/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20Firewall%20Fortinet%20FortiGate-300E/edit%20policy%202.png?raw=1)
 
 
+## 5. Tạo DHCP trên Firewall
+Cấu hình cấp phát DHCP trên Interface Firewall
+![dhcp pool](https://github.com/hiiamtu16/InternReport/blob/0c6f287b84b49d833d5d3903f2c52117110ef991/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20Firewall%20Fortinet%20FortiGate-300E/dhcp%20pool.png?raw=1)
+![dhcp pool 2](https://github.com/hiiamtu16/InternReport/blob/0c6f287b84b49d833d5d3903f2c52117110ef991/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20Firewall%20Fortinet%20FortiGate-300E/dhcp%20pool%202.png?raw=1)
+
+## 6. Lấy IP, kiểm tra ping đến IP WAN và ra ngoài Internet
+![ping](https://github.com/hiiamtu16/InternReport/blob/0c6f287b84b49d833d5d3903f2c52117110ef991/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20Firewall%20Fortinet%20FortiGate-300E/ping.png?raw=1)
+![tracert](https://github.com/hiiamtu16/InternReport/blob/0c6f287b84b49d833d5d3903f2c52117110ef991/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20Firewall%20Fortinet%20FortiGate-300E/tracert.png?raw=1)
+
 
