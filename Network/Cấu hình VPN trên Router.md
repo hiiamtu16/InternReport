@@ -4,7 +4,7 @@
 ## Cấu hình router
 ### Cấu hình WAN và quay PPPoE trên Router Omada
 * Truy cập Web GUI chọn đường WAN trên Router
-![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/d314c0db3f955d3cfea281d5b669ea878f3bcde2/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/1.png?raw=1)
+  ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/d314c0db3f955d3cfea281d5b669ea878f3bcde2/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/1.png?raw=1)
 * Cấu hình quay PPPoE trên cổng WAN
   ![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/d314c0db3f955d3cfea281d5b669ea878f3bcde2/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/2.png?raw=1)
 ### Cấu hình dải LAN, VLAN và DHCP Server
