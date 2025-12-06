@@ -37,6 +37,4 @@
 
 ##Cấu hình Wireguard
 
----
 
-#Cấu hình VPN Site - to - Site Router Omada - Firewall FortiGate
