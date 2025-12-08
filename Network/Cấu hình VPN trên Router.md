@@ -25,16 +25,15 @@
   * Kết quả
     ![Ảnh 9](https://github.com/hiiamtu16/InternReport/blob/d314c0db3f955d3cfea281d5b669ea878f3bcde2/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/9.png?raw=1)
 
-##Cấu hình Wireguard
-
 ---
 
 #Cấu hình VPN Client - to - Site Firewall Fortinet FortiGate-300E
 
 ##Cấu hình firewall
 
-##Cấu hình OpenVPN
+##Cấu hình FortiClient
 
-##Cấu hình Wireguard
+
+
 
 
