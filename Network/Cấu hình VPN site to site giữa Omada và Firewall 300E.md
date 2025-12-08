@@ -23,6 +23,9 @@
   ## Đặt Static Route đến IP Private trên Omada qua VPN
   ![Ảnh 9](https://github.com/hiiamtu16/InternReport/blob/13b9f5387cacaf7ea8cc99cb079c410049a23f7e/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Site-to-Site%20Omada%20-%20FortiGate/9.png?raw=1)
 
+  ## Đặt Default Route
+   ![Ảnh 13](https://github.com/hiiamtu16/InternReport/blob/13b9f5387cacaf7ea8cc99cb079c410049a23f7e/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Site-to-Site%20Omada%20-%20FortiGate/13.png?raw=1)
+
 ---
 
 # 3. Kiểm tra kết quả
