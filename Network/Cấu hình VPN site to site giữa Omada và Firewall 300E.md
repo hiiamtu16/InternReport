@@ -32,5 +32,5 @@
   * Trên FortiGate 300E
     ![Ảnh 11](https://github.com/hiiamtu16/InternReport/blob/13b9f5387cacaf7ea8cc99cb079c410049a23f7e/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Site-to-Site%20Omada%20-%20FortiGate/11.png?raw=1)
   ## Kiểm tra ping
-  *Ping thông từ thiết bị lấy IP trên FortiGate đến 2 ip của Omada
+  * Ping thông từ thiết bị lấy IP trên FortiGate đến 2 ip của Omada
     ![Ảnh 12](https://github.com/hiiamtu16/InternReport/blob/13b9f5387cacaf7ea8cc99cb079c410049a23f7e/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Site-to-Site%20Omada%20-%20FortiGate/12.png?raw=1)
