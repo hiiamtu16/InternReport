@@ -27,11 +27,39 @@
 
 ---
 
-#Cấu hình VPN Client - to - Site Firewall Fortinet FortiGate-300E
+# Cấu hình VPN Client - to - Site Firewall Fortinet FortiGate-300E
 
-##Cấu hình firewall
+## Cấu hình Firewall
+  * Tạo tài khoản cho user
+    ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/b93873c6b59114ef4698c873f72d80902b259fef/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Client-to-Site%20FortiGate%20300E/1.png?raw=1)
+    ![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/b93873c6b59114ef4698c873f72d80902b259fef/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Client-to-Site%20FortiGate%20300E/2.png?raw=1)
+  * Tạo Nhóm cho người dùng
+    ![Ảnh 3](https://github.com/hiiamtu16/InternReport/blob/b93873c6b59114ef4698c873f72d80902b259fef/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Client-to-Site%20FortiGate%20300E/3.png?raw=1)
 
-##Cấu hình FortiClient
+## Cấu hình FortiClient
+  * Tạo IPsec Tunnel VPN
+    ![Ảnh 4](https://github.com/hiiamtu16/InternReport/blob/b93873c6b59114ef4698c873f72d80902b259fef/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Client-to-Site%20FortiGate%20300E/4.png?raw=1)
+    ![Ảnh 5](https://github.com/hiiamtu16/InternReport/blob/b93873c6b59114ef4698c873f72d80902b259fef/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Client-to-Site%20FortiGate%20300E/5.png?raw=1)
+    ![Ảnh 6](https://github.com/hiiamtu16/InternReport/blob/b93873c6b59114ef4698c873f72d80902b259fef/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Client-to-Site%20FortiGate%20300E/6.png?raw=1)
+    ![Ảnh 7](https://github.com/hiiamtu16/InternReport/blob/b93873c6b59114ef4698c873f72d80902b259fef/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Client-to-Site%20FortiGate%20300E/7.png?raw=1)
+    ![Ảnh 8](https://github.com/hiiamtu16/InternReport/blob/b93873c6b59114ef4698c873f72d80902b259fef/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Client-to-Site%20FortiGate%20300E/8.png?raw=1)
+  * Route và Policy
+    - Tạo 2 Policy từ LAN đến VPN và ngược lại
+      ![Ảnh 9](https://github.com/hiiamtu16/InternReport/blob/b93873c6b59114ef4698c873f72d80902b259fef/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Client-to-Site%20FortiGate%20300E/9.png?raw=1)
+
+## Truy cập VPN bằng FortiClient
+  * Thêm cấu hình VPN
+    ![Ảnh 10](https://github.com/hiiamtu16/InternReport/blob/b93873c6b59114ef4698c873f72d80902b259fef/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Client-to-Site%20FortiGate%20300E/10.png?raw=1)
+    ![Ảnh 11](https://github.com/hiiamtu16/InternReport/blob/b93873c6b59114ef4698c873f72d80902b259fef/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Client-to-Site%20FortiGate%20300E/11.png?raw=1)
+    ![Ảnh 12](https://github.com/hiiamtu16/InternReport/blob/b93873c6b59114ef4698c873f72d80902b259fef/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Client-to-Site%20FortiGate%20300E/12.png?raw=1)
+    ![Ảnh 13](https://github.com/hiiamtu16/InternReport/blob/b93873c6b59114ef4698c873f72d80902b259fef/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Client-to-Site%20FortiGate%20300E/13.png?raw=1)
+  * Đăng nhập vào bằng Username và Password đã tạo trên FortiGate
+    ![Ảnh 14](https://github.com/hiiamtu16/InternReport/blob/b93873c6b59114ef4698c873f72d80902b259fef/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Client-to-Site%20FortiGate%20300E/14.png?raw=1)
+
+## Kiểm tra kết quả
+  * Tạo được kết nối VPN giữa PC và FortiGate, lấy được IP Private trên FortiGate
+  ![Ảnh 15](https://github.com/hiiamtu16/InternReport/blob/b93873c6b59114ef4698c873f72d80902b259fef/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Client-to-Site%20FortiGate%20300E/15.png?raw=1)
+
 
 
 
