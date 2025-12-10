@@ -60,6 +60,57 @@
   * Tạo được kết nối VPN giữa PC và FortiGate, lấy được IP Private trên FortiGate
   ![Ảnh 15](https://github.com/hiiamtu16/InternReport/blob/b93873c6b59114ef4698c873f72d80902b259fef/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/VPN%20Client-to-Site%20FortiGate%20300E/15.png?raw=1)
 
+---
+
+---
+
+# CẤU HÌNH VPN CLIENT-TO-SITE TRÊN ROUTER MIKROTIK
+
+## Mô tả mô hình
+  ### Thiết bị 
+  * Đường WAN VNPT 14.224.202.232
+  * Firewall FortiGate 300E
+  * MikroTik CCR2116-12G-4S+
+  ### Kết nối
+  * MikroTik:
+    - VPN: 192.168.30.0/24
+    - Interface "ToFortinet300E": 192.168.254.3
+  * Fortinet:
+    - Port5 (To-Mik): 192.168.254.4
+    - Port1 (WAN VNPT): 14.224.202.232
+
+## Cấu hình MikroTik
+  * Tạo Wireguard
+    ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/433c36aa33ef737acf9c1b4092a7db7c26801fb4/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/Client-to-Site%20MikroTik/1.png?raw=1)
+  * Đặt IP cho Interface Wireguard
+    ![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/433c36aa33ef737acf9c1b4092a7db7c26801fb4/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/Client-to-Site%20MikroTik/2.png?raw=1)
+  * Đặt Firewall Rule cho Wireguard
+    ![Ảnh 3](https://github.com/hiiamtu16/InternReport/blob/433c36aa33ef737acf9c1b4092a7db7c26801fb4/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/Client-to-Site%20MikroTik/3.png?raw=1)
+  * NAT dải VPN
+    ![Ảnh 4](https://github.com/hiiamtu16/InternReport/blob/433c36aa33ef737acf9c1b4092a7db7c26801fb4/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/Client-to-Site%20MikroTik/4.png?raw=1)
+
+## Cấu hình FortiGate
+  * Tạo Virtual IPs để tạo liên kết từ VPN đến IP Public
+    ![Ảnh 5](https://github.com/hiiamtu16/InternReport/blob/433c36aa33ef737acf9c1b4092a7db7c26801fb4/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/Client-to-Site%20MikroTik/5.png?raw=1)
+  * Tạo Policy cho VPN
+    - Tạo đủ 2 Policy, 1 cho dữ liệu ra, 1 cho VPN
+       ![Ảnh 6](https://github.com/hiiamtu16/InternReport/blob/433c36aa33ef737acf9c1b4092a7db7c26801fb4/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/Client-to-Site%20MikroTik/6.png?raw=1)
+    - service cho VPN
+      ![Ảnh 7](https://github.com/hiiamtu16/InternReport/blob/433c36aa33ef737acf9c1b4092a7db7c26801fb4/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/Client-to-Site%20MikroTik/7.png?raw=1)
+
+## Cấu hình truy cập VPN
+  *Cấu hình VPN trên máy người dùng
+  ![Ảnh 8](https://github.com/hiiamtu16/InternReport/blob/433c36aa33ef737acf9c1b4092a7db7c26801fb4/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/Client-to-Site%20MikroTik/8.png?raw=1)
+  * Cấu hình Peer trên Wireguard
+  ![Ảnh 9](https://github.com/hiiamtu16/InternReport/blob/433c36aa33ef737acf9c1b4092a7db7c26801fb4/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/Client-to-Site%20MikroTik/9.png?raw=1)
+
+## Kiểm tra kết quả
+  * Trước khi kết nối VPN
+  ![Ảnh 10](https://github.com/hiiamtu16/InternReport/blob/433c36aa33ef737acf9c1b4092a7db7c26801fb4/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/Client-to-Site%20MikroTik/10.png?raw=1)
+  * Kết nối VPN trên máy
+  ![Ảnh 11](https://github.com/hiiamtu16/InternReport/blob/433c36aa33ef737acf9c1b4092a7db7c26801fb4/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/Client-to-Site%20MikroTik/11.png?raw=1)
+  * Kết nối VPN trên server Wireguard
+  ![Ảnh 12](https://github.com/hiiamtu16/InternReport/blob/433c36aa33ef737acf9c1b4092a7db7c26801fb4/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/Client-to-Site%20MikroTik/12.png?raw=1)
 
 
 
