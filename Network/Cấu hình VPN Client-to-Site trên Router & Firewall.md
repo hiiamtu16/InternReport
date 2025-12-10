@@ -99,7 +99,7 @@
       ![Ảnh 7](https://github.com/hiiamtu16/InternReport/blob/433c36aa33ef737acf9c1b4092a7db7c26801fb4/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/Client-to-Site%20MikroTik/7.png?raw=1)
 
 ## Cấu hình truy cập VPN
-  *Cấu hình VPN trên máy người dùng
+  * Cấu hình VPN trên máy người dùng
   ![Ảnh 8](https://github.com/hiiamtu16/InternReport/blob/433c36aa33ef737acf9c1b4092a7db7c26801fb4/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/Client-to-Site%20MikroTik/8.png?raw=1)
   * Cấu hình Peer trên Wireguard
   ![Ảnh 9](https://github.com/hiiamtu16/InternReport/blob/433c36aa33ef737acf9c1b4092a7db7c26801fb4/Picture%20/Network%20/C%E1%BA%A5u%20h%C3%ACnh%20VPN/Client-to-Site%20MikroTik/9.png?raw=1)
