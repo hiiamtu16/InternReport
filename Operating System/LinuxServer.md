@@ -18,16 +18,16 @@
   * Bật kết nối: sudo ifup **eno16777736**(tên card mạng, có thể thay đổi)
   * Mở file cấu hình của interface cần cấu hình IP tĩnh: sudo nano /etc/sysconfig/network-scripts/ifcfg-**eno16777736**(tên card mạng)
   * File cấu hình:
-    TYPE="Ethernet"
-    BOOTPROTO="static"
-    NAME="ens33"        # Thay "ens33" bằng tên interface 
-    DEVICE="ens33"      # Thay "ens33" bằng tên interface 
-    ONBOOT="yes"        # Giao diện sẽ được kích hoạt khi khởi động
-    IPADDR="192.168.16.100"   
-    NETMASK="255.255.255.0"   
-    GATEWAY="192.168.16.1"     
-    DNS1="8.8.8.8"          
-    DNS2="8.8.4.4"    
+    - TYPE="Ethernet"
+    - BOOTPROTO="static"
+    - NAME="ens33"        # Thay "ens33" bằng tên interface 
+    - DEVICE="ens33"      # Thay "ens33" bằng tên interface 
+    - ONBOOT="yes"        # Giao diện sẽ được kích hoạt khi khởi động
+    - IPADDR="192.168.16.100"   
+    - NETMASK="255.255.255.0"   
+    - GATEWAY="192.168.16.1"     
+    - DNS1="8.8.8.8"          
+    - DNS2="8.8.4.4"    
   * Restart dịch vụ mạng: sudo systemctl restart network
   * Bật dịch vụ mạng: sudo systemctl enable network
 
