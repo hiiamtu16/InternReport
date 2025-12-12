@@ -34,7 +34,7 @@
 ## Reset password
  * Restart máy, bấm tổ hợp (Shift + Esc) vào boost, Bấm E
  * Chuyển con trỏ xuống cuối dòng root, thêm: rd.break
- ![Ảnh 10](https://github.com/hiiamtu16/InternReport/blob/12ca79be2eeee7ef50abfeb2090b4f55c1c9362e/Picture%20/Operating%20System/CentOS7/1.png?raw=1)
+ ![Ảnh 10](https://github.com/hiiamtu16/InternReport/blob/12ca79be2eeee7ef50abfeb2090b4f55c1c9362e/Picture%20/Operating%20System/CentOS7/10.png?raw=1)
  * Vào mode và đổi Pass:
  ![Ảnh 11](https://github.com/hiiamtu16/InternReport/blob/12ca79be2eeee7ef50abfeb2090b4f55c1c9362e/Picture%20/Operating%20System/CentOS7/11.png?raw=1)
 
