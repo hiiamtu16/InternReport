@@ -96,7 +96,7 @@
     + kiểm tra ổ có sẵn: lsblk
     + dùng gparted: chuyển sang /dev/sdb
     + tạo phân vùng
-    ![Ảnh 16](https://github.com/hiiamtu16/InternReport/blob/df15b336ecc36861ce19aaacba2ff73ce6984b0d/Picture%20/Operating%20System/Ubuntu22.04/16.png?raw=1)
+    ![Ảnh 16](https://github.com/hiiamtu16/InternReport/blob/c0cec50c0dbf5c23917130a4a65e89570b5d7c92/Picture%20/Operating%20System/Ubuntu22.04/16.png?raw=1)
   * Format phân vùng: sudo mkfs.ext4 /dev/sdb1; Backup data trên /dev/sda2
   * Cài đặt LVM ghép 2 ổ vào cùng 1 mount
     - Cài đặt LVM: sudo apt install lvm2
