@@ -18,7 +18,7 @@
    * Mở Gparted: gparted
    * Bật phần ổ cứng đang unallocated và tách thành 2 ổ, 1 để lưu dữ liệu, 1 để làm SWAP
    ![Ảnh 8](https://github.com/hiiamtu16/InternReport/blob/df15b336ecc36861ce19aaacba2ff73ce6984b0d/Picture%20/Operating%20System/Ubuntu22.04/8.png?raw=1)
-   ![Ảnh 9](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/9.png?raw=1)
+   ![Ảnh 9](https://github.com/hiiamtu16/InternReport/blob/df15b336ecc36861ce19aaacba2ff73ce6984b0d/Picture%20/Operating%20System/Ubuntu22.04/9.png?raw=1)
   ### Phân ổ
    * Kiểm tra phân vùng ổ: lsblk -f
    * sda2 làm ổ lưu data
@@ -39,7 +39,7 @@
     * Kiểm tra:
      - swapon -s
      - df -h 
-      ![Ảnh 10](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/10.png?raw=1)
+   ![Ảnh 10](https://github.com/hiiamtu16/InternReport/blob/df15b336ecc36861ce19aaacba2ff73ce6984b0d/Picture%20/Operating%20System/Ubuntu22.04/10.png?raw=1)
 ## Đặt IP tĩnh:
   - xem card mạng: ip a
   - xem file cấu hình netplan: ls /etc/netplan      ( có dạng: 00-installer-config.yaml)
@@ -72,14 +72,13 @@
 
  ## Đặt lại mật khẩu root:
   * Bật máy, bấm restart đợi boost rồi bấm liền tổ hợp (Shift-Esc)
-    ![Ảnh 10](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/10.png?raw=1)
-    ![Ảnh 11](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/11.png?raw=1)
-    ![Ảnh 12](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/12.png?raw=1)
-    ![Ảnh 13](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/13.png?raw=1)
+    ![Ảnh 11](https://github.com/hiiamtu16/InternReport/blob/df15b336ecc36861ce19aaacba2ff73ce6984b0d/Picture%20/Operating%20System/Ubuntu22.04/11.png?raw=1)
+    ![Ảnh 12](https://github.com/hiiamtu16/InternReport/blob/df15b336ecc36861ce19aaacba2ff73ce6984b0d/Picture%20/Operating%20System/Ubuntu22.04/12.png?raw=1)
+    ![Ảnh 13](https://github.com/hiiamtu16/InternReport/blob/df15b336ecc36861ce19aaacba2ff73ce6984b0d/Picture%20/Operating%20System/Ubuntu22.04/13.png?raw=1)
   * Tạo root password:
-    ![Ảnh 14](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/14.png?raw=1)
+    ![Ảnh 14](https://github.com/hiiamtu16/InternReport/blob/df15b336ecc36861ce19aaacba2ff73ce6984b0d/Picture%20/Operating%20System/Ubuntu22.04/14.png?raw=1)
   * Đổi password:
-    ![Ảnh 15](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/15.png?raw=1)
+    ![Ảnh 15](https://github.com/hiiamtu16/InternReport/blob/df15b336ecc36861ce19aaacba2ff73ce6984b0d/Picture%20/Operating%20System/Ubuntu22.04/15.png?raw=1)
   * Enter, gõ "exit" chọn "resume" -> ok để chạy lại
 # CentOS7
 
