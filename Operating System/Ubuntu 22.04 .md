@@ -1,5 +1,18 @@
 # Ubuntu
+## Cài đặt Ubuntu
+  * Tạo máy ảo trên VMware Workstation: RAM tối thiểu 2GB, Disk tối thiểu 30GB
+  * Chọn bộ cài Ubuntu 22.
+  * Setup theo các bước
+  ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/1.png?raw=1)
+  ![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/2.png?raw=1)
+  ![Ảnh 3](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/3.png?raw=1)
+  ![Ảnh 4](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/4.png?raw=1)
+  ![Ảnh 5](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/5.png?raw=1)
+  ![Ảnh 6](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/6.png?raw=1)
+  ![Ảnh 7](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/7.png?raw=1)
+
 ## Phân vùng ổ cứng thủ công
+  
 ## Đặt IP tĩnh:
   - xem card mạng: ip a
   - xem file cấu hình netplan: ls /etc/netplan      ( có dạng: 00-installer-config.yaml)
