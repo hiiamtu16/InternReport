@@ -80,12 +80,33 @@
   * Đổi password:
     ![Ảnh 15](https://github.com/hiiamtu16/InternReport/blob/df15b336ecc36861ce19aaacba2ff73ce6984b0d/Picture%20/Operating%20System/Ubuntu22.04/15.png?raw=1)
   * Enter, gõ "exit" chọn "resume" -> ok để chạy lại
-# CentOS7
 
-# AlmaLinux
-## Phân vùng ổ cứng
-  * Cài đặt Gparted
-    - Bật EPEL repo: sudo dnf install epel-release -y
-    - Cài Gparted: sudo dnf install gparted -y
-    - Mở Gparted: gparted
-  * 
+## Thêm ổ khi ổ đầy
+ ### Giả lập full ổ
+  * Tạo thư mục mount: sudo mkdir -p /mnt/sda2
+  * Mount phân vùng /dev/sda2 vào thư mục /mnt/sda2: sudo mount /dev/sda3 /mnt/sda3
+  * Tiến hành ghi đầy dữ liệu vào phân vùng /dev/sda2: sudo dd if=/dev/zero of=/mnt/sda2/testfile bs=1M
+ ### Thêm ổ cứng mới vào máy
+  * Phân vùng ổ cứng
+   - Cài đặt Gparted
+    + Bật EPEL repo: sudo dnf install epel-release -y
+    + Cài Gparted: sudo dnf install gparted -y
+    + Mở Gparted: gparted
+   - Thêm ổ cứng mới (dev/sdb)
+    + kiểm tra ổ có sẵn: lsblk
+    + dùng gparted: chuyển sang /dev/sdb
+    + tạo phân vùng
+    ![Ảnh 16](https://github.com/hiiamtu16/InternReport/blob/df15b336ecc36861ce19aaacba2ff73ce6984b0d/Picture%20/Operating%20System/Ubuntu22.04/16.png?raw=1)
+  * Format phân vùng: sudo mkfs.ext4 /dev/sdb1; Backup data trên /dev/sda2
+  * Cài đặt LVM ghép 2 ổ vào cùng 1 mount
+    - Cài đặt LVM: sudo apt install lvm2
+    - unmount sda2 với /data: sudo umount /dev/sda2
+    - tạo physical volume (PV) trên sda2 và sdb1
+      + sda3: sudo pvcreate /dev/sda2
+      + sdb1: sudo pvcreate /dev/sdb1
+    - Tạo Volume Group (VG):
+      + tạo một volume group (VG): sudo vgcreate my_vg /dev/sda2 /dev/sdb1
+    - Tạo Logical Volume (LV):
+      + Tạo LV với toàn bộ dung lượng của VG: sudo lvcreate -l 100%FREE -n my_lv my_vg
+    - Format Logical Volume (LV): sudo mkfs.ext4 /dev/my_vg/my_lv
+    - Mount lại LV vào /data
