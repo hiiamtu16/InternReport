@@ -10,9 +10,36 @@
   ![Ảnh 5](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/5.png?raw=1)
   ![Ảnh 6](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/6.png?raw=1)
   ![Ảnh 7](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/7.png?raw=1)
-
 ## Phân vùng ổ cứng thủ công
-  
+  ### Cài Gparted
+   * Click chuột phải vào màn hình chọn Open in Terminal
+   * Update: sudo apt update
+   * Cài Gparted: sudo apt install gparted  (Y - Enter)
+   * Mở Gparted: gparted
+   * Bật phần ổ cứng đang unallocated và tách thành 2 ổ, 1 để lưu dữ liệu, 1 để làm SWAP
+    ![Ảnh 8](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/8.png?raw=1)
+    ![Ảnh 9](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/9.png?raw=1)
+  ### Phân ổ
+   * Kiểm tra phân vùng ổ: lsblk -f
+   * sda2 làm ổ lưu data
+     - format ổ: sudo mkfs.ext4 /dev/sda2
+     - tạo thư mục mount point: sudo mkdir /data (có thể đặt tên khác data)
+     - Mount phân vùng dữ liệu: sudo mount /dev/sda2 /data
+     - Thêm phân vùng vào /etc/fstab để mount tự động:
+       + Mở file /etc/fstab: sudo nano /etc/fstab
+       + Thêm dòng sau vào cuối file: /dev/sda2   /data   ext4    defaults    0   2
+       + Lưu file và thoát (Ctrl+X, sau đó nhấn Y và Enter để lưu thay đổi)
+   * sda3 làm SWAP:
+     - format ổ: sudo mkswap /dev/sda3
+     - kích hoạt: sudo swapon /dev/sda3
+     - thêm phân vùng swap vào fstab:
+       + Mở file /etc/fstab: sudo nano /etc/fstab
+       + Thêm vào cuối file: /dev/sda3   none    swap    sw    0   0
+       + Lưu file và thoát (Ctrl+X, sau đó nhấn Y và Enter để lưu thay đổi)
+    * Kiểm tra:
+     - swapon -s
+     - df -h 
+      ![Ảnh 10](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/10.png?raw=1)
 ## Đặt IP tĩnh:
   - xem card mạng: ip a
   - xem file cấu hình netplan: ls /etc/netplan      ( có dạng: 00-installer-config.yaml)
@@ -43,6 +70,17 @@
   - Áp dụng cấu hình: sudo netplan apply
   - debug lỗi: sudo netplan --debug apply
 
+ ## Đặt lại mật khẩu root:
+  * Bật máy, bấm restart đợi boost rồi bấm liền tổ hợp (Shift-Esc)
+    ![Ảnh 10](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/10.png?raw=1)
+    ![Ảnh 11](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/11.png?raw=1)
+    ![Ảnh 12](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/12.png?raw=1)
+    ![Ảnh 13](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/13.png?raw=1)
+  * Tạo root password:
+    ![Ảnh 14](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/14.png?raw=1)
+  * Đổi password:
+    ![Ảnh 15](https://github.com/hiiamtu16/InternReport/blob/50087bffd804b77381b62d4b882f7b3df87232fc/Picture%20/Operating%20System/Ubuntu22.04/15.png?raw=1)
+  * Enter, gõ "exit" chọn "resume" -> ok để chạy lại
 # CentOS7
 
 # AlmaLinux
