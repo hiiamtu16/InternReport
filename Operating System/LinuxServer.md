@@ -41,7 +41,23 @@
 ---
 
 # AlmaLinux
+## Cài đặt
+
+## Cấu hình IP
+ * Kiểm tra cấu hình mạng: ip a
+ * Kiểm tra trạng thái Interface: nmcli device status
+ * Cấu hình IP tĩnh cho Interface ens160: sudo nmcli con mod ens160 ipv4.method manual ipv4.addresses 192.168.16.10/24 ipv4.gateway 192.168.16.1 ipv4.dns "8.8.8.8 8.8.4.4"
+ * Kích hoạt lại kết nối: sudo nmcli con up ens160
+
+## Reset password Root và Admin
 
 ---
 
 # RockyLinux 9.
+## Cài đặt
+
+## Cấu hình IP
+ * Kiểm tra cấu hình mạng: ip a
+ * Kiểm tra trạng thái Interface: nmcli device status
+ * Cấu hình IP tĩnh cho Interface ens160: sudo nmcli con mod ens160 ipv4.method manual ipv4.addresses 192.168.16.10/24 ipv4.gateway 192.168.16.1 ipv4.dns "8.8.8.8 8.8.4.4"
+ * Kích hoạt lại kết nối: sudo nmcli con up ens160
