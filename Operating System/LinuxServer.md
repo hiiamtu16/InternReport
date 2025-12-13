@@ -31,7 +31,7 @@
   * Restart dịch vụ mạng: sudo systemctl restart network
   * Bật dịch vụ mạng: sudo systemctl enable network
   * Kiểm tra cấu hình IP
-     ![Ảnh 14](https://github.com/hiiamtu16/InternReport/blob/12ca79be2eeee7ef50abfeb2090b4f55c1c9362e/Picture%20/Operating%20System/CentOS7/14.png?raw=1)
+     ![Ảnh 14](https://github.com/hiiamtu16/InternReport/blob/8f3e632d477b0dfed33fc2a49fa5b91ca994bb14/Picture%20/Operating%20System/CentOS7/14.png?raw=1)
 
 ## Reset password
  * Restart máy, bấm tổ hợp (Shift + Esc) vào boost, Bấm E
@@ -86,7 +86,7 @@
  * Cấu hình IP tĩnh cho Interface ens160: sudo nmcli con mod ens160 ipv4.method manual ipv4.addresses 192.168.16.10/24 ipv4.gateway 192.168.16.1 ipv4.dns "8.8.8.8 8.8.4.4"
  * Kích hoạt lại kết nối: sudo nmcli con up ens160
  * Kiểm tra cấu hình IP
-    ![Ảnh 9](https://github.com/hiiamtu16/InternReport/blob/6d38f4f51ae42b58a98364746b9644aac4155fee/Picture%20/Operating%20System/Rocky%20Linux%209.7/9.png?raw=1)
+    ![Ảnh 9](https://github.com/hiiamtu16/InternReport/blob/8f3e632d477b0dfed33fc2a49fa5b91ca994bb14/Picture%20/Operating%20System/Rocky%20Linux%209.7/9.png?raw=1)
 ## Reset password
  * Restart máy, bấm tổ hợp (Shift + Esc) vào boost, Bấm E
  ![Ảnh 5](https://github.com/hiiamtu16/InternReport/blob/6d38f4f51ae42b58a98364746b9644aac4155fee/Picture%20/Operating%20System/Rocky%20Linux%209.7/5.png?raw=1)
