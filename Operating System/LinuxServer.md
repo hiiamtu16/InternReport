@@ -42,14 +42,27 @@
 
 # AlmaLinux
 ## Cài đặt
-
+* Phân vùng ổ cứng thủ công
+ ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/fb9c3071de2fd8e59605f78e3edf4ab8a7470ba6/Picture%20/Operating%20System/AlmaLinux10/1.png?raw=1)
+ ![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/fb9c3071de2fd8e59605f78e3edf4ab8a7470ba6/Picture%20/Operating%20System/AlmaLinux10/2.png?raw=1)
+ * Tạo User Admin
+ ![Ảnh 4](https://github.com/hiiamtu16/InternReport/blob/fb9c3071de2fd8e59605f78e3edf4ab8a7470ba6/Picture%20/Operating%20System/AlmaLinux10/4.png?raw=1)
+ * Tạo pass root
+ ![Ảnh 3](https://github.com/hiiamtu16/InternReport/blob/fb9c3071de2fd8e59605f78e3edf4ab8a7470ba6/Picture%20/Operating%20System/AlmaLinux10/3.png?raw=1)
 ## Cấu hình IP
  * Kiểm tra cấu hình mạng: ip a
  * Kiểm tra trạng thái Interface: nmcli device status
  * Cấu hình IP tĩnh cho Interface ens160: sudo nmcli con mod ens160 ipv4.method manual ipv4.addresses 192.168.16.10/24 ipv4.gateway 192.168.16.1 ipv4.dns "8.8.8.8 8.8.4.4"
  * Kích hoạt lại kết nối: sudo nmcli con up ens160
-
+ * Kiểm tra IP sau cấu hình
+ ![Ảnh 8](https://github.com/hiiamtu16/InternReport/blob/fb9c3071de2fd8e59605f78e3edf4ab8a7470ba6/Picture%20/Operating%20System/AlmaLinux10/8.png?raw=1)
 ## Reset password Root và Admin
+ * Restart máy, bấm tổ hợp (Shift + Esc) vào boost, Bấm E
+ ![Ảnh 5](https://github.com/hiiamtu16/InternReport/blob/fb9c3071de2fd8e59605f78e3edf4ab8a7470ba6/Picture%20/Operating%20System/AlmaLinux10/5.png?raw=1)
+ * Chuyển con trỏ xuống thay ro-->rw, thêm: rd.break
+ ![Ảnh 6](https://github.com/hiiamtu16/InternReport/blob/fb9c3071de2fd8e59605f78e3edf4ab8a7470ba6/Picture%20/Operating%20System/AlmaLinux10/6.png?raw=1)
+ * Vào mode và đổi Pass:
+ ![Ảnh 7](https://github.com/hiiamtu16/InternReport/blob/fb9c3071de2fd8e59605f78e3edf4ab8a7470ba6/Picture%20/Operating%20System/AlmaLinux10/7.png?raw=1)
 
 ---
 
