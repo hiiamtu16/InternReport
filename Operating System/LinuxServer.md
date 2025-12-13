@@ -55,9 +55,25 @@
 
 # RockyLinux 9.
 ## Cài đặt
-
+ * Thông số cài đặt
+ ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/6d38f4f51ae42b58a98364746b9644aac4155fee/Picture%20/Operating%20System/Rocky%20Linux%209.7/1.png?raw=1)
+ * Phân vùng ổ cứng thủ công
+ ![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/6d38f4f51ae42b58a98364746b9644aac4155fee/Picture%20/Operating%20System/Rocky%20Linux%209.7/2.png?raw=1)
+ - Tối thiểu 20GB cho ổ Root
+ - phân vùng ổ swap, boot, var, home
+ * Tạo User Admin
+ ![Ảnh 4](https://github.com/hiiamtu16/InternReport/blob/6d38f4f51ae42b58a98364746b9644aac4155fee/Picture%20/Operating%20System/Rocky%20Linux%209.7/4.png?raw=1)
+ * Tạo pass root
+ ![Ảnh 3](https://github.com/hiiamtu16/InternReport/blob/6d38f4f51ae42b58a98364746b9644aac4155fee/Picture%20/Operating%20System/Rocky%20Linux%209.7/3.png?raw=1)
 ## Cấu hình IP
  * Kiểm tra cấu hình mạng: ip a
  * Kiểm tra trạng thái Interface: nmcli device status
  * Cấu hình IP tĩnh cho Interface ens160: sudo nmcli con mod ens160 ipv4.method manual ipv4.addresses 192.168.16.10/24 ipv4.gateway 192.168.16.1 ipv4.dns "8.8.8.8 8.8.4.4"
  * Kích hoạt lại kết nối: sudo nmcli con up ens160
+## Reset password
+ * Restart máy, bấm tổ hợp (Shift + Esc) vào boost, Bấm E
+ ![Ảnh 5](https://github.com/hiiamtu16/InternReport/blob/6d38f4f51ae42b58a98364746b9644aac4155fee/Picture%20/Operating%20System/Rocky%20Linux%209.7/5.png?raw=1)
+ * Chuyển con trỏ xuống cuối dòng root, thêm: rd.break
+ ![Ảnh 6](https://github.com/hiiamtu16/InternReport/blob/6d38f4f51ae42b58a98364746b9644aac4155fee/Picture%20/Operating%20System/Rocky%20Linux%209.7/6.png?raw=1)
+ * Vào mode và đổi Pass:
+ ![Ảnh 8](https://github.com/hiiamtu16/InternReport/blob/6d38f4f51ae42b58a98364746b9644aac4155fee/Picture%20/Operating%20System/Rocky%20Linux%209.7/8.png?raw=1)
