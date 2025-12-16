@@ -92,15 +92,15 @@
    * Tạo Datastore
      ![Ảnh 31](https://github.com/hiiamtu16/InternReport/blob/debf5d473f4cf6d7ed6e84c9e775c3e122a87624/Picture%20/Virtualization/Proxmox%209.1/31.png?raw=1)
    * Lấy Fingerprint
-     ![Ảnh 32](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/32.png?raw=1)
+     ![Ảnh 32](https://github.com/hiiamtu16/InternReport/blob/debf5d473f4cf6d7ed6e84c9e775c3e122a87624/Picture%20/Virtualization/Proxmox%209.1/32.png?raw=1)
    * Link PVE với PBS
-     ![Ảnh 33](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/33.png?raw=1)
+     ![Ảnh 33](https://github.com/hiiamtu16/InternReport/blob/debf5d473f4cf6d7ed6e84c9e775c3e122a87624/Picture%20/Virtualization/Proxmox%209.1/33.png?raw=1)
    * Back up
-     ![Ảnh 34](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/34.png?raw=1)
+     ![Ảnh 34](https://github.com/hiiamtu16/InternReport/blob/debf5d473f4cf6d7ed6e84c9e775c3e122a87624/Picture%20/Virtualization/Proxmox%209.1/34.png?raw=1)
    * Kiểm tra
-     ![Ảnh 35](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/35.png?raw=1)
+     ![Ảnh 35](https://github.com/hiiamtu16/InternReport/blob/debf5d473f4cf6d7ed6e84c9e775c3e122a87624/Picture%20/Virtualization/Proxmox%209.1/35.png?raw=1)
 
 ## Cloud-init
-   ![Ảnh 36](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/36.png?raw=1)
-   ![Ảnh 37](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/37.png?raw=1)
+   ![Ảnh 36](https://github.com/hiiamtu16/InternReport/blob/debf5d473f4cf6d7ed6e84c9e775c3e122a87624/Picture%20/Virtualization/Proxmox%209.1/36.png?raw=1)
+   ![Ảnh 37](https://github.com/hiiamtu16/InternReport/blob/debf5d473f4cf6d7ed6e84c9e775c3e122a87624/Picture%20/Virtualization/Proxmox%209.1/37.png?raw=1)
 
