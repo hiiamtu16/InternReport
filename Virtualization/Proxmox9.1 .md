@@ -42,9 +42,9 @@
     - ![Ảnh 13](?raw=1)
 ## Cấu hình Network
   ### Dạng Flat
-
+   * Đặt IP VM cùng dải, cùng gateway với IP máy thật
   ### Multi VLAN
-
+   * Đặt IP các VM thuộc các VLAN có dải IP khác nhau
 ## Tạo VM, Move disk VM giữa các Data Storage
  ### Tạo VM
   * Upload file iso:
@@ -55,7 +55,25 @@
     ![Ảnh 17](?raw=1)
     - Kiểm tra boot order
     ![Ảnh 18](?raw=1)
+  * Xem máy ảo
+    ![Ảnh 19](?raw=1)
  ### Move disk
+  * Trên máy Proxmox VE, add thêm 1 ổ cứng (sdc 60GB) như các bước trên
+  * Thao tác move disk
+    ![Ảnh 20](?raw=1)
+  * Kiểm tra:
+    - Ổ sdb sau khi move ![Ảnh 21](?raw=1)
+    - Ổ sdc sau khi move ![Ảnh 22](?raw=1)
+    - VM vẫn hoạt động được sau khi move ![Ảnh 23](?raw=1)
 
- 
 ## Back up / restore VM
+ ### Back up
+  * Back up trên 1 máy: 
+    - Back up: ![Ảnh 24](?raw=1)
+    - Kiểm tra: ![Ảnh 25](?raw=1)
+  * Back up tự động nhiều máy
+     - Back up:
+     ![Ảnh 26](?raw=1)
+     ![Ảnh 27](?raw=1)
+ ### Restore
+   ![Ảnh 28](?raw=1)
