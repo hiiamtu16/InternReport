@@ -88,9 +88,9 @@
 
  ### Back up & Restore cloud
    * Tạo S3 endpoint
-     ![Ảnh 30](?raw=1)
+     ![Ảnh 30](https://github.com/hiiamtu16/InternReport/blob/debf5d473f4cf6d7ed6e84c9e775c3e122a87624/Picture%20/Virtualization/Proxmox%209.1/30.png?raw=1)
    * Tạo Datastore
-     ![Ảnh 31](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/31.png?raw=1)
+     ![Ảnh 31](https://github.com/hiiamtu16/InternReport/blob/debf5d473f4cf6d7ed6e84c9e775c3e122a87624/Picture%20/Virtualization/Proxmox%209.1/31.png?raw=1)
    * Lấy Fingerprint
      ![Ảnh 32](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/32.png?raw=1)
    * Link PVE với PBS
