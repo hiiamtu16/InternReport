@@ -40,6 +40,14 @@
     - Kiểm tra: lvs
   * Add Storage trên web gui:
     - ![Ảnh 13](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/13.png?raw=1)
+  * Mở rộng ổ root:
+    - Tạo Physical Volume: pvcreate /dev/sdb
+    - add vào volume group pve: vgextend pve /dev/sdb
+    - mở rộng logical volume root: lvextend -l +100%FREE /dev/pve/root
+    - resize filesystem:
+      + resize2fs /dev/pve/root ( Nếu ổ ext4)
+      + xfs_growfs / ( Nếu ổ xfs)
+    - Mở rộng ổ 14GB lên 40GB: ![Ảnh 29](?raw=1)
 ## Cấu hình Network
   ### Dạng Flat
    * Đặt IP VM cùng dải, cùng gateway với IP máy thật
@@ -67,7 +75,7 @@
     - VM vẫn hoạt động được sau khi move ![Ảnh 23](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/23.png?raw=1)
 
 ## Back up / restore VM
- ### Back up
+ ### Back up & Restore local
   * Back up trên 1 máy: 
     - Back up: ![Ảnh 24](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/24.png?raw=1)
     - Kiểm tra: ![Ảnh 25](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/25.png?raw=1)
@@ -75,5 +83,24 @@
      - Back up:
      ![Ảnh 26](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/26.png?raw=1)
      ![Ảnh 27](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/27.png?raw=1)
- ### Restore
-   ![Ảnh 28](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/28.png?raw=1)
+  * Restore
+    ![Ảnh 28](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/28.png?raw=1)
+
+ ### Back up & Restore cloud
+   * Tạo S3 endpoint
+     ![Ảnh 30](?raw=1)
+   * Tạo Datastore
+     ![Ảnh 31](?raw=1)
+   * Lấy Fingerprint
+     ![Ảnh 32](?raw=1)
+   * Link PVE với PBS
+     ![Ảnh 33](?raw=1)
+   * Back up
+     ![Ảnh 34](?raw=1)
+   * Kiểm tra
+     ![Ảnh 35](?raw=1)
+
+## Cloud-init
+   ![Ảnh 36](?raw=1)
+   ![Ảnh 37](?raw=1)
+
