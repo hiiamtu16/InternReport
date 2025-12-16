@@ -30,11 +30,32 @@
 ## Add Storage
   * Tắt máy Proxmox VE
   * Add thêm ổ cứng vào Proxmox VE
+  * Kiểm tra thiết bị nhận ổ cứng chưa: lsblk (có ổ dev/sdb)
+  * Chạy lệnh trên Proxmox
+    - Tạo Physical Volume: pvcreate /dev/sdb
+    - kiểm tra: pvs
+    - Tạo Volume Group mới: vgcreate vg_sdb /dev/sdb
+    - Kiểm tra: vgs
+    - Tạo Thin Pool: lvcreate -l 100%FREE -T vg_sdb/data
+    - Kiểm tra: lvs
+  * Add Storage trên web gui:
+    - ![Ảnh 13](?raw=1)
 ## Cấu hình Network
   ### Dạng Flat
 
   ### Multi VLAN
 
 ## Tạo VM, Move disk VM giữa các Data Storage
+ ### Tạo VM
+  * Upload file iso:
+    ![Ảnh 15](?raw=1)
+  * Tạo VM
+    ![Ảnh 14](?raw=1)
+    ![Ảnh 16](?raw=1)
+    ![Ảnh 17](?raw=1)
+    - Kiểm tra boot order
+    ![Ảnh 18](?raw=1)
+ ### Move disk
 
+ 
 ## Back up / restore VM
