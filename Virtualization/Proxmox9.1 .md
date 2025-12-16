@@ -13,20 +13,20 @@
     - Tắt Memory Integrity: Windows Security → Device Security → Core Isolation → Memory Integrity = OFF
     - Restart máy
   * Cấu hình máy trên VMware Workstation:
-    ![Ảnh 1](?raw=1)
-    ![Ảnh 2](?raw=1)
-    ![Ảnh 5](?raw=1)
-    ![Ảnh 3](?raw=1)
-    ![Ảnh 4](?raw=1)
+    ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/1.png?raw=1)
+    ![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/2.png?raw=1)
+    ![Ảnh 5](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/5.png?raw=1)
+    ![Ảnh 3](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/3.png?raw=1)
+    ![Ảnh 4](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/4.png?raw=1)
   * Cài đặt
-    ![Ảnh 6](?raw=1)
-    ![Ảnh 7](?raw=1)
-    ![Ảnh 8](?raw=1)
-    ![Ảnh 9](?raw=1)
-    ![Ảnh 10](?raw=1)
+    ![Ảnh 6](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/6.png?raw=1)
+    ![Ảnh 7](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/7.png?raw=1)
+    ![Ảnh 8](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/8.png?raw=1)
+    ![Ảnh 9](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/9.png?raw=1)
+    ![Ảnh 10](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/10.png?raw=1)
   * Kết quả:
-    ![Ảnh 11](?raw=1)
-    ![Ảnh 12](?raw=1)
+    ![Ảnh 11](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/11.png?raw=1)
+    ![Ảnh 12](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/12.png?raw=1)
 ## Add Storage
   * Tắt máy Proxmox VE
   * Add thêm ổ cứng vào Proxmox VE
@@ -39,7 +39,7 @@
     - Tạo Thin Pool: lvcreate -l 100%FREE -T vg_sdb/data
     - Kiểm tra: lvs
   * Add Storage trên web gui:
-    - ![Ảnh 13](?raw=1)
+    - ![Ảnh 13](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/13.png?raw=1)
 ## Cấu hình Network
   ### Dạng Flat
    * Đặt IP VM cùng dải, cùng gateway với IP máy thật
@@ -48,32 +48,32 @@
 ## Tạo VM, Move disk VM giữa các Data Storage
  ### Tạo VM
   * Upload file iso:
-    ![Ảnh 15](?raw=1)
+    ![Ảnh 15](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/15.png?raw=1)
   * Tạo VM
-    ![Ảnh 14](?raw=1)
-    ![Ảnh 16](?raw=1)
-    ![Ảnh 17](?raw=1)
+    ![Ảnh 14](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/14.png?raw=1)
+    ![Ảnh 16](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/16.png?raw=1)
+    ![Ảnh 17](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/17.png?raw=1)
     - Kiểm tra boot order
-    ![Ảnh 18](?raw=1)
+    ![Ảnh 18](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/18.png?raw=1)
   * Xem máy ảo
-    ![Ảnh 19](?raw=1)
+    ![Ảnh 19](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/19.png?raw=1)
  ### Move disk
   * Trên máy Proxmox VE, add thêm 1 ổ cứng (sdc 60GB) như các bước trên
   * Thao tác move disk
-    ![Ảnh 20](?raw=1)
+    ![Ảnh 20](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/20.png?raw=1)
   * Kiểm tra:
-    - Ổ sdb sau khi move ![Ảnh 21](?raw=1)
-    - Ổ sdc sau khi move ![Ảnh 22](?raw=1)
-    - VM vẫn hoạt động được sau khi move ![Ảnh 23](?raw=1)
+    - Ổ sdb sau khi move ![Ảnh 21](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/21.png?raw=1)
+    - Ổ sdc sau khi move ![Ảnh 22](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/22.png?raw=1)
+    - VM vẫn hoạt động được sau khi move ![Ảnh 23](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/23.png?raw=1)
 
 ## Back up / restore VM
  ### Back up
   * Back up trên 1 máy: 
-    - Back up: ![Ảnh 24](?raw=1)
-    - Kiểm tra: ![Ảnh 25](?raw=1)
+    - Back up: ![Ảnh 24](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/24.png?raw=1)
+    - Kiểm tra: ![Ảnh 25](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/25.png?raw=1)
   * Back up tự động nhiều máy
      - Back up:
-     ![Ảnh 26](?raw=1)
-     ![Ảnh 27](?raw=1)
+     ![Ảnh 26](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/26.png?raw=1)
+     ![Ảnh 27](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/27.png?raw=1)
  ### Restore
-   ![Ảnh 28](?raw=1)
+   ![Ảnh 28](https://github.com/hiiamtu16/InternReport/blob/6f6630018d2e9bd17f13a4f3dcaa23d3caaa50b2/Picture%20/Virtualization/Proxmox%209.1/28.png?raw=1)
