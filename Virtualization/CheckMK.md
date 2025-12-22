@@ -82,3 +82,41 @@ $(lsb_release -cs) stable" \
   * Add host pfSense
 
   * Chạy Monitor trên CheckMK
+
+## Giám sát máy Ubuntu sau pfSense
+  ### Join OpenVPN trên pfSense
+   * Cài OpenVPn trên máy Ubuntu chạy CheckMK:
+    - apt update
+    - apt install -y openvpn
+    - Kiểm tra: openvpn --version
+   * Upload file .ovpn lên máy Ubuntu
+    - Mở CMD trên PC chạy bằng quyền Admin
+    - cd đến folder chứa file .ovpn: cd C:\Users\tunv\Downloads
+    - Copy file sang Ubuntu VM: scp pfSense2-UDP4-1194-user1-config.ovpn root@172.16.20.32:/root/ (scp "tên file ovpn" user@"IP Ubuntu":/root/)
+   * Mở OpenVPN trên Proxmox
+    - Chạy OpenVPN: openvpn --config /root/pfSense2-UDP4-1194-user1-config.ovpn
+    - Log in: user1 / 1
+    - End PuTTY, bật lại, kiểm tra:"ip a" check có ip VPN
+   * Kiểm tra Rule trên pfSense cho phép dữ liệu qua VPN
+   * Kiểm tra Static Route
+  ### Giám sát máy
+  * Tạo host trên CheckMK
+
+  * Lấy Agent cho OS cần cài
+
+  * Cop Agent sang Ubuntu
+    - Cài SSH trên máy Ubuntu:
+      + sudo apt update
+      + sudo apt install -y openssh-server
+    - Mở CMD trên PC chạy bằng quyền Admin
+    - cd đến folder chứa agent: cd C:\Users\tunv\Downloads
+    - Copy file sang Ubuntu VMware: scp check-mk-agent_2.4.0p18-dd0c018da230719a_all.deb linux2@192.168.10.52:/tmp/ (scp "tên file agent" user@"IP Ubuntu":/tmp/)
+      
+    - Mở PuTTY SSH vào máy Ubuntu, chạy:
+      + sudo dpkg -i /tmp/check-mk-agent_2.4.0p18-dd0c018da230719a_all.deb (thay tên file)
+      + sudo apt -f install -y
+    - Kiểm tra agent: systemctl status check-mk-agent.socket
+      
+  * Chạy Monitor trên CheckMK
+    
+    
