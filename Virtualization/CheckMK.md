@@ -216,4 +216,4 @@ curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
      - Test Noti:
      ![Ảnh 45](https://github.com/hiiamtu16/InternReport/blob/eaae9fe92c97faf10761d8a27a3a264707a3b778/Picture%20/Virtualization/CheckMK/45.png?raw1=)    
   * Kết quả BOT: 
-  ![Ảnh 46](https://github.com/hiiamtu16/InternReport/blob/eaae9fe92c97faf10761d8a27a3a264707a3b778/Picture%20/Virtualization/CheckMK/46.png?raw1=)    
+  ![Ảnh 46](https://github.com/hiiamtu16/InternReport/blob/ab565fcae7a526d49f9076a2c82dcad5a21973ff/Picture%20/Virtualization/CheckMK/46.jpg?raw1=)    
