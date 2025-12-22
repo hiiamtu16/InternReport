@@ -4,7 +4,15 @@
   ### Clone máy Ubuntu trên Proxmox
    * Hướng dẫn tạo máy mới: https://docs.google.com/document/d/1D0eVJVQrEaQ8PoK7FdfM7Of6PUo25itYv34XHWnTZds/edit?tab=t.0#heading=h.ltovxovfl3bv
    * Clone máy từ mẫu tạo sẵn:
-
+    ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/1.png?raw=1)
+    ![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/2.png?raw=1)
+    ![Ảnh 3](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/3.png?raw=1)
+    ![Ảnh 4](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/4.png?raw=1)
+    ![Ảnh 5](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/5.png?raw=1)
+    ![Ảnh 6](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/6.png?raw=1)
+  * Log in và SSH vào máy:
+    ![Ảnh 7](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/7.png?raw=1)
+ 
   ### Cài đặt Docker trên máy Ubuntu
    * Cài đặt các gói cần thiết:
     - sudo apt update
@@ -24,40 +32,48 @@ $(lsb_release -cs) stable" \
 
   ### Cài đặt CheckMK trên máy Ubuntu
    * Link tải CheckMK: https://checkmk.com/download?platform=docker&edition=cce_trial
+    ![Ảnh 8](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/8.png?raw=1)
    * Tạo Docker volume cho CheckMK: docker volume create monitoring
    * Chạy Container CheckMK lấy từ Link trên CheckMK: docker container run -dit -p 8080:5000 -p 8000:8000 --tmpfs /opt/omd/sites/cmk/tmp:uid=1000,gid=1000 -v monitoring:/omd/sites --name monitoring -v /etc/localtime:/etc/localtime:ro --restart always checkmk/check-mk-cloud:2.4.0p18
    * Kiểm tra Container: docker ps
    * Xem log lấy pass đăng nhập lần đầu:
-    ![Ảnh ](?raw1=)
-   * Đổi pass 
+    ![Ảnh 9](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/9.png?raw1=)
+   * Đổi pass
+    ![Ảnh 10](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/10.png?raw1=)
+    ![Ảnh 11](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/11.png?raw1=)
+
 ---
 
 ## Giám sát máy Proxmox
   * Tạo host trên CheckMK
-
+  ![Ảnh 12](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/12.png?raw1=)
+  ![Ảnh 13](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/13.png?raw1=)
   * Lấy Agent cho OS cần cài
-
+  ![Ảnh 14](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/14.png?raw1=)
+  ![Ảnh 15](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/15.png?raw1=)
   * Cop Agent sang Ubuntu
     - Mở CMD trên PC chạy bằng quyền Admin
     - cd đến folder chứa agent: cd C:\Users\tunv\Downloads
     - Copy file sang Ubuntu VM: scp check-mk-agent_2.4.0p18-dd0c018da230719a_all.deb root@172.16.20.32:/tmp/ (scp "tên file agent" user@"IP Ubuntu":/tmp/)
-      
+      ![Ảnh 16](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/16.png?raw1=)
     - Mở PuTTY SSH vào máy Ubuntu, chạy:
       + sudo dpkg -i /tmp/check-mk-agent_2.4.0p18-dd0c018da230719a_all.deb (thay tên file)
       + sudo apt -f install -y
     - Kiểm tra agent: systemctl status check-mk-agent.socket
-      
+      ![Ảnh 17](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/17.png?raw1=)
   * Chạy Monitor trên CheckMK
-    
+  ![Ảnh 18](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/18.png?raw1=)
+  ![Ảnh 19](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/19.png?raw1=)
+
 ---
 
 ## Giám sát PC Windows
   * Tạo host trên CheckMK
-
+  ![Ảnh 20](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/20.png?raw1=)
   * Lấy Agent cho OS cần cài
-
+  ![Ảnh 21](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/21.png?raw1=)
   * Chạy Agent trên PC
-
+  ![Ảnh 22](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/22.png?raw1=)
   * Mở Cổng 6565 Firewall trên PC bằng CMD run as administrator: netsh advfirewall firewall add rule name="Checkmk Agent 6556" dir=in action=allow protocol=TCP localport=6556
   * bật TCP listener (port 6556)
     - Tắt legacy mode: "C:\Program Files (x86)\checkmk\service\check_mk_agent.exe" stop_legacy
@@ -67,25 +83,27 @@ $(lsb_release -cs) stable" \
       + net start CheckmkService
     - Kiểm tra port 6556: netstat -ano | find "6556" (kết quả: TCP    0.0.0.0:6556     0.0.0.0:0     LISTENING)
   * Kiểm tra Agent đã chạy chưa trên CMD: sc query CheckmkService
+  ![Ảnh 23](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/23.png?raw1=)
   * Chạy Monitor trên CheckMK
-    
+  ![Ảnh 24](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/24.png?raw1=)
+  ![Ảnh 25](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/25.png?raw1=)
+  ![Ảnh 26](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/26.png?raw1=)
 
 ---
 
 ## Giám sát pfSense 
   * Cấu hình SNMP trên pfSense
-
-  * Cấu hình SNMP trên pfSense
-
+  ![Ảnh 27](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/27.png?raw1=)
   * Tạo Rule
-
+  ![Ảnh 30](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/30.png?raw1=)
   * Add host pfSense
-
+  ![Ảnh 28](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/28.png?raw1=)
   * Chạy Monitor trên CheckMK
+  ![Ảnh 29](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/29.png?raw1=)
 
 ## Giám sát máy Ubuntu sau pfSense
   ### Join OpenVPN trên pfSense
-   * Cài OpenVPn trên máy Ubuntu chạy CheckMK:
+   * Cài OpenVPn trên máy Ubuntu chạy Server CheckMK:
     - apt update
     - apt install -y openvpn
     - Kiểm tra: openvpn --version
@@ -98,12 +116,17 @@ $(lsb_release -cs) stable" \
     - Log in: user1 / 1
     - End PuTTY, bật lại, kiểm tra:"ip a" check có ip VPN
    * Kiểm tra Rule trên pfSense cho phép dữ liệu qua VPN
+    ![Ảnh 31](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/31.png?raw1=)
+    ![Ảnh 32](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/32.png?raw1=)
+    ![Ảnh 33](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/33.png?raw1=)
    * Kiểm tra Static Route
+    ![Ảnh 34](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/34.png?raw1=)
   ### Giám sát máy
   * Tạo host trên CheckMK
-
+  ![Ảnh 35](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/35.png?raw1=)
   * Lấy Agent cho OS cần cài
-
+   ![Ảnh 14](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/14.png?raw1=)
+   ![Ảnh 15](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/15.png?raw1=)
   * Cop Agent sang Ubuntu
     - Cài SSH trên máy Ubuntu:
       + sudo apt update
@@ -111,12 +134,11 @@ $(lsb_release -cs) stable" \
     - Mở CMD trên PC chạy bằng quyền Admin
     - cd đến folder chứa agent: cd C:\Users\tunv\Downloads
     - Copy file sang Ubuntu VMware: scp check-mk-agent_2.4.0p18-dd0c018da230719a_all.deb linux2@192.168.10.52:/tmp/ (scp "tên file agent" user@"IP Ubuntu":/tmp/)
-      
     - Mở PuTTY SSH vào máy Ubuntu, chạy:
       + sudo dpkg -i /tmp/check-mk-agent_2.4.0p18-dd0c018da230719a_all.deb (thay tên file)
       + sudo apt -f install -y
     - Kiểm tra agent: systemctl status check-mk-agent.socket
       
   * Chạy Monitor trên CheckMK
-    
-    
+   ![Ảnh 36](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/36.png?raw1=)
+   ![Ảnh 37](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/37.png?raw1=)    
