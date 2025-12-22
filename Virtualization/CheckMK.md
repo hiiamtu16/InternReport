@@ -142,3 +142,78 @@ $(lsb_release -cs) stable" \
   * Chạy Monitor trên CheckMK
    ![Ảnh 36](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/36.png?raw1=)
    ![Ảnh 37](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/37.png?raw1=)    
+
+## Gửi thông báo về Telegram
+  ### Tạo Bot trên Tele
+   * Mở Telegram → tìm @BotFather
+     - /start
+     - /newbot
+   * Đặt tên bot: CheckMK BOT
+   * Đặt username bot (bắt buộc kết thúc bằng bot): nvtu_checkmk_bot
+   * Lưu Bot Token: 8512556584:AAHx3FQBvvGjOUX3SCTBAKC1lyRpjLT8A_M
+  ### Lấy Chat ID Tele
+   * Tìm bot @userinfobot
+    - /start
+   * Lấy ID: 7158697854
+  ### Tạo Script Tele trên CheckMK
+   * SSH vào CheckMK Server từ Docker:
+    - docker exec -it monitoring bash
+   * Cài nano:
+     - apt update
+     - apt install nano -y 
+   * Vào user cmk: omd su cmk
+   * cd đúng thư mục notifications: cd /omd/sites/cmk/local/share/check_mk/notifications
+   * Tạo file tele: nano telegram_personal.sh
+   * Paste mã:
+    #!/bin/bash
+
+BOT_TOKEN="8512556584:AAHx3FQBvvGjOUX3SCTBAKC1lyRpjLT8A_M"
+CHAT_ID="7158697854"
+
+#!/bin/bash
+
+BOT_TOKEN="8512556584:AAHx3FQBvvGjOUX3SCTBAKC1lyRpjLT8A_M"
+CHAT_ID="7158697854"
+
+STATE="$NOTIFY_SERVICESTATE$NOTIFY_HOSTSTATE"
+
+MESSAGE="🚨 *CheckMK BOT NVTU*
+
+👤 User: $NOTIFY_CONTACTNAME
+🖥 Host: *$NOTIFY_HOSTNAME*
+🧩 Service: *$NOTIFY_SERVICEDESC*
+📊 State: *$STATE*
+
+📝 Output:
+$NOTIFY_SERVICEOUTPUT
+
+🕒 Time: $NOTIFY_SHORTDATETIME
+"
+
+curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+  -d chat_id="${CHAT_ID}" \
+  -d parse_mode="Markdown" \
+  --data-urlencode text="$MESSAGE"
+
+   * Cấp quyền chạy: chmod +x telegram_personal.sh
+   * Test bot:
+     - Tìm bot vừa tạo (nvtu_checkmk_bot) nhắn: /start
+     - chạy lệnh trên ssh: ./telegram_personal.sh 
+  
+  ### Cấu hình CheckMK gửi tin nhắn về
+   * Tạo Noti:
+   ![Ảnh 38](https://github.com/hiiamtu16/InternReport/blob/5c944ef28ba8e69924e9a3ba09255ac794d2ddd5/Picture%20/Virtualization/CheckMK/38.png?raw1=)    
+   *  Tạo Rule Noti:
+   ![Ảnh 39](https://github.com/hiiamtu16/InternReport/blob/5c944ef28ba8e69924e9a3ba09255ac794d2ddd5/Picture%20/Virtualization/CheckMK/39.png?raw1=)
+   ![Ảnh 40](https://github.com/hiiamtu16/InternReport/blob/5c944ef28ba8e69924e9a3ba09255ac794d2ddd5/Picture%20/Virtualization/CheckMK/40.png?raw1=)    
+   ![Ảnh 41](https://github.com/hiiamtu16/InternReport/blob/5c944ef28ba8e69924e9a3ba09255ac794d2ddd5/Picture%20/Virtualization/CheckMK/41.png?raw1=)    
+   ![Ảnh 42](https://github.com/hiiamtu16/InternReport/blob/5c944ef28ba8e69924e9a3ba09255ac794d2ddd5/Picture%20/Virtualization/CheckMK/42.png?raw1=)    
+   *  Test Noti
+     - Rescan:
+     ![Ảnh 43](https://github.com/hiiamtu16/InternReport/blob/5c944ef28ba8e69924e9a3ba09255ac794d2ddd5/Picture%20/Virtualization/CheckMK/43.png?raw1=)
+     - Active device:
+     ![Ảnh 44](https://github.com/hiiamtu16/InternReport/blob/5c944ef28ba8e69924e9a3ba09255ac794d2ddd5/Picture%20/Virtualization/CheckMK/44.png?raw1=)    
+     - Test Noti:
+     ![Ảnh 45](https://github.com/hiiamtu16/InternReport/blob/eaae9fe92c97faf10761d8a27a3a264707a3b778/Picture%20/Virtualization/CheckMK/45.png?raw1=)    
+  * Kết quả BOT: 
+  ![Ảnh 46](https://github.com/hiiamtu16/InternReport/blob/eaae9fe92c97faf10761d8a27a3a264707a3b778/Picture%20/Virtualization/CheckMK/46.png?raw1=)    
