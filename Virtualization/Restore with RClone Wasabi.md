@@ -2,7 +2,7 @@
 
 * Kiểm tra server Wasabi Backup:
   ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/8f8934a0a06d4a89fc4a279074976687cf07e1f8/Picture%20/Virtualization/Restore%20Wasabi/1.png?raw=1)
-* Cài RClone trên máy Ubuntu: curl https://rclone.org/install.sh | bash
+* Cài RClone trên máy Ubuntu: curl https://rclone.org/install.sh | sudo bash
 * Kiểm tra: rclone version
 * Tạo Remote Version Wasabi trong RClone:
   - Chạy cấu hình: rclone config
