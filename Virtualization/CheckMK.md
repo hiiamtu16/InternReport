@@ -247,3 +247,51 @@ curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
     ![Ảnh 56](https://github.com/hiiamtu16/InternReport/blob/2bce95dde11147acc354e71a1bdd79db80f074ba/Picture%20/Virtualization/CheckMK/56.png?raw1=)
     - Check 
     ![Ảnh 57](https://github.com/hiiamtu16/InternReport/blob/2bce95dde11147acc354e71a1bdd79db80f074ba/Picture%20/Virtualization/CheckMK/57.png?raw1=)
+
+##  Connect CheckMK - Grafana
+  - Cài Grafana trên máy CheckMK Server
+    - update hệ thống:
+      - sudo apt update
+      - sudo apt upgrade -y
+    - Cài các gói cần thiết
+      - sudo apt install -y apt-transport-https software-properties-common wget
+    - Thêm Grafana GPG key
+      - wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+    - Thêm Grafana repository
+      - echo "deb https://packages.grafana.com/oss/deb stable main" \
+| sudo tee /etc/apt/sources.list.d/grafana.list
+    - Cài Grafana
+      - sudo apt update
+      - sudo apt install grafana -y
+    - Khởi động Grafana
+      - sudo systemctl enable grafana-server
+      - sudo systemctl start grafana-server
+    - Kiểm tra Grafana đã chạy chưa
+      - systemctl status grafana-server
+      - Kết quả: Active: active (running); cổng 3000
+    - Check Port Grafana: netstat -lntp | grep 3000
+  - Mở Grafana trên Web GUI:
+    - Truy cập Grafana trên web: 172.16.20.32:3000 (IP máy cài grafana:port 3000)
+    - TK mặc định đăng nhập lần đầu: admin / admin
+    - Đổi mk mặc định
+  - Cài Plugin
+    - Tìm plug in checkmk
+    ![Ảnh 61](https://github.com/hiiamtu16/InternReport/blob/417677eea702b0be6d52d1bd9a2d0ab90c0abe6c/Picture%20/Virtualization/CheckMK/61.png?raw1=)
+    ![Ảnh 62](https://github.com/hiiamtu16/InternReport/blob/417677eea702b0be6d52d1bd9a2d0ab90c0abe6c/Picture%20/Virtualization/CheckMK/62.png?raw1=)
+  - Cấu hình user cho Grafana trên CheckMK
+    ![Ảnh 63](https://github.com/hiiamtu16/InternReport/blob/417677eea702b0be6d52d1bd9a2d0ab90c0abe6c/Picture%20/Virtualization/CheckMK/63.png?raw1=)
+    ![Ảnh 64](https://github.com/hiiamtu16/InternReport/blob/417677eea702b0be6d52d1bd9a2d0ab90c0abe6c/Picture%20/Virtualization/CheckMK/64.png?raw1=)
+  - Add Datasource:
+    ![Ảnh 65](https://github.com/hiiamtu16/InternReport/blob/417677eea702b0be6d52d1bd9a2d0ab90c0abe6c/Picture%20/Virtualization/CheckMK/65.png?raw1=)
+    ![Ảnh 66](https://github.com/hiiamtu16/InternReport/blob/417677eea702b0be6d52d1bd9a2d0ab90c0abe6c/Picture%20/Virtualization/CheckMK/66.png?raw1=)
+    ![Ảnh 67](https://github.com/hiiamtu16/InternReport/blob/417677eea702b0be6d52d1bd9a2d0ab90c0abe6c/Picture%20/Virtualization/CheckMK/67.png?raw1=)
+  - Tạo Dashboard
+    ![Ảnh 68](https://github.com/hiiamtu16/InternReport/blob/417677eea702b0be6d52d1bd9a2d0ab90c0abe6c/Picture%20/Virtualization/CheckMK/68.png?raw1=)
+    ![Ảnh 69](https://github.com/hiiamtu16/InternReport/blob/417677eea702b0be6d52d1bd9a2d0ab90c0abe6c/Picture%20/Virtualization/CheckMK/69.png?raw1=)
+    ![Ảnh 70](https://github.com/hiiamtu16/InternReport/blob/417677eea702b0be6d52d1bd9a2d0ab90c0abe6c/Picture%20/Virtualization/CheckMK/70.png?raw1=)
+  - Vẽ biểu đồ
+    ![Ảnh 71](https://github.com/hiiamtu16/InternReport/blob/417677eea702b0be6d52d1bd9a2d0ab90c0abe6c/Picture%20/Virtualization/CheckMK/71.png?raw1=)
+    
+    
+           
+   
