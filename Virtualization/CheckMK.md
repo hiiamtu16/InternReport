@@ -217,3 +217,29 @@ curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
      ![Ảnh 45](https://github.com/hiiamtu16/InternReport/blob/eaae9fe92c97faf10761d8a27a3a264707a3b778/Picture%20/Virtualization/CheckMK/45.png?raw1=)    
   * Kết quả BOT: 
   ![Ảnh 46](https://github.com/hiiamtu16/InternReport/blob/ab565fcae7a526d49f9076a2c82dcad5a21973ff/Picture%20/Virtualization/CheckMK/46.jpg?raw1=)    
+
+## Thay đổi mức WARN / CRIT
+  * Add Rule:
+    ![Ảnh 46](https://github.com/hiiamtu16/InternReport/blob/2bce95dde11147acc354e71a1bdd79db80f074ba/Picture%20/Virtualization/CheckMK/46.png?raw1=)
+    - Tìm Filesystem
+    ![Ảnh 47](https://github.com/hiiamtu16/InternReport/blob/2bce95dde11147acc354e71a1bdd79db80f074ba/Picture%20/Virtualization/CheckMK/47.png?raw1=)
+    ![Ảnh 48](https://github.com/hiiamtu16/InternReport/blob/2bce95dde11147acc354e71a1bdd79db80f074ba/Picture%20/Virtualization/CheckMK/48.png?raw1=)
+    - Add
+    ![Ảnh 49](https://github.com/hiiamtu16/InternReport/blob/2bce95dde11147acc354e71a1bdd79db80f074ba/Picture%20/Virtualization/CheckMK/49.png?raw1=)
+    ![Ảnh 50](https://github.com/hiiamtu16/InternReport/blob/2bce95dde11147acc354e71a1bdd79db80f074ba/Picture%20/Virtualization/CheckMK/50.png?raw1=)
+  * Kiểm tra
+
+## Giám sát Web LogicLab
+  * Tạo Host
+  ![Ảnh 51](https://github.com/hiiamtu16/InternReport/blob/2bce95dde11147acc354e71a1bdd79db80f074ba/Picture%20/Virtualization/CheckMK/51.png?raw1=)
+  * Tạo Rule:
+  ![Ảnh 52](https://github.com/hiiamtu16/InternReport/blob/2bce95dde11147acc354e71a1bdd79db80f074ba/Picture%20/Virtualization/CheckMK/52.png?raw1=)
+  ![Ảnh 53](https://github.com/hiiamtu16/InternReport/blob/2bce95dde11147acc354e71a1bdd79db80f074ba/Picture%20/Virtualization/CheckMK/53.png?raw1=)
+  * Rule:
+  ![Ảnh 54](https://github.com/hiiamtu16/InternReport/blob/2bce95dde11147acc354e71a1bdd79db80f074ba/Picture%20/Virtualization/CheckMK/54.png?raw1=)
+  ![Ảnh 55](https://github.com/hiiamtu16/InternReport/blob/2bce95dde11147acc354e71a1bdd79db80f074ba/Picture%20/Virtualization/CheckMK/55.png?raw1=)
+  * Kiểm tra:
+    - Scan
+    ![Ảnh 56](https://github.com/hiiamtu16/InternReport/blob/2bce95dde11147acc354e71a1bdd79db80f074ba/Picture%20/Virtualization/CheckMK/56.png?raw1=)
+    - Check 
+    ![Ảnh 57](https://github.com/hiiamtu16/InternReport/blob/2bce95dde11147acc354e71a1bdd79db80f074ba/Picture%20/Virtualization/CheckMK/57.png?raw1=)
