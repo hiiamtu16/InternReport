@@ -291,7 +291,8 @@ curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
     ![Ảnh 70](https://github.com/hiiamtu16/InternReport/blob/417677eea702b0be6d52d1bd9a2d0ab90c0abe6c/Picture%20/Virtualization/CheckMK/70.png?raw1=)
   - Vẽ biểu đồ
     ![Ảnh 71](https://github.com/hiiamtu16/InternReport/blob/417677eea702b0be6d52d1bd9a2d0ab90c0abe6c/Picture%20/Virtualization/CheckMK/71.png?raw1=)
-    
+    ![Ảnh 72](https://github.com/hiiamtu16/InternReport/blob/735ddb5dc1c35a8de0c43ff2027da3d9b506e62f/Picture%20/Virtualization/CheckMK/72.png?raw1=)
+
     
            
    
