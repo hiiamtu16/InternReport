@@ -49,7 +49,7 @@ $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
               MYSQL_PASSWORD: nextcloudpassword
         
           app:
-            image: nextcloud:29
+            image: nextcloud:latest
             container_name: nextcloud_app
             restart: always
             ports:
@@ -179,7 +179,6 @@ $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
     - Client Id: nextcloud
     - Client Secret: (Xem ở KeyCloak Client)
     - Scope: openid profile email
-    - 
   - Kiểm tra: Mở Web NextCloud
   ![Ảnh 21](?raw=1)
  
