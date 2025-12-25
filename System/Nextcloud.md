@@ -121,12 +121,65 @@ $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
     - Kiểm tra: docker ps
     - Vào Web GUI: http://172.16.20.35:8081/ (giao thức http; ip máy; port 8080 (có thể thay đổi trên file .yml)
       - Đăng nhập lần đầu:
-      ![Ảnh 2](?raw=2)
+      ![Ảnh 2](?raw=1)
       - Đổi pass admin
+      ![Ảnh 15](?raw=1)
+      ![Ảnh 16](?raw=1)
+      ![Ảnh 17](?raw=1)
   - Backup KeyCloak
     - backup database: tar czvf keycloak_backup.tar.gz postgres compose.yml
     - Restore: docker compose up -d
 
  ---
 ## Xác minh đăng nhập NextCloud bằng KeyCloak
-  -  
+  ### Luồng đăng nhập:
+  Tổng quan luồng đăng nhập
+   - Luồng chuẩn sẽ là:
+     - User vào Nextcloud
+     - Nextcloud chuyển user sang Keycloak
+     - User đăng nhập ở Keycloak
+     - Keycloak trả token về
+     - Nextcloud xác thực và tạo user
+   - Nextcloud đóng vai trò Client
+   - Keycloak đóng vai trò Identity Provider
+
+  ### Cấu hình KeyCloak
+  - Tạo Realm mới
+  ![Ảnh 3](?raw=1)
+  ![Ảnh 4](?raw=1)
+  - Tạo Client cho NextCloud
+  ![Ảnh 5](?raw=1)
+  ![Ảnh 6](?raw=1)
+  ![Ảnh 7](?raw=1)
+  ![Ảnh 8](?raw=1)
+  - Lấy Client Secret
+  ![Ảnh 9](?raw=1)
+  - Tạo account
+    - Tạo user 
+    ![Ảnh 19](?raw=1)
+    ![Ảnh 11](?raw=1)
+    - Tạo password
+    ![Ảnh 12](?raw=1)
+    ![Ảnh 13](?raw=1)
+    ![Ảnh 14](?raw=1)
+
+  ### Cấu hình NextCloud
+  - Cài app Social Login
+  ![Ảnh 18](?raw=1)
+  ![Ảnh 19](?raw=1)
+  - Cấu hình OpenID Connect
+  ![Ảnh 20](?raw=1)
+    - Internal name: Keycloak
+    - Title: KeyCloak
+    - Authorize url: http://172.16.20.35:8081/realms/nextcloud/protocol/openid-connect/auth?prompt=login (mỗi lần đăng nhập bên KeyCloak được lựa chọn nhập pass hoặc đăng nhập mới)
+    - Token url: http://172.16.20.35:8081/realms/nextcloud/protocol/openid-connect/token
+    - Display name claim (optional): preferred_username
+    - User info URL (optional): http://172.16.20.35:8081/realms/nextcloud/protocol/openid-connect/userinfo
+    - Logout URL (optional):
+    - Client Id: nextcloud
+    - Client Secret: (Xem ở KeyCloak Client)
+    - Scope: openid profile email
+    - 
+  - Kiểm tra: Mở Web NextCloud
+  ![Ảnh 21](?raw=1)
+ 
