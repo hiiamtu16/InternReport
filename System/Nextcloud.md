@@ -173,12 +173,26 @@ $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
     - Title: KeyCloak
     - Authorize url: http://172.16.20.35:8081/realms/nextcloud/protocol/openid-connect/auth?prompt=login (mỗi lần đăng nhập bên KeyCloak được lựa chọn nhập pass hoặc đăng nhập mới)
     - Token url: http://172.16.20.35:8081/realms/nextcloud/protocol/openid-connect/token
-    - Display name claim (optional): preferred_username
+    - Display name claim (optional): name
     - User info URL (optional): http://172.16.20.35:8081/realms/nextcloud/protocol/openid-connect/userinfo
     - Logout URL (optional):
     - Client Id: nextcloud
     - Client Secret: (Xem ở KeyCloak Client)
     - Scope: openid profile email
+  - Cấu hình NextCloud nhận full name
+    - Tạo Client Scope
+    ![Ảnh 22](?raw=1)
+    ![Ảnh 23](?raw=1)
+    - Add Mapper
+    ![Ảnh 24](?raw=1)
+    ![Ảnh 25](?raw=1)
+    ![Ảnh 26](?raw=1)
+    - Add Scope vào Cloud
+    ![Ảnh 27](?raw=1)
+    ![Ảnh 28](?raw=1)
+    ![Ảnh 29](?raw=1)
+    - Check lại NextCloud đảm bảo chọn dòng: Display name claim (optional): name
+    ![Ảnh 30](?raw=1)
   - Kiểm tra: Mở Web NextCloud
   ![Ảnh 21](?raw=1)
  
