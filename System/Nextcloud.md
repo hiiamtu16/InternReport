@@ -403,11 +403,4 @@ $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
                 - Test qua HAProxy: curl -kI https://auth.cloudnvt.km0.vn
               - Cấu hình KeyCloak chạy sau HAProxy
                 - MỞ FILE docker-compose: ls docker-compose.yml
-
-   
-
-
-
-    
-
- 
+                - 
