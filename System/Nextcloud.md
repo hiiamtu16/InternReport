@@ -75,8 +75,6 @@ $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
     - Backup data: tar czvf nextcloud_backup.tar.gz nextcloud db compose.yml
     - Restore chỉ cần bung thư mục và chạy lại: docker compose up -d
  
-    
-
 ---
 
 ## Khởi tạo KeyCloak
@@ -195,4 +193,221 @@ $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
     ![Ảnh 30](?raw=1)
   - Kiểm tra: Mở Web NextCloud
   ![Ảnh 21](?raw=1)
+
+ ---
+
+ ## HA Proxy
+   - Cài HA Proxy:
+     - Lệnh cài:
+       - sudo apt update
+       - sudo apt install -y haproxy
+     - Kiểm tra: haproxy -v
+   - Tắt HAProxy mặc định (chưa cấu hình): sudo systemctl stop haproxy
+   - Cấu hình HAProxy
+     - Backup config: sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
+     -  Mở file cấu hình: sudo nano /etc/haproxy/haproxy.cfg
+     -  Xoá và paste đoạn này:
+      ```
+        global
+            log /dev/log local0
+            maxconn 4096
+            daemon
+        
+        defaults
+            log global
+            mode http
+            option httplog
+            timeout connect 5s
+            timeout client  60s
+            timeout server  60s
+        
+        frontend http_in
+            bind *:80
+            mode http
+            default_backend nextcloud_backend
+        
+        backend nextcloud_backend
+            mode http
+            server nextcloud 127.0.0.1:8080 check
+      ```
+     - Start HAProxy: 
+       - sudo systemctl start haproxy
+       - sudo systemctl status haproxy
+   - Test HAProxy local
+     - Test qua port 80: ss -lntp | grep haproxy
+     - Test qua HAProxy: curl -I http://127.0.0.1
+   - Tạo Subdomain:
+     ![Ảnh 31](?raw=1)  
+     - Tạo Virtual IP trên Firewall, mở Port 80(HTTP), 443(HTTPS)
+     ![Ảnh 32](?raw=1)  
+     - Tạo Rule cho VIPs
+     ![Ảnh 33](?raw=1)
+     ![Ảnh 34](?raw=1)
+     - Add trusted Domain:
+       - Sửa file /nextcloud/nextcloud/config/config.php:
+         - Di chuyển đến vị trí file: cd /nextcloud
+         - Kiểm tra Config: ls nextcloud/config
+         - Mở file bằng nano:  nano nextcloud/config/config.php
+         - sửa trusted_domains: có dạng
+           ```
+            'trusted_domains' =>
+              array (
+                0 => 'localhost',
+              ),
+           ```
+           Sửa thành:
+           ```
+            'trusted_domains' =>
+            array (
+              0 => 'localhost',
+              1 => '127.0.0.1',
+              2 => '172.16.20.35',
+              3 => 'cloudnvt.km0.vn',
+            ),
+           ```
+          - Lưu file, thoát và restart container
+      - Tạo SSL cho web:
+        - Mở Port 443 và map (giống phần trên)
+        - Cài SSL
+          - Cài Certbot trên VM
+            - apt update
+            - apt install -y certbot
+          - Pause HAProxy để xin Cert: systemctl stop haproxy
+          - Xin SSL cho domain: certbot certonly --standalone -d cloudnvt.km0.vn
+          - Kiểm tra cert:
+            - ls -l /etc/letsencrypt/live/cloudnvt.km0.vn/
+            - openssl x509 -in /etc/letsencrypt/live/cloudnvt.km0.vn/fullchain.pem -noout -dates
+           ![Ảnh 35](?raw=1)
+        -  Tạo file PEM (cert) cho HAProxy:
+           ```
+           cat /etc/letsencrypt/live/cloudnvt.km0.vn/fullchain.pem \
+               /etc/letsencrypt/live/cloudnvt.km0.vn/privkey.pem \
+               > /etc/ssl/private/cloudnvt.pem
+           
+            chmod 600 /etc/ssl/private/cloudnvt.pem
+           ```
+        -  Cấu hình HAProxy HTTPS:
+          - Mở file: nano /etc/haproxy/haproxy.cfg
+          - Ghi đè:
+           ```
+           global
+               log /dev/log local0
+               maxconn 4096
+            
+           defaults
+               log global
+               mode http
+               option httplog
+               option forwardfor
+               timeout connect 5s
+               timeout client  60s
+               timeout server  60s
+            
+           frontend http_in
+               bind *:80
+               redirect scheme https if !{ ssl_fc }
+            
+           frontend https_in
+               bind *:443 ssl crt /etc/ssl/private/cloudnvt.pem
+               http-request set-header X-Forwarded-Proto https
+               http-request set-header X-Forwarded-Port 443
+               http-request set-header X-Forwarded-For %[src]
+            
+               default_backend nextcloud_backend
+            
+           backend nextcloud_backend
+               server nextcloud 127.0.0.1:8080 check
+           ```
+          - Chỉnh NextCloud cho HTTPS:
+            - Mở config: nano nextcloud/config/config.php
+            - Thêm:
+             ```
+             'trusted_proxies' => ['127.0.0.1'],
+             'overwriteprotocol' => 'https',
+             'overwrite.cli.url' => 'https://cloudnvt.km0.vn',
+             ```
+             ![Ảnh 36](?raw=1)
+            - Restart: docker restart nextcloud_app
+          - Chỉnh KeyCloak cho HTTPS:
+            - Kiểm tra DNS: nslookup auth.cloudnvt.km0.vn (trả về đúng IP WAN)
+            - Cấp SSL cho KeyCloak:
+              - Dừng HAProxy tạm thời: systemctl stop haproxy
+              - Xin cert Let’s Encrypt cho auth: certbot certonly --standalone -d auth.cloudnvt.km0.vn
+              - Kiểm tra cert vừa cấp: ls -l /etc/letsencrypt/live/auth.cloudnvt.km0.vn/
+              - Kiểm tra xem HAProxy đã có PEM cho auth chưa: ls -l /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem
+                - Nếu chưa có, tạo mới:
+                  ```
+                    cat /etc/letsencrypt/live/auth.cloudnvt.km0.vn/fullchain.pem \
+                    /etc/letsencrypt/live/auth.cloudnvt.km0.vn/privkey.pem \
+                    > /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem
+                  ```
+                  ```
+                  chmod 600 /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem
+                  ```
+              - Verify PEM: openssl x509 -in /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem -noout -text | grep DNS (Phải thấy: DNS:auth.cloudnvt.km0.vn)
+            - Sửa HAProxy:
+              - Backup config trước khi sửa: cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
+              - Mở config: nano /etc/haproxy/haproxy.cfg
+              - Sửa thành:
+             ```
+             global
+                log /dev/log local0
+                log /dev/log local1 notice
+                daemon
+                maxconn 4096
+            
+            defaults
+                log global
+                mode http
+                option httplog
+                option dontlognull
+                timeout connect 5s
+                timeout client  60s
+                timeout server  60s
+            
+            frontend http_in
+                bind *:80
+                redirect scheme https code 301 if !{ ssl_fc }
+            
+            frontend https_in
+                bind *:443 ssl crt /etc/haproxy/certs/cloudnvt.km0.vn.pem crt /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem
+                mode http
+                option forwardfor
+            
+                acl host_nextcloud hdr(host) -i cloudnvt.km0.vn
+                acl host_keycloak  hdr(host) -i auth.cloudnvt.km0.vn
+            
+                http-request set-header X-Forwarded-Proto https
+                http-request set-header X-Forwarded-Port 443
+                http-request set-header X-Forwarded-For %[src]
+            
+                use_backend nextcloud_backend if host_nextcloud
+                use_backend keycloak_backend  if host_keycloak
+                default_backend nextcloud_backend
+            
+            backend nextcloud_backend
+                mode http
+                server nextcloud 127.0.0.1:8080 check
+            
+            backend keycloak_backend
+                mode http
+                server keycloak 127.0.0.1:8081 check
+
+             ```
+              - Kiểm tra: haproxy -c -f /etc/haproxy/haproxy.cfg
+              - Restart: systemctl restart haproxy
+              - Kiểm tra Service: systemctl status haproxy
+              - Kiểm tra KeyCloak:
+                - Kiểm tra container: docker ps | grep keycloak (Thấy image: quay.io/keycloak/keycloak)
+                - Test KeyCloak: curl -I http://127.0.0.1:8081
+                - Test qua HAProxy: curl -kI https://auth.cloudnvt.km0.vn
+              - Cấu hình KeyCloak chạy sau HAProxy
+                - MỞ FILE docker-compose: ls docker-compose.yml
+
+   
+
+
+
+    
+
  
