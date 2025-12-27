@@ -332,15 +332,17 @@
               - Xin cert Let’s Encrypt cho auth: certbot certonly --standalone -d auth.cloudnvt.km0.vn
               - Kiểm tra cert vừa cấp: ls -l /etc/letsencrypt/live/auth.cloudnvt.km0.vn/
               - Kiểm tra xem HAProxy đã có PEM cho auth chưa: ls -l /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem
-                - Nếu chưa có, tạo mới:
+                - Tạo thư mục certs cho HAProxy: sudo mkdir -p /etc/haproxy/certs   
+                - Ghép cert HAProxy: 
                   ```
-                    cat /etc/letsencrypt/live/auth.cloudnvt.km0.vn/fullchain.pem \
-                    /etc/letsencrypt/live/auth.cloudnvt.km0.vn/privkey.pem \
-                    > /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem
+                  sudo cat \
+                  /etc/letsencrypt/live/auth.cloudnvt.km0.vn/fullchain.pem \
+                  /etc/letsencrypt/live/auth.cloudnvt.km0.vn/privkey.pem \
+                  > /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem
                   ```
-                  ```
-                  chmod 600 /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem
-                  ```
+                 - Set quyền đọc cho haproxy:
+                   - sudo chmod 600 /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem
+                   - sudo chown root:root /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem 
               - Verify PEM: openssl x509 -in /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem -noout -text | grep DNS (Phải thấy: DNS:auth.cloudnvt.km0.vn)
             - Sửa HAProxy:
               - Backup config trước khi sửa: cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
