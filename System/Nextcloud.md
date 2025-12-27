@@ -242,7 +242,7 @@
      ![Ảnh 34](?raw=1)
      - Add trusted Domain:
        - Sửa file /nextcloud/nextcloud/config/config.php:
-         - Di chuyển đến vị trí file: cd /nextcloud
+         - Di chuyển đến vị trí file: cd ~/nextcloud
          - Kiểm tra Config: ls nextcloud/config
          - Mở file bằng nano:  nano nextcloud/config/config.php
          - sửa trusted_domains: có dạng
@@ -262,7 +262,7 @@
               3 => 'cloudnvt.km0.vn',
             ),
            ```
-          - Lưu file, thoát và restart container
+          - Lưu file, thoát và restart container: docker compose restart
       - Tạo SSL cho web:
         - Mở Port 443 và map (giống phần trên)
         - Cài SSL
