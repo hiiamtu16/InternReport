@@ -100,7 +100,7 @@
       restart: always
       command: start-dev
       ports:
-        - "8081:8080"      //dùng port 8081 né 8080 của NextCloud
+        - "8081:8080"      #dùng port 8081 né 8080 của NextCloud
       environment:
         KC_DB: postgres
         KC_DB_URL_HOST: postgres
