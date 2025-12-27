@@ -407,5 +407,59 @@
                 - Test KeyCloak: curl -I http://127.0.0.1:8081
                 - Test qua HAProxy: curl -kI https://auth.cloudnvt.km0.vn
               - Cấu hình KeyCloak chạy sau HAProxy
-                - MỞ FILE docker-compose: ls docker-compose.yml
-                - 
+                - Mở file compose.yml của Keycloak:
+                  - cd /root/keycloak
+                  - nano compose.yml
+                - Sửa service keycloak thành như sau:
+                 ```
+                 services:
+                  postgres:
+                    image: postgres:15
+                    container_name: keycloak_db
+                    restart: always
+                    volumes:
+                      - ./postgres:/var/lib/postgresql/data
+                    environment:
+                      POSTGRES_DB: keycloak
+                      POSTGRES_USER: keycloak
+                      POSTGRES_PASSWORD: keycloakpassword
+                
+                  keycloak:
+                    image: quay.io/keycloak/keycloak:25.0.6
+                    container_name: keycloak
+                    restart: always
+                    command: start
+                    ports:
+                     - "8081:8080"
+                    environment:
+                      KC_DB: postgres
+                      KC_DB_URL_HOST: postgres
+                      KC_DB_USERNAME: keycloak
+                      KC_DB_PASSWORD: keycloakpassword
+                
+                      KC_PROXY: edge
+                      KC_HTTP_ENABLED: true
+                      KC_HOSTNAME: auth.cloudnvt.km0.vn
+                      KC_HOSTNAME_STRICT: true
+                      KC_HOSTNAME_STRICT_HTTPS: true
+                      KC_FEATURES: hostname:v1
+                
+                      KEYCLOAK_ADMIN: admin
+                      KEYCLOAK_ADMIN_PASSWORD: adminpassword
+                    depends_on:
+                      - postgres
+                 ``` 
+                - Restart KeyCloak:
+                  - cd /root/keycloak
+                  - docker compose down
+                  - docker compose up -d
+                - RESTART HAPROXY:
+                  - haproxy -c -f /etc/haproxy/haproxy.cfg
+                  - systemctl restart haproxy
+              - Sửa KeyCloak Web GUI
+                ![Ảnh 38](?raw=1)
+                ![Ảnh 39](?raw=1)
+              - Sửa NextCloud Web GUI: Social login:
+                ![Ảnh 40](?raw=1)
+
+  
