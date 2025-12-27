@@ -39,6 +39,25 @@
     - Lưu file rồi chạy Mailcow lần đầu
       - docker compose pull
       - docker compose up -d
+ ---
+ ## Cấu hình DNS:
+   - Tạo thêm bản ghi cho MailCow (dựa trên bản ghi đã có của NextCloud và KeyCloak)
+    ![Ảnh 1](?raw=1)
+   - Tạo NAT và Rule cho MailCow
+     -  Tạo VIPs và mở Port dịch vụ
+     ![Ảnh 2](?raw=1)
+     -  Add VIPs vào Rule
+     ![Ảnh 3](?raw=1)
+     -  Kiểm tra: nc -vz mail.cloudnvt.km0.vn 25 (thấy success / có thể test các port khác)
+   - Bật LET’S ENCRYPT cho MailCow:
+     - Mở cấu hình Mailcow trên VM:
+       - cd /opt/mailcow-dockerized
+       - nano mailcow.conf
+     - Tìm dòng: SKIP_LETS_ENCRYPT=y
+     - Sửa thành: SKIP_LETS_ENCRYPT=n
+     - Restart Mailcow để xin cert:
+       - docker compose down
+       - docker compose up -d
+       - Kiểm tra log xin cert: docker compose logs -f acme-mailcow
  
-
  
