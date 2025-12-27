@@ -274,6 +274,13 @@
           - Kiểm tra cert:
             - ls -l /etc/letsencrypt/live/cloudnvt.km0.vn/
             - openssl x509 -in /etc/letsencrypt/live/cloudnvt.km0.vn/fullchain.pem -noout -dates
+          - Ghép cert cho domain:
+            ```
+            sudo cat \
+            /etc/letsencrypt/live/cloudnvt.km0.vn/fullchain.pem \
+            /etc/letsencrypt/live/cloudnvt.km0.vn/privkey.pem \
+            > /etc/haproxy/certs/cloudnvt.km0.vn.pem
+            ```
            ![Ảnh 35](?raw=1)
         -  Tạo file PEM (cert) cho HAProxy:
            ```
@@ -352,7 +359,6 @@
              global
                 log /dev/log local0
                 log /dev/log local1 notice
-                daemon
                 maxconn 4096
             
             defaults
