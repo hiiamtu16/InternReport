@@ -83,7 +83,7 @@
     - Paste nội dung sau: (tự đổi pass khác)
     ```
     services:
-    postgres:
+     postgres:
       image: postgres:15
       container_name: keycloak_db
       restart: always
@@ -94,7 +94,7 @@
         POSTGRES_USER: keycloak
         POSTGRES_PASSWORD: keycloakpassword
     
-    keycloak:
+     keycloak:
       image: quay.io/keycloak/keycloak:25.0.6
       container_name: keycloak
       restart: always
