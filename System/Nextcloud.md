@@ -66,7 +66,7 @@
       - Kiểm tra Container: docker ps
       - Vào Web GUI: http://172.16.20.35:8080/ (giao thức http; ip máy; port 8080 (có thể thay đổi trên file .yml)
       - Đăng nhập lần đầu:
-       ![Ảnh 1](?raw=1)
+       ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/1.png?raw=1)
       - Đổi pass admin
   - Back up:
     - Backup data: tar czvf nextcloud_backup.tar.gz nextcloud db compose.yml
@@ -116,11 +116,11 @@
     - Kiểm tra: docker ps
     - Vào Web GUI: http://172.16.20.35:8081/ (giao thức http; ip máy; port 8080 (có thể thay đổi trên file .yml)
       - Đăng nhập lần đầu:
-      ![Ảnh 2](?raw=1)
+      ![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/2.png?raw=1)
       - Đổi pass admin
-      ![Ảnh 15](?raw=1)
-      ![Ảnh 16](?raw=1)
-      ![Ảnh 17](?raw=1)
+      ![Ảnh 15](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/15.png?raw=1)
+      ![Ảnh 16](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/16.png?raw=1)
+      ![Ảnh 17](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/17.png?raw=1)
   - Backup KeyCloak
     - backup database: tar czvf keycloak_backup.tar.gz postgres compose.yml
     - Restore: docker compose up -d
@@ -140,30 +140,30 @@
 
   ### Cấu hình KeyCloak
   - Tạo Realm mới
-  ![Ảnh 3](?raw=1)
-  ![Ảnh 4](?raw=1)
+  ![Ảnh 3](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/3.png?raw=1)
+  ![Ảnh 4](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/4.png?raw=1)
   - Tạo Client cho NextCloud
-  ![Ảnh 5](?raw=1)
-  ![Ảnh 6](?raw=1)
-  ![Ảnh 7](?raw=1)
-  ![Ảnh 8](?raw=1)
+  ![Ảnh 5](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/5.png?raw=1)
+  ![Ảnh 6](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/6.png?raw=1)
+  ![Ảnh 7](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/7.png?raw=1)
+  ![Ảnh 8](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/8.png?raw=1)
   - Lấy Client Secret
-  ![Ảnh 9](?raw=1)
+  ![Ảnh 9](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/9.png?raw=1)
   - Tạo account
     - Tạo user 
-    ![Ảnh 19](?raw=1)
-    ![Ảnh 11](?raw=1)
+    ![Ảnh 19](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/19.png?raw=1)
+    ![Ảnh 11](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/11.png?raw=1)
     - Tạo password
-    ![Ảnh 12](?raw=1)
-    ![Ảnh 13](?raw=1)
-    ![Ảnh 14](?raw=1)
+    ![Ảnh 12](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/12.png?raw=1)
+    ![Ảnh 13](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/13.png?raw=1)
+    ![Ảnh 14](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/14.png?raw=1)
 
   ### Cấu hình NextCloud
   - Cài app Social Login
-  ![Ảnh 18](?raw=1)
-  ![Ảnh 19](?raw=1)
+  ![Ảnh 18](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/18.png?raw=1)
+  ![Ảnh 19](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/19.png?raw=1)
   - Cấu hình OpenID Connect
-  ![Ảnh 20](?raw=1)
+  ![Ảnh 20](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/20.png?raw=1)
     - Internal name: Keycloak
     - Title: KeyCloak
     - Authorize url: http://172.16.20.35:8081/realms/nextcloud/protocol/openid-connect/auth?prompt=login (mỗi lần đăng nhập bên KeyCloak được lựa chọn nhập pass hoặc đăng nhập mới)
@@ -176,20 +176,20 @@
     - Scope: openid profile email
   - Cấu hình NextCloud nhận full name
     - Tạo Client Scope
-    ![Ảnh 22](?raw=1)
-    ![Ảnh 23](?raw=1)
+    ![Ảnh 22](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/22.png?raw=1)
+    ![Ảnh 23](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/23.png?raw=1)
     - Add Mapper
-    ![Ảnh 24](?raw=1)
-    ![Ảnh 25](?raw=1)
-    ![Ảnh 26](?raw=1)
+    ![Ảnh 24](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/24.png?raw=1)
+    ![Ảnh 25](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/25.png?raw=1)
+    ![Ảnh 26](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/26.png?raw=1)
     - Add Scope vào Cloud
-    ![Ảnh 27](?raw=1)
-    ![Ảnh 28](?raw=1)
-    ![Ảnh 29](?raw=1)
+    ![Ảnh 27](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/27.png?raw=1)
+    ![Ảnh 28](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/28.png?raw=1)
+    ![Ảnh 29](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/29.png?raw=1)
     - Check lại NextCloud đảm bảo chọn dòng: Display name claim (optional): name
-    ![Ảnh 30](?raw=1)
+    ![Ảnh 30](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/30.png?raw=1)
   - Kiểm tra: Mở Web NextCloud
-  ![Ảnh 21](?raw=1)
+  ![Ảnh 21](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/21.png?raw=1)
 
  ---
 
@@ -234,12 +234,12 @@
      - Test qua port 80: ss -lntp | grep haproxy
      - Test qua HAProxy: curl -I http://127.0.0.1
    - Tạo Subdomain:
-     ![Ảnh 31](?raw=1)  
+     ![Ảnh 31](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/31.png?raw=1)  
      - Tạo Virtual IP trên Firewall, mở Port 80(HTTP), 443(HTTPS)
-     ![Ảnh 32](?raw=1)  
+     ![Ảnh 32](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/32.png?raw=1)  
      - Tạo Rule cho VIPs
-     ![Ảnh 33](?raw=1)
-     ![Ảnh 34](?raw=1)
+     ![Ảnh 33](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/33.png?raw=1)
+     ![Ảnh 34](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/34.png?raw=1)
      - Add trusted Domain:
        - Sửa file /nextcloud/nextcloud/config/config.php:
          - Di chuyển đến vị trí file: cd ~/nextcloud
@@ -281,7 +281,7 @@
             /etc/letsencrypt/live/cloudnvt.km0.vn/privkey.pem \
             > /etc/haproxy/certs/cloudnvt.km0.vn.pem
             ```
-           ![Ảnh 35](?raw=1)
+           ![Ảnh 35](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/35.png?raw=1)
         -  Tạo file PEM (cert) cho HAProxy:
            ```
            cat /etc/letsencrypt/live/cloudnvt.km0.vn/fullchain.pem \
@@ -330,7 +330,7 @@
              'overwriteprotocol' => 'https',
              'overwrite.cli.url' => 'https://cloudnvt.km0.vn',
              ```
-             ![Ảnh 36](?raw=1)
+             ![Ảnh 36](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/36.png?raw=1)
             - Restart: docker restart nextcloud_app
           - Chỉnh KeyCloak cho HTTPS:
             - Kiểm tra DNS: nslookup auth.cloudnvt.km0.vn (trả về đúng IP WAN)
@@ -457,9 +457,9 @@
                   - haproxy -c -f /etc/haproxy/haproxy.cfg
                   - systemctl restart haproxy
               - Sửa KeyCloak Web GUI
-                ![Ảnh 38](?raw=1)
-                ![Ảnh 39](?raw=1)
+                ![Ảnh 38](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/38.png?raw=1)
+                ![Ảnh 39](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/39.png?raw=1)
               - Sửa NextCloud Web GUI: Social login:
-                ![Ảnh 40](?raw=1)
+                ![Ảnh 40](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/40.png?raw=1)
 
   
