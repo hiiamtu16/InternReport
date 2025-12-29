@@ -49,15 +49,47 @@
      -  Add VIPs vào Rule
      ![Ảnh 3](?raw=1)
      -  Kiểm tra: nc -vz mail.cloudnvt.km0.vn 25 (thấy success / có thể test các port khác)
-   - Bật LET’S ENCRYPT cho MailCow:
-     - Mở cấu hình Mailcow trên VM:
-       - cd /opt/mailcow-dockerized
-       - nano mailcow.conf
-     - Tìm dòng: SKIP_LETS_ENCRYPT=y
-     - Sửa thành: SKIP_LETS_ENCRYPT=n
-     - Restart Mailcow để xin cert:
-       - docker compose down
-       - docker compose up -d
-       - Kiểm tra log xin cert: docker compose logs -f acme-mailcow
+
+---
+## Cấu hình MailCow
+  - Đăng nhập trang quản trị
+
+  - Add domain
+
+  - Tạo MailBox User để test dịch vụ
+
+  - Test gửi và nhận mail
+
+  - Tích hợp KeyCloak
+    - Trên KeyCloak:
+      - Tạo thêm Client cho MailCow
+     
+      - Copy Secret
+    - Trên MailCow:
+
+ ---
+ ## HTTPS cho MailCow trên HAProxy
+   - Kiểm tra IP WAN MailCow: dig mail.cloudnvt.km0.vn +short
+   - Trên máy HAProxy
+     - systemctl stop haproxy
+     - Check Port 80: ss -lntp | grep ':80'
+     - Xin Cert: certbot certonly --standalone -d mail.cloudnvt.km0.vn
+     - Kiểm tra Cert: ls -l /etc/letsencrypt/live/mail.cloudnvt.km0.vn/
+     - Ghép Cert cho HAProxy:
+       ```
+       cat \
+        /etc/letsencrypt/live/mail.cloudnvt.km0.vn/fullchain.pem \
+        /etc/letsencrypt/live/mail.cloudnvt.km0.vn/privkey.pem \
+        > /etc/haproxy/certs/mail.cloudnvt.km0.vn.pem
+        
+        chmod 600 /etc/haproxy/certs/mail.cloudnvt.km0.vn.pem
+       ```
+     - Reload HAProxy:
+       - haproxy -c -f /etc/haproxy/haproxy.cfg
+       - systemctl reload haproxy
+     - Test kết quả cuối: curl -Ik https://mail.cloudnvt.km0.vn
+     - Sửa HAProxy:
+       - Mở file: nano /etc/haproxy/haproxy.cfg
+       -  
  
- 
+
