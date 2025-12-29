@@ -69,27 +69,69 @@
 
  ---
  ## HTTPS cho MailCow trên HAProxy
-   - Kiểm tra IP WAN MailCow: dig mail.cloudnvt.km0.vn +short
-   - Trên máy HAProxy
-     - systemctl stop haproxy
-     - Check Port 80: ss -lntp | grep ':80'
-     - Xin Cert: certbot certonly --standalone -d mail.cloudnvt.km0.vn
-     - Kiểm tra Cert: ls -l /etc/letsencrypt/live/mail.cloudnvt.km0.vn/
-     - Ghép Cert cho HAProxy:
-       ```
-       cat \
-        /etc/letsencrypt/live/mail.cloudnvt.km0.vn/fullchain.pem \
+  - Chỉnh MailCow HTTP nội bộ:
+    - Mở file cấu hình MailCow: nano /opt/mailcow-dockerized/mailcow.conf
+    - Kiểm tra:
+      - MAILCOW_HOSTNAME=mail.cloudnvt.km0.vn
+      - SKIP_LETS_ENCRYPT=y
+    - Lưu file:
+    - Restart MailCow:
+      - cd /opt/mailcow-dockerized
+      - docker compose down
+      - docker compose up -d
+  - Thêm Domain MailCow vào HAProxy
+    - Trên máy HAProxy: Chỉ mở rộng https_in
+      - acl host_mailcow hdr(host) -i mail.cloudnvt.km0.vn (acl)
+      - use_backend mailcow_backend if host_mailcow  (rule)
+  - Tạo BackEnd MailCow:
+    - Thêm vào cuối file haproxy.cfg:
+      - backend mailcow_backend
+      - mode http
+      - server mailcow 172.16.20.38:80 check
+  - Xin HTTPS cho MailCow:
+    - Xin Cert: certbot certonly --standalone -d mail.cloudnvt.km0.vn
+    - Sau khi có Cert:
+     ```
+      cat /etc/letsencrypt/live/mail.cloudnvt.km0.vn/fullchain.pem \
         /etc/letsencrypt/live/mail.cloudnvt.km0.vn/privkey.pem \
         > /etc/haproxy/certs/mail.cloudnvt.km0.vn.pem
-        
-        chmod 600 /etc/haproxy/certs/mail.cloudnvt.km0.vn.pem
-       ```
-     - Reload HAProxy:
-       - haproxy -c -f /etc/haproxy/haproxy.cfg
-       - systemctl reload haproxy
-     - Test kết quả cuối: curl -Ik https://mail.cloudnvt.km0.vn
-     - Sửa HAProxy:
-       - Mở file: nano /etc/haproxy/haproxy.cfg
-       -  
- 
+     
+      chmod 600 /etc/haproxy/certs/mail.cloudnvt.km0.vn.pem
+      chown root:root /etc/haproxy/certs/mail.cloudnvt.km0.vn.pem
+     ```
+    - Thêm Cert vào Bind :
+      - trên máy HAProxy: sudo nano /etc/haproxy/haproxy.cfg
+      - Sửa dòng bind *:443 ssl thành: bind *:443 ssl crt /etc/haproxy/certs/cloudnvt.km0.vn.pem crt /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem crt /etc/haproxy/certs/mail.cloudnvt.km0.vn.pem
+  - Reload và kiểm tra:
+    - Reload:
+      - haproxy -c -f /etc/haproxy/haproxy.cfg
+      - systemctl reload haproxy
+    - Test:
+      - curl -I https://mail.cloudnvt.km0.vn
+      - Kết quả: HTTP 302 hoặc 200
+  - Sửa cấu hình MailCow:
+    - Mở file cấu hình trên máy MailCow: nano /opt/mailcow-dockerized/mailcow.conf
+    - Kiểm tra đúng các dòng:
+      - MAILCOW_HOSTNAME=mail.cloudnvt.km0.vn
+      - HTTP_PORT=80
+      - HTTPS_PORT=443
+      - ENABLE_SSL=n
+      - SKIP_LETS_ENCRYPT=y
+    - Thêm các dòng (nếu chưa có; có rồi thì sửa):
+      - ENABLE_SSL=n
+      - HTTP_REDIRECT=n
+      - SKIP_LETS_ENCRYPT=y
+      - TRUSTED_PROXIES=172.16.20.36
+      - FORCE_HTTPS=n
+    - Save và Reload MailCow:
+      -  cd /opt/mailcow-dockerized
+      -  docker compose down
+      -  docker compose pull
+      -  docker compose up -d
 
+---
+## Gửi Mail qua nền tảng Google Mail
+  - Sử dụng Gmail Relay:
+    - Vào trang: https://myaccount.google.com/
+    - Tìm app password tạo mk cho mailcow   
+    - cop pass sinh ra: bwwq irug nyuy ndev 
