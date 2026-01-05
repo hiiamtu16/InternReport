@@ -67,8 +67,32 @@
       - Copy Secret
     - Trên MailCow:
 
- ---
- ## HTTPS cho MailCow trên HAProxy
+---
+## HTTPS cho MailCow bằng CertBot (LƯU Ý: XIN CERT THỦ CÔNG, PHẢI GIA HẠN CERT THỦ CÔNG SAU 90 NGÀY)
+  - Cài Cert Bot:
+    - apt update
+    - apt install -y certbot
+    - Kiểm tra: certbot --version
+  - Kiểm tra Cert: certbot certificates
+  - Xin Cert:
+  ```
+  certbot certonly \
+    --manual \
+    --preferred-challenges dns \
+    -d mail2.cloudnvt.km0.vn
+  ```
+  
+  ![Ảnh 15](?raw=1)
+  - Tạo bản ghi TXT trên DNS giống với CertBot gửi thông tin
+  ![Ảnh 16](?raw=1)
+  - Kiểm tra bản ghi TXT trên 1 PuTTY khác (giống, ok ==> quay lại PuTTY xin cert Enter): dig TXT _acme-challenge.mail2.cloudnvt.km0.vn +short
+  ![Ảnh 17](?raw=1)
+  - Kiểm tra Cert: certbot certificates
+  ![Ảnh 18](?raw=1)
+  - Xác nhận cert tồn tại: ls -l /etc/letsencrypt/live/mail.cloudnvt.km0.vn/
+ 
+---
+ ## HTTPS cho MailCow trên HAProxy (HTTP nội bộ sau HAProxy, HTTPS bên ngoài)
   - Chỉnh MailCow HTTP nội bộ:
     - Mở file cấu hình MailCow: nano /opt/mailcow-dockerized/mailcow.conf
     - Kiểm tra:
