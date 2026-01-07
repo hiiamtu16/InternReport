@@ -136,177 +136,177 @@
   - Tạo script sync: nano /opt/keycloak_mailcow_sync/sync.py
   - Paste vào file:
   ```
-    import os
-    import sys
-    import json
-    import secrets
-    import string
-    import requests
-    from urllib.parse import urljoin
-    
-    def load_env(path: str) -> None:
-        if not os.path.exists(path):
-            return
-        with open(path, "r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if not line or line.startswith("#"):
-                    continue
-                if "=" not in line:
-                    continue
-                k, v = line.split("=", 1)
-                os.environ.setdefault(k.strip(), v.strip())
-    
-    def must_get(name: str) -> str:
-        v = os.getenv(name, "").strip()
-        if not v:
-            print(f"Missing env: {name}", file=sys.stderr)
-            sys.exit(2)
-        return v
-    
-    def rand_password(length: int = 20) -> str:
-        alphabet = string.ascii_letters + string.digits
-        return "".join(secrets.choice(alphabet) for _ in range(length))
-    
-    def keycloak_get_token(base_url: str, realm: str, client_id: str, client_secret: str) -> str:
-        token_url = urljoin(base_url.rstrip("/") + "/", f"realms/{realm}/protocol/openid-connect/token")
-        resp = requests.post(
-            token_url,
-            data={
-                "grant_type": "client_credentials",
-                "client_id": client_id,
-                "client_secret": client_secret,
-            },
-            timeout=30,
-        )
-        resp.raise_for_status()
-        return resp.json()["access_token"]
-    
-    def keycloak_list_users(base_url: str, realm: str, token: str, page_size: int = 2000):
-        users = []
-        first = 0
-        while True:
-            url = urljoin(base_url.rstrip("/") + "/", f"admin/realms/{realm}/users")
-            resp = requests.get(
-                url,
-                headers={"Authorization": f"Bearer {token}"},
-                params={"first": first, "max": page_size},
-                timeout=60,
-            )
-            resp.raise_for_status()
-            batch = resp.json()
-            if not batch:
-                break
-            users.extend(batch)
-            first += page_size
-        return users
-    
-    def mailcow_api_get_all_mailboxes(base_url: str, api_key: str):
-        url = urljoin(base_url.rstrip("/") + "/", "api/v1/get/mailbox/all")
-        resp = requests.get(url, headers={"X-API-Key": api_key}, timeout=60, verify=False)
-        resp.raise_for_status()
-        return resp.json()
-    
-    def mailcow_api_add_mailbox(base_url: str, api_key: str, payload: dict):
-        url = urljoin(base_url.rstrip("/") + "/", "api/v1/add/mailbox")
-        resp = requests.post(
-            url,
-            headers={"X-API-Key": api_key, "Content-Type": "application/json"},
-            data=json.dumps([payload]),
-            timeout=60,
-            verify=False,
-        )
-        resp.raise_for_status()
-        return resp.json()
-    
-    def main():
-        load_env("/opt/keycloak_mailcow_sync/.env")
-    
-        mailcow_base = must_get("MAILCOW_BASE_URL")
-        mailcow_key = must_get("MAILCOW_API_KEY")
-        mail_domain = must_get("MAILCOW_MAIL_DOMAIN")
-    
-        kc_base = must_get("KEYCLOAK_BASE_URL")
-        kc_realm = must_get("KEYCLOAK_REALM")
-        kc_client_id = must_get("KEYCLOAK_CLIENT_ID")
-        kc_client_secret = must_get("KEYCLOAK_CLIENT_SECRET")
-    
-        sync_only_domain = os.getenv("SYNC_ONLY_DOMAIN_USERS", "1").strip() == "1"
-        dry_run = os.getenv("DRY_RUN", "0").strip() == "1"
-    
-        print("Step 1 Get Keycloak token")
-        token = keycloak_get_token(kc_base, kc_realm, kc_client_id, kc_client_secret)
-    
-        print("Step 2 List Keycloak users")
-        kc_users = keycloak_list_users(kc_base, kc_realm, token)
-        print(f"Keycloak users fetched: {len(kc_users)}")
-    
-        print("Step 3 Get Mailcow mailboxes")
-        mailcow_boxes = mailcow_api_get_all_mailboxes(mailcow_base, mailcow_key)
-        existing = set()
-        for mb in mailcow_boxes:
-            u = mb.get("username", "").strip().lower()
-            if u:
-                existing.add(u)
-        print(f"Mailcow mailboxes existing: {len(existing)}")
-    
-        created = 0
-        skipped = 0
-    
-        print("Step 4 Sync")
-        for u in kc_users:
-            if not u.get("enabled", True):
-                continue
-    
-            email = (u.get("email") or "").strip().lower()
-            if not email or "@" not in email:
-                continue
-    
-            if sync_only_domain and not email.endswith("@" + mail_domain):
-                continue
-    
-            if email in existing:
-                skipped += 1
-                continue
-    
-            local_part = email.split("@", 1)[0]
-            display_name = (u.get("firstName") or "").strip()
-            if u.get("lastName"):
-                display_name = (display_name + " " + u["lastName"].strip()).strip()
-            if not display_name:
-                display_name = local_part
-    
-            pw = rand_password()
-    
-            payload = {
-                "local_part": local_part,
-                "domain": mail_domain,
-                "name": display_name,
-                "password": pw,
-                "password2": pw,
-                "quota": "0",
-                "active": "1",
-            }
-    
-            print(f"Create mailbox: {email}")
-            if dry_run:
-                print("DRY_RUN enabled, not creating")
-                created += 1
-                continue
-    
-            try:
-                res = mailcow_api_add_mailbox(mailcow_base, mailcow_key, payload)
-                print(res)
-                created += 1
-            except Exception as e:
-                print(f"Create failed for {email}: {e}", file=sys.stderr)
-    
-        print("Done")
-        print(f"Created: {created}")
-        print(f"Skipped existing: {skipped}")
-    
-    if __name__ == "__main__":
-        main()
+  import os
+  import sys
+  import json
+  import secrets
+  import string
+  import requests
+  from urllib.parse import urljoin
+  
+  def load_env(path: str) -> None:
+      if not os.path.exists(path):
+          return
+      with open(path, "r", encoding="utf-8") as f:
+          for line in f:
+              line = line.strip()
+              if not line or line.startswith("#"):
+                  continue
+              if "=" not in line:
+                  continue
+              k, v = line.split("=", 1)
+              os.environ.setdefault(k.strip(), v.strip())
+  
+  def must_get(name: str) -> str:
+      v = os.getenv(name, "").strip()
+      if not v:
+          print(f"Missing env: {name}", file=sys.stderr)
+          sys.exit(2)
+      return v
+  
+  def rand_password(length: int = 20) -> str:
+      alphabet = string.ascii_letters + string.digits
+      return "".join(secrets.choice(alphabet) for _ in range(length))
+  
+  def keycloak_get_token(base_url: str, realm: str, client_id: str, client_secret: str) -> str:
+      token_url = urljoin(base_url.rstrip("/") + "/", f"realms/{realm}/protocol/openid-connect/token")
+      resp = requests.post(
+          token_url,
+          data={
+              "grant_type": "client_credentials",
+              "client_id": client_id,
+              "client_secret": client_secret,
+          },
+          timeout=30,
+      )
+      resp.raise_for_status()
+      return resp.json()["access_token"]
+  
+  def keycloak_list_users(base_url: str, realm: str, token: str, page_size: int = 2000):
+      users = []
+      first = 0
+      while True:
+          url = urljoin(base_url.rstrip("/") + "/", f"admin/realms/{realm}/users")
+          resp = requests.get(
+              url,
+              headers={"Authorization": f"Bearer {token}"},
+              params={"first": first, "max": page_size},
+              timeout=60,
+          )
+          resp.raise_for_status()
+          batch = resp.json()
+          if not batch:
+              break
+          users.extend(batch)
+          first += page_size
+      return users
+  
+  def mailcow_api_get_all_mailboxes(base_url: str, api_key: str):
+      url = urljoin(base_url.rstrip("/") + "/", "api/v1/get/mailbox/all")
+      resp = requests.get(url, headers={"X-API-Key": api_key}, timeout=60, verify=False)
+      resp.raise_for_status()
+      return resp.json()
+  
+  def mailcow_api_add_mailbox(base_url: str, api_key: str, payload: dict):
+      url = urljoin(base_url.rstrip("/") + "/", "api/v1/add/mailbox")
+      resp = requests.post(
+          url,
+          headers={"X-API-Key": api_key, "Content-Type": "application/json"},
+          data=json.dumps([payload]),
+          timeout=60,
+          verify=False,
+      )
+      resp.raise_for_status()
+      return resp.json()
+  
+  def main():
+      load_env("/opt/keycloak_mailcow_sync/.env")
+  
+      mailcow_base = must_get("MAILCOW_BASE_URL")
+      mailcow_key = must_get("MAILCOW_API_KEY")
+      mail_domain = must_get("MAILCOW_MAIL_DOMAIN")
+  
+      kc_base = must_get("KEYCLOAK_BASE_URL")
+      kc_realm = must_get("KEYCLOAK_REALM")
+      kc_client_id = must_get("KEYCLOAK_CLIENT_ID")
+      kc_client_secret = must_get("KEYCLOAK_CLIENT_SECRET")
+  
+      sync_only_domain = os.getenv("SYNC_ONLY_DOMAIN_USERS", "1").strip() == "1"
+      dry_run = os.getenv("DRY_RUN", "0").strip() == "1"
+  
+      print("Step 1 Get Keycloak token")
+      token = keycloak_get_token(kc_base, kc_realm, kc_client_id, kc_client_secret)
+  
+      print("Step 2 List Keycloak users")
+      kc_users = keycloak_list_users(kc_base, kc_realm, token)
+      print(f"Keycloak users fetched: {len(kc_users)}")
+  
+      print("Step 3 Get Mailcow mailboxes")
+      mailcow_boxes = mailcow_api_get_all_mailboxes(mailcow_base, mailcow_key)
+      existing = set()
+      for mb in mailcow_boxes:
+          u = mb.get("username", "").strip().lower()
+          if u:
+              existing.add(u)
+      print(f"Mailcow mailboxes existing: {len(existing)}")
+  
+      created = 0
+      skipped = 0
+  
+      print("Step 4 Sync")
+      for u in kc_users:
+          if not u.get("enabled", True):
+              continue
+  
+          email = (u.get("email") or "").strip().lower()
+          if not email or "@" not in email:
+              continue
+  
+          if sync_only_domain and not email.endswith("@" + mail_domain):
+              continue
+  
+          if email in existing:
+              skipped += 1
+              continue
+  
+          local_part = email.split("@", 1)[0]
+          display_name = (u.get("firstName") or "").strip()
+          if u.get("lastName"):
+              display_name = (display_name + " " + u["lastName"].strip()).strip()
+          if not display_name:
+              display_name = local_part
+  
+          pw = rand_password()
+  
+          payload = {
+              "local_part": local_part,
+              "domain": mail_domain,
+              "name": display_name,
+              "password": pw,
+              "password2": pw,
+              "quota": "0",
+              "active": "1",
+          }
+  
+          print(f"Create mailbox: {email}")
+          if dry_run:
+              print("DRY_RUN enabled, not creating")
+              created += 1
+              continue
+  
+          try:
+              res = mailcow_api_add_mailbox(mailcow_base, mailcow_key, payload)
+              print(res)
+              created += 1
+          except Exception as e:
+              print(f"Create failed for {email}: {e}", file=sys.stderr)
+  
+      print("Done")
+      print(f"Created: {created}")
+      print(f"Skipped existing: {skipped}")
+  
+  if __name__ == "__main__":
+      main()
   ```
 - Chạy thử và chạy thật:
     - Chạy thử không tạo user:
