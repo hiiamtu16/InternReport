@@ -90,7 +90,55 @@
   - Kiểm tra Cert: certbot certificates
   ![Ảnh 18](?raw=1)
   - Xác nhận cert tồn tại: ls -l /etc/letsencrypt/live/mail.cloudnvt.km0.vn/
+
+---
+## Đồng bộ user từ KeyCloak sang MailCow Server (sử dụng API)
+  - Tạo API cho MailCow trên MailCow Server:
+    - Di chuyển đến thư mục: cd /opt/mailcow-dockerized 
+    - Tạo API_KEY:  openssl rand -hex 32
+    ![Ảnh 19](?raw=1)
+    - Mở file cấu hình: nano mailcow.conf
+    - Bấm Ctrl+W để tìm kiếm, tìm từ khoá "API_KEY="
+    - Điền API_KEY vừa tạo, cho phép trên các IP
+    ![Ảnh 20](?raw=1)
+    - Lưu lại và reload docker
+      - docker compose down
+      - docker compose up -d
+    - Test API: Test lấy danh sách mailbox: curl -k https://mail.cloudnvt.km0.vn/api/v1/get/mailbox/all \-H "X-API-Key: **API_KEY_vừa_tạo**"
+  - Tạo user MailCow bằng API
+    - Endpoint: POST /api/v1/add/mailbox
+    - Payload chuẩn:
+      ```
+      {
+        "local_part": "tunv",
+        "domain": "cloudnvt.km0.vn",
+        "name": "Nguyễn Văn Tú",
+        "password": "SYNC_FROM_KEYCLOAK",
+        "password2": "SYNC_FROM_KEYCLOAK",
+        "quota": "0",
+        "active": "1"
+      }
+      ```
+  - Update Pass MailCow bằng API:
+    - Endpoint: POST /api/v1/edit/mailbox
+    - Payload:
+     ```
+     {
+        "items": ["tunv@cloudnvt.km0.vn"],
+        "attr": {
+          "password": "NEW_PASSWORD",
+          "password2": "NEW_PASSWORD"
+        }
+      }
+     ```
+  -  
+
  
+  
+
+
+
+
 ---
  ## HTTPS cho MailCow trên HAProxy (HTTP nội bộ sau HAProxy, HTTPS bên ngoài)
   - Chỉnh MailCow HTTP nội bộ:
