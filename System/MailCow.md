@@ -308,6 +308,10 @@
   if __name__ == "__main__":
       main()
   ```
+- Cấp quyền cho MailCow:
+  ![Ảnh 21](?raw=1)
+  ![Ảnh 22](?raw=1)
+  ![Ảnh 23](?raw=1)
 - Chạy thử và chạy thật:
     - Chạy thử không tạo user:
       ```
@@ -316,6 +320,7 @@
       sed -i 's/^DRY_RUN=.*/DRY_RUN=1/' .env
       python3 sync.py
       ```
+      ![Ảnh 24](?raw=1)
     - Chạy thật: 
       ```
       sed -i 's/^DRY_RUN=.*/DRY_RUN=0/' .env
