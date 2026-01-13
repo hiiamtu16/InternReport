@@ -23,5 +23,6 @@
 * Kiểm tra kết nối (xem list bucket, nếu có là cấu hình đúng): rclone lsd RestoreProxmox:
 * Tạo thư mục restore trên máy: mkdir -p /restore/backup-cuongnv (đường dẫn thư mục)
 * Copy dữ liệu từ Wasabi về local: rclone copy RestoreProxmox:backup-cuongnv /restore/backup-cuongnv --progress
+* ( rclone copy 'tên remote mình vừa tạo':'tên bucket trên wasabi' 'đường dẫn mình vừa tạo' --progress
   ![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/8f8934a0a06d4a89fc4a279074976687cf07e1f8/Picture%20/Virtualization/Restore%20Wasabi/2.png?raw=1)
 
