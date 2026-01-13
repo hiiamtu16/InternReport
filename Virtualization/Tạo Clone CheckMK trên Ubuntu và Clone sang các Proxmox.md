@@ -157,4 +157,8 @@
   - Tạo thư mục lưu: sudo mkdir -p /mnt/datastore/clone-vm/
   - Cấp quyền: sudo chown -R www-data:www-data /mnt/datastore/
   - Backing Path cop vào PBS: /mnt/datastore/clone-vm/
+  - Lấy IP Public của PBS: curl ifconfig.me
+  - Tạo remote:   ![Ảnh 18](?raw=1)
+  - Tạo Pull Sync job trong DataStore trên PBS và run now để sync
+
 
