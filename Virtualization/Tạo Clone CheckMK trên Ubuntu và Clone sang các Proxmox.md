@@ -140,6 +140,12 @@
     ![Ảnh 14](?raw=1)
     ![Ảnh 15](?raw=1)
   - Back up:   ![Ảnh 16](?raw=1)
+  
+## Restore trên PVE khác
+  - Xoá .in-use trên Wasabi bucket
+  ![Ảnh 17](?raw=1)
+  - Add S3 endpoint và tạo DataStore trên PVE muốn dùng để restore (như trên)
+  - Restore dữ liệu về (Doc: https://github.com/hiiamtu16/InternReport/blob/40ea60981f1a60c4da1851c30288b50424e31952/Virtualization/Restore%20with%20RClone%20Wasabi.md)
   - 
 
   
