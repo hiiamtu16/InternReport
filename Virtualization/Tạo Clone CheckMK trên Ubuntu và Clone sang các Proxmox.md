@@ -146,7 +146,12 @@
   ![Ảnh 17](?raw=1)
   - Add S3 endpoint và tạo DataStore trên PVE muốn dùng để restore (như trên)
   - Restore dữ liệu về (Doc: https://github.com/hiiamtu16/InternReport/blob/40ea60981f1a60c4da1851c30288b50424e31952/Virtualization/Restore%20with%20RClone%20Wasabi.md)
-  - 
+  - Đổi IP tĩnh
+  - Đổi hostname:
+    - Đổi hostname trong 2 file:
+      - sudo nano /etc/hostname
+      - sudo nano /etc/hosts
+    - Reboot: sudo reboot    
 
   
 
