@@ -153,6 +153,8 @@
       - sudo nano /etc/hosts
     - Reboot: sudo reboot    
 
-  
-
-
+## Tạo Remote Backup trên PBS
+  - Tạo thư mục lưu: sudo mkdir -p /mnt/datastore/clone-vm/
+  - Cấp quyền: sudo chown -R www-data:www-data /mnt/datastore/
+  - Backing Path cop vào PBS: /mnt/datastore/clone-vm/
+- Secret token API: fdacb768-a6c6-4e95-af3e-65fbc7412434
