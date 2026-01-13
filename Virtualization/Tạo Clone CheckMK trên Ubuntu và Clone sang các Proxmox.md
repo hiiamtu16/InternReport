@@ -161,4 +161,101 @@
   - Tạo remote:   ![Ảnh 18](?raw=1)
   - Tạo Pull Sync job trong DataStore trên PBS và run now để sync
 
+## Tạo Bot gửi thông báo Group
+  - Tạo thư mục: sudo mkdir -p /omd/sites/monitoring/local/share/check_mk/notifications
+  - Tạo file Script: sudo nano /omd/sites/monitoring/local/share/check_mk/notifications/telegram_notify.sh
+  - Nội dung Script:
+    ```
+    #!/bin/bash
+    # Telegram notification for CheckMK (Vietnamese - Docker version, numeric-state compatible)
+    # Author: ChatGPT x CuongNV (Final verified 2025)
+    
+    BOT_TOKEN="your_bot_token_here"
+    CHAT_ID="your_chat_id_here"
+    LOGFILE="/omd/sites/monitoring/var/log/telegram_notify.log"
+    TMP_FLAG="/tmp/checkmk_${NOTIFY_HOSTNAME}.flag"
+    
+    export TZ="Asia/Ho_Chi_Minh"
+    CURRENT_TIME=$(date +"%H:%M - %d/%m/%Y")
+    
+    # ===============================
+    # 1. Xác định trạng thái (CheckMK đôi khi chỉ truyền số)
+    # ===============================
+    STATE="${NOTIFY_STATE:-${NOTIFY_SHORTSTATE}}"
+    TYPE="${NOTIFY_NOTIFICATIONTYPE:-UNKNOWN}"
+    
+    case "$STATE" in
+      0|OK|UP)
+        STATE="OK"
+        ICON="✅"
+        TITLE="ĐÃ KHÔI PHỤC"
+        ;;
+      1|WARN)
+        STATE="WARN"
+        ICON="🟡"
+        TITLE="CẢNH BÁO"
+        ;;
+      2|CRIT|DOWN)
+        STATE="CRIT"
+        ICON="🔴"
+        TITLE="CẢNH BÁO NGHIÊM TRỌNG"
+        ;;
+      3|UNKNOWN)
+        STATE="UNKNOWN"
+        ICON="⚫"
+        TITLE="KHÔNG XÁC ĐỊNH"
+        ;;
+      *)
+        ICON="🔔"
+        TITLE="THÔNG BÁO"
+        ;;
+    esac
+    
+    # Nếu là thông báo khôi phục (RECOVERY) thì ép lại tiêu đề/icon cho rõ
+    if [[ "$TYPE" == "RECOVERY" ]]; then
+        ICON="✅"
+        TITLE="ĐÃ KHÔI PHỤC"
+    fi
+    
+    # ===============================
+    # 2. Chống gửi trùng (cho HOST)
+    # ===============================
+    if [ "$NOTIFY_WHAT" = "HOST" ]; then
+        if [ -f "$TMP_FLAG" ] && [ "$STATE" != "OK" ]; then
+            echo "$(date '+%F %T') - Skip duplicate host alert for ${NOTIFY_HOSTNAME}" >> "$LOGFILE"
+            exit 0
+        fi
+        if [ "$STATE" != "OK" ]; then
+            echo "recent" > "$TMP_FLAG"
+            (sleep 15 && rm -f "$TMP_FLAG") &
+        fi
+    fi
+    
+    # ===============================
+    # 3. Xây nội dung tin nhắn
+    # ===============================
+    if [ "$NOTIFY_WHAT" = "SERVICE" ]; then
+        MESSAGE="${ICON} ${TITLE}
+    Máy chủ: ${NOTIFY_HOSTNAME}
+    Dịch vụ: ${NOTIFY_SERVICEDESC}
+    Nội dung: ${NOTIFY_SERVICEOUTPUT}
+    Thời gian: ${CURRENT_TIME}"
+    else
+        MESSAGE="${ICON} ${TITLE}
+    Máy chủ: ${NOTIFY_HOSTNAME}
+    Nội dung: ${NOTIFY_HOSTOUTPUT}
+    Thời gian: ${CURRENT_TIME}"
+    fi
+    
+    # ===============================
+    # 4. Gửi Telegram
+    # ===============================
+    curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+         --data-urlencode "chat_id=${CHAT_ID}" \
+         --data-urlencode "text=${MESSAGE}" >> "$LOGFILE" 2>&1
+    
+    echo "$(date '+%F %T') - Sent ${STATE}/${TYPE} alert for ${NOTIFY_WHAT}/${NOTIFY_HOSTNAME}" >> "$LOGFILE"
 
+    ```
+    - Cập nhật quyền thực thi: sudo chmod +x /omd/sites/monitoring/local/share/check_mk/notifications/telegram_notify.sh
+    - 
