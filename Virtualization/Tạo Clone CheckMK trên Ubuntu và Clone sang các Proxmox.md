@@ -165,6 +165,8 @@
   - Tạo thư mục dưới quyền user cmk:
     ```
     sudo docker exec -it checkmk bash
+    ```
+    ```
     su - cmk
     apt update
     apt install nano -y
@@ -283,9 +285,15 @@
     ```
     - Cập nhật quyền thực thi, quyền ghi file log và khởi động lại omd:
       ```
+      touch /omd/sites/monitoring/var/log/telegram_notify.log
       chmod 666 /omd/sites/monitoring/var/log/telegram_notify.log
       chmod -R 777 /omd/sites/monitoring/var/log/
       sudo chmod +x /omd/sites/monitoring/local/share/check_mk/notifications/telegram_notify.sh
       omd restart
       ```
+    - Cài đặt Admin nhận Notification:
+    ![Ảnh 19](?raw=1)
+    ![Ảnh 20](?raw=1)
+    ![Ảnh 21](?raw=1)
+
     
