@@ -5,28 +5,28 @@
 ### Download và Upload
   - Link down Ubuntu: [https://releases.ubuntu.com/plucky/](https://releases.ubuntu.com/plucky/)
   - Chọn bản Server install image  
-  ![Ảnh 1](?raw=1)
+  ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/1.png?raw=1)
   - Upload Ubuntu lên Storage Proxmox  
-  ![Ảnh 2](?raw=1)
+  ![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/2.png?raw=1)
   - Khởi tạo VM Ubuntu:
     - Đặt tên VM:  
-    ![Ảnh 3](?raw=1)
+    ![Ảnh 3](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/3.png?raw=1)
     - Chọn ISO:  
-    ![Ảnh 4](?raw=1)
+    ![Ảnh 4](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/4.png?raw=1)
     - Tạo Disk nhỏ (25GB):  
-    ![Ảnh 5](?raw=1)
+    ![Ảnh 5](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/5.png?raw=1)
     - CPU 1 socket 4 cores:  
-    ![Ảnh 6](?raw=1)
+    ![Ảnh 6](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/6.png?raw=1)
     - RAM 4GB:  
-    ![Ảnh 7](?raw=1)
+    ![Ảnh 7](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/7.png?raw=1)
     - Network:  
-    ![Ảnh 8](?raw=1)
+    ![Ảnh 8](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/8.png?raw=1)
 
 ## 2. Setup Ubuntu:
   - Cấu hình theo ảnh  
-  ![Ảnh 9](?raw=1)
-  ![Ảnh 10](?raw=1)
-  ![Ảnh 11](?raw=1)
+  ![Ảnh 9](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/9.png?raw=1)
+  ![Ảnh 10](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/10.png?raw=1)
+  ![Ảnh 11](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/11.png?raw=1)
   - Cấu hình IP tĩnh:
     - Xem card mạng và ip đang chạy: `ip a`
     - Mở file netplan: `sudo nano /etc/netplan/*.yaml`
@@ -132,7 +132,7 @@
 ## 4. Backup Wasabi và Restore từ Proxmox khác
   - Tạo DataStore trên PBS:
     - Tạo S3 endpoint chung để backup & restore  
-    ![Ảnh 12](?raw=1)
+    ![Ảnh 12](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/12.png?raw=1)
     - Tạo Local Cache (mở SSH PBS):
       ```bash
       mkdir -p /var/lib/proxmox-backup/wasabi/clone-checkmk
@@ -140,16 +140,16 @@
       chmod 700 /var/lib/proxmox-backup
       ```
     - Copy đường dẫn cho Local Cache: `/var/lib/proxmox-backup/wasabi/clone-checkmk`  
-    ![Ảnh 13](?raw=1)
+    ![Ảnh 13](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/13.png?raw=1)
   - Link PVE vs PBS:  
-    ![Ảnh 14](?raw=1)  
-    ![Ảnh 15](?raw=1)
+    ![Ảnh 14](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/14.png?raw=1)  
+    ![Ảnh 15](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/15.png?raw=1)
   - Back up:   
-    ![Ảnh 16](?raw=1)
+    ![Ảnh 16](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/16.png?raw=1)
 
 ## 5. Restore trên PVE khác
   - Xoá `.in-use` trên Wasabi bucket  
-    ![Ảnh 17](?raw=1)
+    ![Ảnh 17](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/17.png?raw=1)
   - Add S3 endpoint và tạo DataStore trên PVE muốn dùng để restore (như trên).
   - Restore dữ liệu về (Doc: [Restore guide](https://github.com/hiiamtu16/InternReport/blob/40ea60981f1a60c4da1851c30288b50424e31952/Virtualization/Restore%20with%20RClone%20Wasabi.md))
   - Đổi IP tĩnh.
@@ -174,7 +174,7 @@
     curl ifconfig.me
     ```
   - Tạo remote:   
-    ![Ảnh 18](?raw=1)
+    ![Ảnh 18](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/18.png?raw=1)
   - Tạo Pull Sync job trong DataStore trên PBS và **run now** để sync.
 
 ## 7. Tạo Bot gửi thông báo Group
@@ -308,6 +308,6 @@
       omd restart
       ```
     - Cài đặt Admin nhận Notification:  
-    ![Ảnh 19](?raw=1)  
-    ![Ảnh 20](?raw=1)  
-    ![Ảnh 21](?raw=1)
+    ![Ảnh 19](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/19.png?raw=1)  
+    ![Ảnh 20](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/20.png?raw=1)  
+    ![Ảnh 21](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/21.png?raw=1)
