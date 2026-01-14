@@ -167,14 +167,17 @@
   - Nội dung Script:
     ```
     #!/bin/bash
+
     # Telegram notification for CheckMK (Vietnamese - Docker version, numeric-state compatible)
     # Author: ChatGPT x CuongNV (Final verified 2025)
     
-    BOT_TOKEN="your_bot_token_here"
-    CHAT_ID="your_chat_id_here"
+    # Thông tin Bot và ChatID
+    BOT_TOKEN="8355983239:AAE9KZneAscdCjWC0f5baoJTI0fN_ZJMtLo"
+    CHAT_ID="-1003588408038"
     LOGFILE="/omd/sites/monitoring/var/log/telegram_notify.log"
     TMP_FLAG="/tmp/checkmk_${NOTIFY_HOSTNAME}.flag"
     
+    # Cài đặt múi giờ cho Việt Nam
     export TZ="Asia/Ho_Chi_Minh"
     CURRENT_TIME=$(date +"%H:%M - %d/%m/%Y")
     
@@ -248,14 +251,27 @@
     fi
     
     # ===============================
-    # 4. Gửi Telegram
+    # 4. Kiểm tra nội dung tin nhắn trước khi gửi
     # ===============================
+    if [ -z "$MESSAGE" ]; then
+        echo "$(date '+%F %T') - Error: Message is empty for ${NOTIFY_HOSTNAME}" >> "$LOGFILE"
+        exit 1
+    fi
+    
+    # ===============================
+    # 5. Gửi Telegram
+    # ===============================
+    # Kiểm tra thông điệp có đúng không trước khi gửi
+    echo "Sending message to Telegram with content: $MESSAGE" >> "$LOGFILE"
+    
     curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
          --data-urlencode "chat_id=${CHAT_ID}" \
-         --data-urlencode "text=${MESSAGE}" >> "$LOGFILE" 2>&1
+         --data-urlencode "text=${MESSAGE}" \
+         --data-urlencode "parse_mode=Markdown" >> "$LOGFILE" 2>&1
     
+    # Ghi vào log khi đã gửi thông báo
     echo "$(date '+%F %T') - Sent ${STATE}/${TYPE} alert for ${NOTIFY_WHAT}/${NOTIFY_HOSTNAME}" >> "$LOGFILE"
 
     ```
     - Cập nhật quyền thực thi: sudo chmod +x /omd/sites/monitoring/local/share/check_mk/notifications/telegram_notify.sh
-    - 
+    
