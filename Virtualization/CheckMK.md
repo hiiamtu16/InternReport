@@ -66,6 +66,20 @@ $(lsb_release -cs) stable" \
   ![Ảnh 19](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/19.png?raw1=)
 
 ---
+## Giám sát máy AlmaLinux
+  - Tạo host trên CheckMK như trên
+  - Lấy Agent cho OS (Setup - Linux - agent `.noarch.rpm`)
+  - Copy file sang AlmaLinux giống như trên
+  - Mở PuTTY SSH vào máy AlmaLinux, chạy:
+    - `sudo dnf install /tmp/check-mk-agent-2.4.0p3-1.noarch.rpm` (thay tên file)
+    - Mở Port :
+     ```
+     sudo firewall-cmd --add-port=6556/tcp --permanent
+     sudo firewall-cmd --reload
+     ```
+    - Kiểm tra tình trạng dịch vụ và kết nối: `sudo systemctl status check-mk-agent-async.service`
+
+---
 
 ## Giám sát PC Windows
   - Tạo host trên CheckMK
