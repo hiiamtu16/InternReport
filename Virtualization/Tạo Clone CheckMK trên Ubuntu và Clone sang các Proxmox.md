@@ -238,16 +238,18 @@
     # 3. Xây nội dung tin nhắn
     # ===============================
     if [ "$NOTIFY_WHAT" = "SERVICE" ]; then
-        MESSAGE="${ICON} ${TITLE}
-    Máy chủ: ${NOTIFY_HOSTNAME}
-    Dịch vụ: ${NOTIFY_SERVICEDESC}
-    Nội dung: ${NOTIFY_SERVICEOUTPUT}
-    Thời gian: ${CURRENT_TIME}"
+        MESSAGE="📢 *Thông báo từ CheckMK SG*\n\n
+    *Trạng thái*: $TITLE\n
+    *Máy chủ*: ${NOTIFY_HOSTNAME}\n
+    *Dịch vụ*: ${NOTIFY_SERVICEDESC}\n
+    *Nội dung*: ${NOTIFY_SERVICEOUTPUT}\n
+    *Thời gian*: ${CURRENT_TIME}"
     else
-        MESSAGE="${ICON} ${TITLE}
-    Máy chủ: ${NOTIFY_HOSTNAME}
-    Nội dung: ${NOTIFY_HOSTOUTPUT}
-    Thời gian: ${CURRENT_TIME}"
+        MESSAGE="📢 *Thông báo từ CheckMK SG*\n\n
+    *Trạng thái*: $TITLE\n
+    *Máy chủ*: ${NOTIFY_HOSTNAME}\n
+    *Nội dung*: ${NOTIFY_HOSTOUTPUT}\n
+    *Thời gian*: ${CURRENT_TIME}"
     fi
     
     # ===============================
@@ -271,7 +273,6 @@
     
     # Ghi vào log khi đã gửi thông báo
     echo "$(date '+%F %T') - Sent ${STATE}/${TYPE} alert for ${NOTIFY_WHAT}/${NOTIFY_HOSTNAME}" >> "$LOGFILE"
-
     ```
     - Cập nhật quyền thực thi: sudo chmod +x /omd/sites/monitoring/local/share/check_mk/notifications/telegram_notify.sh
     
