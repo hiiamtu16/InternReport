@@ -28,8 +28,8 @@
   ![Ảnh 10](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/10.png?raw=1)
   ![Ảnh 11](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/11.png?raw=1)
   - Cấu hình IP tĩnh:
-    - Xem card mạng và ip đang chạy: `ip a`
-    - Mở file netplan: `sudo nano /etc/netplan/*.yaml`
+    - Xem card mạng và ip đang chạy: ```ip a```
+    - Mở file netplan: ```sudo nano /etc/netplan/*.yaml```
     - Đặt IP tĩnh:
       ```yaml
       network:
@@ -56,16 +56,16 @@
       ip route
       ```
   - Cho phép SSH từ tài khoản root:
-    - Tạo password cho root: `sudo passwd root`
+    - Tạo password cho root: ```sudo passwd root```
     - Cài editor:
       ```bash
       sudo apt update
       sudo apt install -y nano
       ```
     - Sửa cấu hình SSH: `sudo nano /etc/ssh/sshd_config`
-      - Tìm `PermitRoot` và bật:
-        - `PermitRootLogin yes`
-        - `PasswordAuthentication yes`
+      - Tìm ```PermitRoot``` và bật:
+        - ```PermitRootLogin yes```
+        - ```PasswordAuthentication yes```
       - Test & Restart:
         ```bash
         sudo sshd -t
@@ -155,9 +155,9 @@
   - Đổi IP tĩnh.
   - Đổi hostname:
     - Đổi hostname trong 2 file:
-      - `sudo nano /etc/hostname`
-      - `sudo nano /etc/hosts`
-    - Reboot: `sudo reboot`    
+      - ```sudo nano /etc/hostname```
+      - ```sudo nano /etc/hosts```
+    - Reboot: ```sudo reboot```
 
 ## 6. Tạo Remote Backup trên PBS
   - Tạo thư mục lưu:
@@ -168,7 +168,7 @@
     ```bash
     sudo chown -R www-data:www-data /mnt/datastore/
     ```
-  - Backing Path copy vào PBS: `/mnt/datastore/clone-vm/`
+  - Backing Path copy vào PBS: ```/mnt/datastore/clone-vm/```
   - Lấy IP Public của PBS:
     ```bash
     curl ifconfig.me
