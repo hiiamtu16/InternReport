@@ -9,7 +9,8 @@
        + Windows Hypervisor Platform
        + Windows Subsystem for Linux
        + Windows Sandbox
-    - Tắt hypervisor ở mức boot: Mở CMD (Run as Administrator): ```bcdedit /set hypervisorlaunchtype off```
+    - Tắt hypervisor ở mức boot: Mở CMD (Run as Administrator):
+      ```bcdedit /set hypervisorlaunchtype off```
     - Tắt Memory Integrity: Windows Security → Device Security → Core Isolation → Memory Integrity = OFF
     - Restart máy
   * Cấu hình máy trên VMware Workstation:
