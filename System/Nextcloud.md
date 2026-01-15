@@ -4,30 +4,49 @@
   - Clone máy Ubuntu (Xem lại CheckMK)
   - Cài NextCloud Compose trên Ubuntu
     - Cài Docker & Docker Compose
-      - sudo apt update
-      - sudo apt install ca-certificates curl gnupg lsb-release -y
-      - sudo mkdir -p /etc/apt/keyrings
-      - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-      - echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-      - sudo apt update
-      - sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+      ```
+      sudo apt update
+      sudo apt install ca-certificates curl gnupg lsb-release -y
+      sudo mkdir -p /etc/apt/keyrings
+      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+      echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+      sudo apt update
+      sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+      ```
       - Kiểm tra:
-        - docker --version
-        - docker compose version
+        ```
+        docker --version
+        docker compose version
+        ```
       - Cho user chạy docker không cần sudo:
-        - sudo usermod -aG docker $USER
-        - newgrp docker
+        ```
+        sudo usermod -aG docker $USER
+        newgrp docker
+        ```
       - Start Docker:
-        - systemctl start docker
-      - Cho Docker tự chạy sau reboot: systemctl enable docker
-      - Kiểm tra lại: systemctl status docker
+        ```
+        systemctl start docker
+        ```
+      - Cho Docker tự chạy sau reboot:
+        ```
+        systemctl enable docker
+        ```
+      - Kiểm tra lại:
+        ```
+        systemctl status docker
+        ```
   - Cài NextCloud
     - Tạo thư mục Nextcloud:
       - Tạo thư mục chuẩn để dễ backup:
-        - mkdir -p ~/nextcloud
-        - cd ~/nextcloud
+        ```
+        mkdir -p ~/nextcloud
+        cd ~/nextcloud
+        ```
     - Tạo file Docker Compose cho Nextcloud:
-      - Tạo file: nano compose.yml
+      - Tạo file:
+        ```
+        nano compose.yml
+        ```
       - Paste nội dung sau: (tự đổi pass khác)
         ```
         version: "3.8"
@@ -62,24 +81,39 @@
               - db
         ```
     - Chạy Nextcloud:
-      - docker compose up -d
-      - Kiểm tra Container: docker ps
-      - Vào Web GUI: http://172.16.20.35:8080/ (giao thức http; ip máy; port 8080 (có thể thay đổi trên file .yml)
+      ```
+      docker compose up -d
+      ```
+      - Kiểm tra Container:
+        ```
+        docker ps
+        ```
+      - Vào Web GUI: `http://172.16.20.35:8080/` (giao thức http; ip máy; port 8080 (có thể thay đổi trên file .yml)
       - Đăng nhập lần đầu:
        ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/1.png?raw=1)
       - Đổi pass admin
   - Back up:
-    - Backup data: tar czvf nextcloud_backup.tar.gz nextcloud db compose.yml
-    - Restore chỉ cần bung thư mục và chạy lại: docker compose up -d
- 
+    - Backup data:
+      ```
+      tar czvf nextcloud_backup.tar.gz nextcloud db compose.yml
+      ```
+    - Restore chỉ cần bung thư mục và chạy lại:
+      ```
+      docker compose up -d
+      ```
+      
 ---
 
 ## Khởi tạo KeyCloak
   - Tạo thư mục riêng cho Keycloak
-    - mkdir -p /root/keycloak
-    - cd /root/keycloak
+    ```
+    mkdir -p /root/keycloak
+    cd /root/keycloak
+    ```
   - Tạo file Docker Compose cho Keycloak:
-    - nano compose.yml
+    ```
+    nano compose.yml
+    ```
     - Paste nội dung sau: (tự đổi pass khác)
     ```
     services:
@@ -112,9 +146,14 @@
         - postgres
     ```
   - Chạy KeyCloak
-    - docker compose up -d
-    - Kiểm tra: docker ps
-    - Vào Web GUI: http://172.16.20.35:8081/ (giao thức http; ip máy; port 8080 (có thể thay đổi trên file .yml)
+    ```
+    docker compose up -d
+    ```
+    - Kiểm tra:
+      ```
+      docker ps
+      ```
+    - Vào Web GUI: `http://172.16.20.35:8081/` (giao thức http; ip máy; port 8080 (có thể thay đổi trên file .yml)
       - Đăng nhập lần đầu:
       ![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/2.png?raw=1)
       - Đổi pass admin
@@ -122,8 +161,14 @@
       ![Ảnh 16](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/16.png?raw=1)
       ![Ảnh 17](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/17.png?raw=1)
   - Backup KeyCloak
-    - backup database: tar czvf keycloak_backup.tar.gz postgres compose.yml
-    - Restore: docker compose up -d
+    - backup database:
+      ```
+      tar czvf keycloak_backup.tar.gz postgres compose.yml
+      ```
+    - Restore:
+      ```
+      docker compose up -d
+      ```
 
  ---
 ## Xác minh đăng nhập NextCloud bằng KeyCloak
@@ -164,16 +209,16 @@
   ![Ảnh 19](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/19.png?raw=1)
   - Cấu hình OpenID Connect
   ![Ảnh 20](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/20.png?raw=1)
-    - Internal name: Keycloak
-    - Title: KeyCloak
-    - Authorize url: http://172.16.20.35:8081/realms/nextcloud/protocol/openid-connect/auth?prompt=login (mỗi lần đăng nhập bên KeyCloak được lựa chọn nhập pass hoặc đăng nhập mới)
-    - Token url: http://172.16.20.35:8081/realms/nextcloud/protocol/openid-connect/token
-    - Display name claim (optional): name
-    - User info URL (optional): http://172.16.20.35:8081/realms/nextcloud/protocol/openid-connect/userinfo
+    - Internal name: `Keycloak`
+    - Title: `KeyCloak`
+    - Authorize url: `http://172.16.20.35:8081/realms/nextcloud/protocol/openid-connect/auth?prompt=login` (mỗi lần đăng nhập bên KeyCloak được lựa chọn nhập pass hoặc đăng nhập mới)
+    - Token url: `http://172.16.20.35:8081/realms/nextcloud/protocol/openid-connect/token`
+    - Display name claim (optional): `name`
+    - User info URL (optional): `http://172.16.20.35:8081/realms/nextcloud/protocol/openid-connect/userinfo`
     - Logout URL (optional):
-    - Client Id: nextcloud
+    - Client Id: `nextcloud`
     - Client Secret: (Xem ở KeyCloak Client)
-    - Scope: openid profile email
+    - Scope: `openid profile email`
   - Cấu hình NextCloud nhận full name
     - Tạo Client Scope
     ![Ảnh 22](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/22.png?raw=1)
@@ -196,14 +241,28 @@
  ## HA Proxy
    - Cài HA Proxy:
      - Lệnh cài:
-       - sudo apt update
-       - sudo apt install -y haproxy
-     - Kiểm tra: haproxy -v
-   - Tắt HAProxy mặc định (chưa cấu hình): sudo systemctl stop haproxy
+       ```
+       sudo apt update
+       sudo apt install -y haproxy
+       ```
+     - Kiểm tra:
+       ```
+       haproxy -v
+       ```
+   - Tắt HAProxy mặc định (chưa cấu hình):
+     ```
+     sudo systemctl stop haproxy
+     ```
    - Cấu hình HAProxy
-     - Backup config: sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
-     -  Mở file cấu hình: sudo nano /etc/haproxy/haproxy.cfg
-     -  Xoá và paste đoạn này:
+     - Backup config:
+       ```
+       sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
+       ```
+     - Mở file cấu hình:
+       ```
+       sudo nano /etc/haproxy/haproxy.cfg
+       ```
+     - Xoá và paste đoạn này:
       ```
         global
             log /dev/log local0
@@ -228,11 +287,19 @@
             server nextcloud 127.0.0.1:8080 check
       ```
      - Start HAProxy: 
-       - sudo systemctl start haproxy
-       - sudo systemctl status haproxy
+       ```
+       sudo systemctl start haproxy
+       sudo systemctl status haproxy
+       ```
    - Test HAProxy local
-     - Test qua port 80: ss -lntp | grep haproxy
-     - Test qua HAProxy: curl -I http://127.0.0.1
+     - Test qua port 80:
+       ```
+       ss -lntp | grep haproxy
+       ```
+     - Test qua HAProxy:
+       ```
+       curl -I http://127.0.0.1
+       ```
    - Tạo Subdomain:
      ![Ảnh 31](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/31.png?raw=1)  
      - Tạo Virtual IP trên Firewall, mở Port 80(HTTP), 443(HTTPS)
@@ -241,10 +308,19 @@
      ![Ảnh 33](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/33.png?raw=1)
      ![Ảnh 34](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/34.png?raw=1)
      - Add trusted Domain:
-       - Sửa file /nextcloud/nextcloud/config/config.php:
-         - Di chuyển đến vị trí file: cd ~/nextcloud
-         - Kiểm tra Config: ls nextcloud/config
-         - Mở file bằng nano:  nano nextcloud/config/config.php
+       - Sửa file `/nextcloud/nextcloud/config/config.php`:
+         - Di chuyển đến vị trí file:
+           ```
+           cd ~/nextcloud
+           ```
+         - Kiểm tra Config:
+           ```
+           ls nextcloud/config
+           ```
+         - Mở file bằng nano:
+           ```
+           nano nextcloud/config/config.php
+           ```
          - sửa trusted_domains: có dạng
            ```
             'trusted_domains' =>
@@ -262,18 +338,31 @@
               3 => 'cloudnvt.km0.vn',
             ),
            ```
-          - Lưu file, thoát và restart container: docker compose restart
+          - Lưu file, thoát và restart container:
+            ```
+            docker compose restart
+            ```
       - Tạo SSL cho web:
         - Mở Port 443 và map (giống phần trên)
         - Cài SSL
           - Cài Certbot trên VM
-            - apt update
-            - apt install -y certbot
-          - Pause HAProxy để xin Cert: systemctl stop haproxy
-          - Xin SSL cho domain: certbot certonly --standalone -d cloudnvt.km0.vn
+            ```
+            apt update
+            apt install -y certbot
+            ```
+          - Pause HAProxy để xin Cert:
+            ```
+            systemctl stop haproxy
+            ```
+          - Xin SSL cho domain:
+            ```
+            certbot certonly --standalone -d cloudnvt.km0.vn
+            ```
           - Kiểm tra cert:
-            - ls -l /etc/letsencrypt/live/cloudnvt.km0.vn/
-            - openssl x509 -in /etc/letsencrypt/live/cloudnvt.km0.vn/fullchain.pem -noout -dates
+            ```
+            ls -l /etc/letsencrypt/live/cloudnvt.km0.vn/
+            openssl x509 -in /etc/letsencrypt/live/cloudnvt.km0.vn/fullchain.pem -noout -dates
+            ```
           - Ghép cert cho domain:
             ```
             sudo cat \
@@ -291,7 +380,10 @@
             chmod 600 /etc/ssl/private/cloudnvt.pem
            ```
         -  Cấu hình HAProxy HTTPS:
-          - Mở file: nano /etc/haproxy/haproxy.cfg
+          - Mở file:
+            ```
+            nano /etc/haproxy/haproxy.cfg
+            ```
           - Ghi đè:
            ```
            global
@@ -323,7 +415,10 @@
                server nextcloud 127.0.0.1:8080 check
            ```
           - Chỉnh NextCloud cho HTTPS:
-            - Mở config: nano nextcloud/config/config.php
+            - Mở config:
+              ```
+              nano nextcloud/config/config.php
+              ```
             - Thêm:
              ```
              'trusted_proxies' => ['127.0.0.1'],
@@ -331,15 +426,37 @@
              'overwrite.cli.url' => 'https://cloudnvt.km0.vn',
              ```
              ![Ảnh 36](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/36.png?raw=1)
-            - Restart: docker restart nextcloud_app
+            - Restart:
+              ```
+              docker restart nextcloud_app
+              ```
           - Chỉnh KeyCloak cho HTTPS:
-            - Kiểm tra DNS: nslookup auth.cloudnvt.km0.vn (trả về đúng IP WAN)
+            - Kiểm tra DNS:
+              ```
+              nslookup auth.cloudnvt.km0.vn
+              ```
+              (trả về đúng IP WAN)
             - Cấp SSL cho KeyCloak:
-              - Dừng HAProxy tạm thời: systemctl stop haproxy
-              - Xin cert Let’s Encrypt cho auth: certbot certonly --standalone -d auth.cloudnvt.km0.vn
-              - Kiểm tra cert vừa cấp: ls -l /etc/letsencrypt/live/auth.cloudnvt.km0.vn/
-              - Kiểm tra xem HAProxy đã có PEM cho auth chưa: ls -l /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem
-                - Tạo thư mục certs cho HAProxy: sudo mkdir -p /etc/haproxy/certs   
+              - Dừng HAProxy tạm thời:
+                ```
+                systemctl stop haproxy
+                ```
+              - Xin cert Let’s Encrypt cho auth:
+                ```
+                certbot certonly --standalone -d auth.cloudnvt.km0.vn
+                ```
+              - Kiểm tra cert vừa cấp:
+                ```
+                ls -l /etc/letsencrypt/live/auth.cloudnvt.km0.vn/
+                ```
+              - Kiểm tra xem HAProxy đã có PEM cho auth chưa:
+                ```
+                ls -l /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem
+                ```
+                - Tạo thư mục certs cho HAProxy:
+                  ```
+                  sudo mkdir -p /etc/haproxy/certs
+                  ```
                 - Ghép cert HAProxy: 
                   ```
                   sudo cat \
@@ -348,12 +465,24 @@
                   > /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem
                   ```
                  - Set quyền đọc cho haproxy:
-                   - sudo chmod 600 /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem
-                   - sudo chown root:root /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem 
-              - Verify PEM: openssl x509 -in /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem -noout -text | grep DNS (Phải thấy: DNS:auth.cloudnvt.km0.vn)
+                   ```
+                   sudo chmod 600 /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem
+                   sudo chown root:root /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem
+                   ```
+              - Verify PEM:
+                ```
+                openssl x509 -in /etc/haproxy/certs/auth.cloudnvt.km0.vn.pem -noout -text | grep DNS
+                ```
+                (Phải thấy: DNS:auth.cloudnvt.km0.vn)
             - Sửa HAProxy:
-              - Backup config trước khi sửa: cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
-              - Mở config: nano /etc/haproxy/haproxy.cfg
+              - Backup config trước khi sửa:
+                ```
+                cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
+                ```
+              - Mở config:
+                ```
+                nano /etc/haproxy/haproxy.cfg
+                ```
               - Sửa thành:
              ```
              global
@@ -399,17 +528,38 @@
                 server keycloak 127.0.0.1:8081 check
 
              ```
-              - Kiểm tra: haproxy -c -f /etc/haproxy/haproxy.cfg
-              - Restart: systemctl restart haproxy
-              - Kiểm tra Service: systemctl status haproxy
+              - Kiểm tra:
+                ```
+                haproxy -c -f /etc/haproxy/haproxy.cfg
+                ```
+              - Restart:
+                ```
+                systemctl restart haproxy
+                ```
+              - Kiểm tra Service:
+                ```
+                systemctl status haproxy
+                ```
               - Kiểm tra KeyCloak:
-                - Kiểm tra container: docker ps | grep keycloak (Thấy image: quay.io/keycloak/keycloak)
-                - Test KeyCloak: curl -I http://127.0.0.1:8081
-                - Test qua HAProxy: curl -kI https://auth.cloudnvt.km0.vn
+                - Kiểm tra container:
+                  ```
+                  docker ps | grep keycloak
+                  ```
+                   (Thấy image: quay.io/keycloak/keycloak)
+                - Test KeyCloak:
+                  ```
+                  curl -I http://127.0.0.1:8081
+                  ```
+                - Test qua HAProxy:
+                  ```
+                  curl -kI https://auth.cloudnvt.km0.vn
+                  ```
               - Cấu hình KeyCloak chạy sau HAProxy
                 - Mở file compose.yml của Keycloak:
-                  - cd /root/keycloak
-                  - nano compose.yml
+                  ```
+                  cd /root/keycloak
+                  nano compose.yml
+                  ```
                 - Sửa service keycloak thành như sau:
                  ```
                  services:
@@ -450,12 +600,16 @@
                       - postgres
                  ``` 
                 - Restart KeyCloak:
-                  - cd /root/keycloak
-                  - docker compose down
-                  - docker compose up -d
+                  ```
+                  cd /root/keycloak
+                  docker compose down
+                  docker compose up -d
+                  ```
                 - RESTART HAPROXY:
-                  - haproxy -c -f /etc/haproxy/haproxy.cfg
-                  - systemctl restart haproxy
+                  ```
+                  haproxy -c -f /etc/haproxy/haproxy.cfg
+                  systemctl restart haproxy
+                  ```
               - Sửa KeyCloak Web GUI
                 ![Ảnh 38](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/38.png?raw=1)
                 ![Ảnh 39](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/39.png?raw=1)
