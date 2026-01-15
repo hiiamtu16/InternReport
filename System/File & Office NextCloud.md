@@ -7,7 +7,10 @@
 ---
 ## Mở, Chỉnh sửa file Office trên NextCloud
   - Chuẩn bị SSL cert:
-    - Kiểm tra cert cho office.cloudnvt.km0.vn: echo | openssl s_client -servername office.cloudnvt.km0.vn -connect 210.245.58.99:443 2>/dev/null | openssl x509 -noout -text | grep -A1 "Subject Alternative Name"
+    - Kiểm tra cert cho office.cloudnvt.km0.vn:
+      ```
+      echo | openssl s_client -servername office.cloudnvt.km0.vn -connect 210.245.58.99:443 2>/dev/null | openssl x509 -noout -text | grep -A1 "Subject Alternative Name"
+      ```
     - Tắt HAProxy tạm: sudo systemctl stop haproxy
     - Xin cert: certbot certonly --standalone -d office.cloudnvt.km0.vn
     - Kiểm tra cert:
