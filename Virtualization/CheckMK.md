@@ -15,27 +15,37 @@
  
   ### Cài đặt Docker trên máy Ubuntu
    - Cài đặt các gói cần thiết:
-    - sudo apt update
-    - sudo apt install -y ca-certificates curl gnupg lsb-release
-   - Thêm Docker GPG key: sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
-| sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-   - Thêm Docker repository:echo \
-"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
-https://download.docker.com/linux/ubuntu \
-$(lsb_release -cs) stable" \
-| sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+     ``` sudo apt update
+      sudo apt install -y ca-certificates curl gnupg lsb-release
+     ```
+   - Thêm Docker GPG key:
+     ``` sudo mkdir -p /etc/apt/keyrings
+      curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+      | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+     ```
+   - Thêm Docker repository:
+     ``` echo \
+      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+      https://download.docker.com/linux/ubuntu \
+      $(lsb_release -cs) stable" \
+      | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+     ```
    - Cài Docker Engine:
-    -  sudo apt update
-    -  sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-   - Kiểm tra Docker: docker --version
-
+     ```sudo apt update
+     sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+     ```
+   - Kiểm tra Docker:
+     ``` docker --version ```
   ### Cài đặt CheckMK trên máy Ubuntu
    - Link tải CheckMK: https://checkmk.com/download?platform=docker&edition=cce_trial
     ![Ảnh 8](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/8.png?raw=1)
    - Tạo Docker volume cho CheckMK: docker volume create monitoring
-   - Chạy Container CheckMK lấy từ Link trên CheckMK: docker container run -dit -p 8080:5000 -p 8000:8000 --tmpfs /opt/omd/sites/cmk/tmp:uid=1000,gid=1000 -v monitoring:/omd/sites --name monitoring -v /etc/localtime:/etc/localtime:ro --restart always checkmk/check-mk-cloud:2.4.0p18
-   - Kiểm tra Container: docker ps
+   - Chạy Container CheckMK lấy từ Link trên CheckMK:
+     ```
+     docker container run -dit -p 8080:5000 -p 8000:8000 --tmpfs /opt/omd/sites/cmk/tmp:uid=1000,gid=1000 -v monitoring:/omd/sites --name monitoring -v         /etc/localtime:/etc/localtime:ro --restart always checkmk/check-mk-cloud:2.4.0p18
+     ```
+   - Kiểm tra Container:
+     ```docker ps```
    - Xem log lấy pass đăng nhập lần đầu:
     ![Ảnh 9](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/9.png?raw1=)
    - Đổi pass
@@ -53,13 +63,18 @@ $(lsb_release -cs) stable" \
   ![Ảnh 15](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/15.png?raw1=)
   - Cop Agent sang Ubuntu
     - Mở CMD trên PC chạy bằng quyền Admin
-    - cd đến folder chứa agent: cd C:\Users\tunv\Downloads
-    - Copy file sang Ubuntu VM: scp check-mk-agent_2.4.0p18-dd0c018da230719a_all.deb root@172.16.20.32:/tmp/ (scp "tên file agent" user@"IP Ubuntu":/tmp/)
+    - cd đến folder chứa agent:
+      ```cd C:\Users\tunv\Downloads```
+    - Copy file sang Ubuntu VM:
+      ```scp check-mk-agent_2.4.0p18-dd0c018da230719a_all.deb root@172.16.20.32:/tmp/ ```
+      (scp "tên file agent" user@"IP Ubuntu":/tmp/)
       ![Ảnh 16](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/16.png?raw1=)
     - Mở PuTTY SSH vào máy Ubuntu, chạy:
-      + sudo dpkg -i /tmp/check-mk-agent_2.4.0p18-dd0c018da230719a_all.deb (thay tên file)
-      + sudo apt -f install -y
-    - Kiểm tra agent: systemctl status check-mk-agent.socket
+      ``` sudo dpkg -i /tmp/check-mk-agent_2.4.0p18-dd0c018da230719a_all.deb (thay tên file)
+      sudo apt -f install -y
+      ```
+    - Kiểm tra agent:
+      ``` systemctl status check-mk-agent.socket ```
       ![Ảnh 17](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/17.png?raw1=)
   - Chạy Monitor trên CheckMK
   ![Ảnh 18](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/18.png?raw1=)
@@ -71,13 +86,14 @@ $(lsb_release -cs) stable" \
   - Lấy Agent cho OS (Setup - Linux - agent `.noarch.rpm`)
   - Copy file sang AlmaLinux giống như trên
   - Mở PuTTY SSH vào máy AlmaLinux, chạy:
-    - `sudo dnf install /tmp/check-mk-agent-2.4.0p3-1.noarch.rpm` (thay tên file)
+    - ``` sudo dnf install /tmp/check-mk-agent-2.4.0p3-1.noarch.rpm ``` (thay tên file)
     - Mở Port :
      ```
      sudo firewall-cmd --add-port=6556/tcp --permanent
      sudo firewall-cmd --reload
      ```
-    - Kiểm tra tình trạng dịch vụ và kết nối: `sudo systemctl status check-mk-agent-async.service`
+    - Kiểm tra tình trạng dịch vụ và kết nối:
+      ``` sudo systemctl status check-mk-agent-async.service ```
 
 ---
 
@@ -88,15 +104,22 @@ $(lsb_release -cs) stable" \
   ![Ảnh 21](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/21.png?raw1=)
   - Chạy Agent trên PC
   ![Ảnh 22](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/22.png?raw1=)
-  - Mở Cổng 6565 Firewall trên PC bằng CMD run as administrator: netsh advfirewall firewall add rule name="Checkmk Agent 6556" dir=in action=allow protocol=TCP localport=6556
+  - Mở Cổng 6565 Firewall trên PC bằng CMD run as administrator:
+    ```netsh advfirewall firewall add rule name="Checkmk Agent 6556" dir=in action=allow protocol=TCP localport=6556```
   - bật TCP listener (port 6556)
-    - Tắt legacy mode: "C:\Program Files (x86)\checkmk\service\check_mk_agent.exe" stop_legacy
-    - Bật lại agent chuẩn + listener: "C:\Program Files (x86)\checkmk\service\check_mk_agent.exe" start_legacy
+    - Tắt legacy mode:
+      ```"C:\Program Files (x86)\checkmk\service\check_mk_agent.exe" stop_legacy```
+    - Bật lại agent chuẩn + listener:
+      ```"C:\Program Files (x86)\checkmk\service\check_mk_agent.exe" start_legacy```
     - Restart service:
-      + net stop CheckmkService
-      + net start CheckmkService
-    - Kiểm tra port 6556: netstat -ano | find "6556" (kết quả: TCP    0.0.0.0:6556     0.0.0.0:0     LISTENING)
-  - Kiểm tra Agent đã chạy chưa trên CMD: sc query CheckmkService
+      ```
+      net stop CheckmkService
+      net start CheckmkService
+      ```
+    - Kiểm tra port 6556:
+      ``` netstat -ano | find "6556" (kết quả: TCP    0.0.0.0:6556     0.0.0.0:0     LISTENING)```
+  - Kiểm tra Agent đã chạy chưa trên CMD:
+    ``` sc query CheckmkService ```
   ![Ảnh 23](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/23.png?raw1=)
   - Chạy Monitor trên CheckMK
   ![Ảnh 24](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/24.png?raw1=)
@@ -118,17 +141,23 @@ $(lsb_release -cs) stable" \
 ## Giám sát máy Ubuntu sau pfSense
   ### Join OpenVPN trên pfSense
    - Cài OpenVPn trên máy Ubuntu chạy Server CheckMK:
-    - apt update
-    - apt install -y openvpn
-    - Kiểm tra: openvpn --version
+     ```
+     apt update
+     apt install -y openvpn
+     ```
+   - Kiểm tra:
+     ``` openvpn --version ```
    - Upload file .ovpn lên máy Ubuntu
     - Mở CMD trên PC chạy bằng quyền Admin
-    - cd đến folder chứa file .ovpn: cd C:\Users\tunv\Downloads
-    - Copy file sang Ubuntu VM: scp pfSense2-UDP4-1194-user1-config.ovpn root@172.16.20.32:/root/ (scp "tên file ovpn" user@"IP Ubuntu":/root/)
+    - cd đến folder chứa file .ovpn:
+       ``` cd C:\Users\tunv\Downloads ```
+    - Copy file sang Ubuntu VM:
+       ``` scp pfSense2-UDP4-1194-user1-config.ovpn root@172.16.20.32:/root/ ``` (scp "tên file ovpn" user@"IP Ubuntu":/root/)
    - Mở OpenVPN trên Proxmox
-    - Chạy OpenVPN: openvpn --config /root/pfSense2-UDP4-1194-user1-config.ovpn
+    - Chạy OpenVPN:
+       ``` openvpn --config /root/pfSense2-UDP4-1194-user1-config.ovpn ```
     - Log in: user1 / 1
-    - End PuTTY, bật lại, kiểm tra:"ip a" check có ip VPN
+    - End PuTTY, bật lại, kiểm tra: `ip a` check có ip VPN
    - Kiểm tra Rule trên pfSense cho phép dữ liệu qua VPN
     ![Ảnh 31](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/31.png?raw1=)
     ![Ảnh 32](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/32.png?raw1=)
@@ -143,15 +172,20 @@ $(lsb_release -cs) stable" \
    ![Ảnh 15](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/15.png?raw1=)
   - Cop Agent sang Ubuntu
     - Cài SSH trên máy Ubuntu:
-      + sudo apt update
-      + sudo apt install -y openssh-server
+      ``` sudo apt update
+      sudo apt install -y openssh-server
+      ```
     - Mở CMD trên PC chạy bằng quyền Admin
-    - cd đến folder chứa agent: cd C:\Users\tunv\Downloads
-    - Copy file sang Ubuntu VMware: scp check-mk-agent_2.4.0p18-dd0c018da230719a_all.deb linux2@192.168.10.52:/tmp/ (scp "tên file agent" user@"IP Ubuntu":/tmp/)
+    - cd đến folder chứa agent:
+      ``` cd C:\Users\tunv\Downloads ```
+    - Copy file sang Ubuntu VMware:
+      ``` scp check-mk-agent_2.4.0p18-dd0c018da230719a_all.deb linux2@192.168.10.52:/tmp/ ``` (scp "tên file agent" user@"IP Ubuntu":/tmp/)
     - Mở PuTTY SSH vào máy Ubuntu, chạy:
-      + sudo dpkg -i /tmp/check-mk-agent_2.4.0p18-dd0c018da230719a_all.deb (thay tên file)
-      + sudo apt -f install -y
-    - Kiểm tra agent: systemctl status check-mk-agent.socket
+      ``` sudo dpkg -i /tmp/check-mk-agent_2.4.0p18-dd0c018da230719a_all.deb (thay tên file)
+      sudo apt -f install -y
+      ```
+    - Kiểm tra agent:
+      ``` systemctl status check-mk-agent.socket ```
       
   - Chạy Monitor trên CheckMK
    ![Ảnh 36](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/36.png?raw1=)
@@ -171,26 +205,27 @@ $(lsb_release -cs) stable" \
    - Lấy ID: 7158697854
   ### Tạo Script Tele trên CheckMK
    - SSH vào CheckMK Server từ Docker:
-    - docker exec -it monitoring bash
+      ``` docker exec -it monitoring bash ```
    - Cài nano:
-     - apt update
-     - apt install nano -y 
-   - Vào user cmk: omd su cmk
-   - cd đúng thư mục notifications: cd /omd/sites/cmk/local/share/check_mk/notifications
-   - Tạo file tele: nano telegram_personal.sh
+     ``` apt update
+     apt install nano -y
+     ```
+   - Vào user cmk:
+     ``` omd su cmk ```
+   - cd đúng thư mục notifications:
+     ``` cd /omd/sites/cmk/local/share/check_mk/notifications ```
+   - Tạo file tele:
+     ``` nano telegram_personal.sh ```
    - Paste mã:
-    #!/bin/bash
-
-BOT_TOKEN="8512556584:AAHx3FQBvvGjOUX3SCTBAKC1lyRpjLT8A_M"
-CHAT_ID="7158697854"
+    ```
 
 #!/bin/bash
-
+  
 BOT_TOKEN="8512556584:AAHx3FQBvvGjOUX3SCTBAKC1lyRpjLT8A_M"
 CHAT_ID="7158697854"
 
 STATE="$NOTIFY_SERVICESTATE$NOTIFY_HOSTSTATE"
-
+        
 MESSAGE="🚨 -CheckMK BOT NVTU-
 
 👤 User: $NOTIFY_CONTACTNAME
@@ -205,9 +240,9 @@ $NOTIFY_SERVICEOUTPUT
 "
 
 curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
-  -d chat_id="${CHAT_ID}" \
-  -d parse_mode="Markdown" \
-  --data-urlencode text="$MESSAGE"
+   -d chat_id="${CHAT_ID}" \
+   -d parse_mode="Markdown" \
+    --data-urlencode text="$MESSAGE"
 
    - Cấp quyền chạy: chmod +x telegram_personal.sh
    - Test bot:
@@ -265,28 +300,36 @@ curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
 ##  Connect CheckMK - Grafana
   - Cài Grafana trên máy CheckMK Server
     - update hệ thống:
-      - sudo apt update
-      - sudo apt upgrade -y
+      ```sudo apt update
+      sudo apt upgrade -y
+      ```
     - Cài các gói cần thiết
-      - sudo apt install -y apt-transport-https software-properties-common wget
+      ```sudo apt install -y apt-transport-https software-properties-common wget```
     - Thêm Grafana GPG key
-      - wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+      ```wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add - ```
     - Thêm Grafana repository
-      - echo "deb https://packages.grafana.com/oss/deb stable main" \
-| sudo tee /etc/apt/sources.list.d/grafana.list
+      ```
+      echo "deb https://packages.grafana.com/oss/deb stable main" \
+      | sudo tee /etc/apt/sources.list.d/grafana.list
+      ```
     - Cài Grafana
-      - sudo apt update
-      - sudo apt install grafana -y
+      ```
+      sudo apt update
+      sudo apt install grafana -y
+      ```
     - Khởi động Grafana
-      - sudo systemctl enable grafana-server
-      - sudo systemctl start grafana-server
+      ```
+      sudo systemctl enable grafana-server
+      sudo systemctl start grafana-server
+      ```
     - Kiểm tra Grafana đã chạy chưa
-      - systemctl status grafana-server
-      - Kết quả: Active: active (running); cổng 3000
-    - Check Port Grafana: netstat -lntp | grep 3000
+      ``` systemctl status grafana-server ```
+      - Kết quả: `Active: active (running)`; cổng `3000`
+    - Check Port Grafana:
+      ``` netstat -lntp | grep 3000 ```
   - Mở Grafana trên Web GUI:
-    - Truy cập Grafana trên web: 172.16.20.32:3000 (IP máy cài grafana:port 3000)
-    - TK mặc định đăng nhập lần đầu: admin / admin
+    - Truy cập Grafana trên web: `172.16.20.32:3000` (IP máy cài grafana:port 3000)
+    - TK mặc định đăng nhập lần đầu: `admin / admin`
     - Đổi mk mặc định
   - Cài Plugin
     - Tìm plug in checkmk
