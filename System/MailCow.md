@@ -3,9 +3,13 @@
 ## Cài đặt MailCow trên máy Ubuntu
   - CÀI DOCKER + DEPENDENCIES CHO MAILCOW
     - Update hệ thống:
-      - apt update
-      - apt update -y
-    - Cài JQ: apt install -y jq
+      ``` apt update
+      apt update -y
+      ```
+    - Cài JQ:
+      ```
+      apt install -y jq
+      ```
     - Cài Docker:
       ```
       apt install -y ca-certificates curl gnupg lsb-release
@@ -26,29 +30,44 @@
      docker compose version
      ```
   - CLONE MAILCOW:
-    - cd /opt
-    - git clone https://github.com/mailcow/mailcow-dockerized
-    - cd mailcow-dockerized
+    ``` cd /opt
+    git clone https://github.com/mailcow/mailcow-dockerized
+    cd mailcow-dockerized
+    ```
   - KHỞI TẠO CẤU HÌNH MAILCOW:
-    - ./generate_config.sh
-    - Script sẽ hỏi: Mail server hostname (FQDN):
-    - Điền: mail.cloudnvt.km0.vn
+    ```
+    ./generate_config.sh
+    ```
+    - Script sẽ hỏi: ` Mail server hostname (FQDN):`
+    - Điền: `mail.cloudnvt.km0.vn`
   - CHỈNH CẤU HÌNH TỐI THIỂU
-    - Mở file cấu hình: nano mailcow.conf
-    - Thêm tạm: SKIP_LETS_ENCRYPT=y (tạm thời bỏ qua DNS)
+    - Mở file cấu hình:
+      ```
+      nano mailcow.conf
+      ```
+    - Thêm tạm:
+      ```
+      SKIP_LETS_ENCRYPT=y
+      ```
+      (tạm thời bỏ qua DNS)
     - Lưu file rồi chạy Mailcow lần đầu
-      - docker compose pull
-      - docker compose up -d
+      ``` docker compose pull
+      docker compose up -d
+      ```
  ---
  ## Cấu hình DNS:
    - Tạo thêm bản ghi cho MailCow (dựa trên bản ghi đã có của NextCloud và KeyCloak)
     ![Ảnh 1](?raw=1)
    - Tạo NAT và Rule cho MailCow
-     -  Tạo VIPs và mở Port dịch vụ
+     - Tạo VIPs và mở Port dịch vụ
      ![Ảnh 2](?raw=1)
-     -  Add VIPs vào Rule
+     - Add VIPs vào Rule
      ![Ảnh 3](?raw=1)
-     -  Kiểm tra: nc -vz mail.cloudnvt.km0.vn 25 (thấy success / có thể test các port khác)
+     - Kiểm tra:
+       ```
+       nc -vz mail.cloudnvt.km0.vn 25
+       ```
+        (thấy success / có thể test các port khác)
 
 ---
 ## Cấu hình MailCow
@@ -70,10 +89,14 @@
 ---
 ## HTTPS cho MailCow bằng CertBot (LƯU Ý: XIN CERT THỦ CÔNG, PHẢI GIA HẠN CERT THỦ CÔNG SAU 90 NGÀY)
   - Cài Cert Bot:
-    - apt update
-    - apt install -y certbot
-    - Kiểm tra: certbot --version
-  - Kiểm tra Cert: certbot certificates
+    ``` apt update
+    apt install -y certbot
+    Kiểm tra: certbot --version
+    ```
+  - Kiểm tra Cert:
+    ```
+    certbot certificates
+    ```
   - Xin Cert:
   ```
   certbot certonly \
@@ -87,24 +110,43 @@
   ![Ảnh 16](?raw=1)
   - Kiểm tra bản ghi TXT trên 1 PuTTY khác (giống, ok ==> quay lại PuTTY xin cert Enter): dig TXT _acme-challenge.mail2.cloudnvt.km0.vn +short
   ![Ảnh 17](?raw=1)
-  - Kiểm tra Cert: certbot certificates
+  - Kiểm tra Cert:
+    ```
+    certbot certificates
+    ```
   ![Ảnh 18](?raw=1)
-  - Xác nhận cert tồn tại: ls -l /etc/letsencrypt/live/mail.cloudnvt.km0.vn/
+  - Xác nhận cert tồn tại:
+    ```
+    ls -l /etc/letsencrypt/live/mail.cloudnvt.km0.vn/
+    ```
 
 ---
 ## Đồng bộ user từ KeyCloak sang MailCow Server (sử dụng API)
   - Tạo API cho MailCow trên MailCow Server:
-    - Di chuyển đến thư mục: cd /opt/mailcow-dockerized 
-    - Tạo API_KEY:  openssl rand -hex 32
+    - Di chuyển đến thư mục:
+      ```
+      cd /opt/mailcow-dockerized
+      ```
+    - Tạo API_KEY:
+      ```
+      openssl rand -hex 32
+      ```
     ![Ảnh 19](?raw=1)
-    - Mở file cấu hình: nano mailcow.conf
-    - Bấm Ctrl+W để tìm kiếm, tìm từ khoá "API_KEY="
+    - Mở file cấu hình:
+      ```
+      nano mailcow.conf
+      ```
+    - Bấm Ctrl+W để tìm kiếm, tìm từ khoá `API_KEY=`
     - Điền API_KEY vừa tạo, cho phép trên các IP
     ![Ảnh 20](?raw=1)
     - Lưu lại và reload docker
-      - docker compose down
-      - docker compose up -d
-    - Test API: Test lấy danh sách mailbox: curl -k https://mail.cloudnvt.km0.vn/api/v1/get/mailbox/all \-H "X-API-Key: **API_KEY_vừa_tạo**"
+      ```docker compose down
+      docker compose up -d
+      ```
+    - Test API: Test lấy danh sách mailbox:
+      ```
+      curl -k https://mail.cloudnvt.km0.vn/api/v1/get/mailbox/all \-H "X-API-Key: **API_KEY_vừa_tạo**"
+      ```
   - Tạo thư mục và môi trường chạy script:
     ```
     sudo mkdir -p /opt/keycloak_mailcow_sync
@@ -118,7 +160,10 @@
     pip install --upgrade pip
     pip install requests
     ```
-  - Tạo file cấu hình dạng env: nano /opt/keycloak_mailcow_sync/.env
+  - Tạo file cấu hình dạng env:
+    ```
+    nano /opt/keycloak_mailcow_sync/.env
+    ```
   - Paste vào file:
   ```
   MAILCOW_BASE_URL=https://mail.cloudnvt.km0.vn
@@ -133,7 +178,10 @@
   SYNC_ONLY_DOMAIN_USERS=1
   DRY_RUN=0
   ```
-  - Tạo script sync: nano /opt/keycloak_mailcow_sync/sync.py
+  - Tạo script sync:
+    ```
+    nano /opt/keycloak_mailcow_sync/sync.py
+    ```
   - Paste vào file:
   ```
   import os
