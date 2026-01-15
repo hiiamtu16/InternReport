@@ -217,34 +217,116 @@
    - Tạo file tele:
      ``` nano telegram_personal.sh ```
    - Paste mã:
+    ```bash
+    #!/bin/bash
+
+    # Telegram notification for CheckMK (Vietnamese - Docker version, numeric-state compatible)
+    # Author: ChatGPT x CuongNV (Final verified 2025)
+    
+    # Thông tin Bot và ChatID
+    BOT_TOKEN="8355983239:AAE9KZneAscdCjWC0f5baoJTI0fN_ZJMtLo"
+    CHAT_ID="-1003588408038"
+    LOGFILE="/omd/sites/monitoring/var/log/telegram_notify.log"
+    TMP_FLAG="/tmp/checkmk_${NOTIFY_HOSTNAME}.flag"
+    
+    # Cài đặt múi giờ cho Việt Nam
+    export TZ="Asia/Ho_Chi_Minh"
+    CURRENT_TIME=$(date +"%H:%M - %d/%m/%Y")
+    
+    # ===============================
+    # 1. Xác định trạng thái (CheckMK đôi khi chỉ truyền số)
+    # ===============================
+    STATE="${NOTIFY_STATE:-${NOTIFY_SHORTSTATE}}"
+    TYPE="${NOTIFY_NOTIFICATIONTYPE:-UNKNOWN}"
+    
+    case "$STATE" in
+      0|OK|UP)
+        STATE="OK"
+        ICON="✅"
+        TITLE="ĐÃ KHÔI PHỤC"
+        ;;
+      1|WARN)
+        STATE="WARN"
+        ICON="🟡"
+        TITLE="CẢNH BÁO"
+        ;;
+      2|CRIT|DOWN)
+        STATE="CRIT"
+        ICON="🔴"
+        TITLE="CẢNH BÁO NGHIÊM TRỌNG"
+        ;;
+      3|UNKNOWN)
+        STATE="UNKNOWN"
+        ICON="⚫"
+        TITLE="KHÔNG XÁC ĐỊNH"
+        ;;
+      *)
+        ICON="🔔"
+        TITLE="THÔNG BÁO"
+        ;;
+    esac
+    
+    # Nếu là thông báo khôi phục (RECOVERY) thì ép lại tiêu đề/icon cho rõ
+    if [[ "$TYPE" == "RECOVERY" ]]; then
+        ICON="✅"
+        TITLE="ĐÃ KHÔI PHỤC"
+    fi
+    
+    # ===============================
+    # 2. Chống gửi trùng (cho HOST)
+    # ===============================
+    if [ "$NOTIFY_WHAT" = "HOST" ]; then
+        if [ -f "$TMP_FLAG" ] && [ "$STATE" != "OK" ]; then
+            echo "$(date '+%F %T') - Skip duplicate host alert for ${NOTIFY_HOSTNAME}" >> "$LOGFILE"
+            exit 0
+        fi
+        if [ "$STATE" != "OK" ]; then
+            echo "recent" > "$TMP_FLAG"
+            (sleep 15 && rm -f "$TMP_FLAG") &
+        fi
+    fi
+    
+    # ===============================
+    # 3. Xây nội dung tin nhắn
+    # ===============================
+    if [ "$NOTIFY_WHAT" = "SERVICE" ]; then
+        MESSAGE="${ICON} ${TITLE}
+    Máy chủ: ${NOTIFY_HOSTNAME}
+    Dịch vụ: ${NOTIFY_SERVICEDESC}
+    Nội dung: ${NOTIFY_SERVICEOUTPUT}
+    Thời gian: ${CURRENT_TIME}"
+    else
+        MESSAGE="${ICON} ${TITLE}
+    Máy chủ: ${NOTIFY_HOSTNAME}
+    Nội dung: ${NOTIFY_HOSTOUTPUT}
+    Thời gian: ${CURRENT_TIME}"
+    fi
+
+    
+    # ===============================
+    # 4. Kiểm tra nội dung tin nhắn trước khi gửi
+    # ===============================
+    if [ -z "$MESSAGE" ]; then
+        echo "$(date '+%F %T') - Error: Message is empty for ${NOTIFY_HOSTNAME}" >> "$LOGFILE"
+        exit 1
+    fi
+    
+    # ===============================
+    # 5. Gửi Telegram
+    # ===============================
+    # Kiểm tra thông điệp có đúng không trước khi gửi
+    echo "Sending message to Telegram with content: $MESSAGE" >> "$LOGFILE"
+    
+    curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+         --data-urlencode "chat_id=${CHAT_ID}" \
+         --data-urlencode "text=${MESSAGE}" \
+         --data-urlencode "parse_mode=Markdown" >> "$LOGFILE" 2>&1
+    
+    # Ghi vào log khi đã gửi thông báo
+    echo "$(date '+%F %T') - Sent ${STATE}/${TYPE} alert for ${NOTIFY_WHAT}/${NOTIFY_HOSTNAME}" >> "$LOGFILE"
     ```
-
-#!/bin/bash
-  
-BOT_TOKEN="8512556584:AAHx3FQBvvGjOUX3SCTBAKC1lyRpjLT8A_M"
-CHAT_ID="7158697854"
-
-STATE="$NOTIFY_SERVICESTATE$NOTIFY_HOSTSTATE"
-        
-MESSAGE="🚨 -CheckMK BOT NVTU-
-
-👤 User: $NOTIFY_CONTACTNAME
-🖥 Host: -$NOTIFY_HOSTNAME-
-🧩 Service: -$NOTIFY_SERVICEDESC-
-📊 State: -$STATE-
-
-📝 Output:
-$NOTIFY_SERVICEOUTPUT
-
-🕒 Time: $NOTIFY_SHORTDATETIME
-"
-
-curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
-   -d chat_id="${CHAT_ID}" \
-   -d parse_mode="Markdown" \
-    --data-urlencode text="$MESSAGE"
-
-   - Cấp quyền chạy: chmod +x telegram_personal.sh
+   - Cấp quyền chạy:
+     ``` chmod +x telegram_personal.sh ```
    - Test bot:
      - Tìm bot vừa tạo (nvtu_checkmk_bot) nhắn: /start
      - chạy lệnh trên ssh: ./telegram_personal.sh 
