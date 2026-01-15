@@ -15,8 +15,8 @@
   - Tạo remote:   
     ![Ảnh 18](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/18.png?raw=1)
   - Tạo Pull Sync job trong DataStore trên PBS và **run now** để sync.
-    ![Ảnh 22](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/18.png?raw=1)
-    ![Ảnh 23](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/18.png?raw=1)
+    ![Ảnh 22](https://github.com/hiiamtu16/InternReport/blob/d1ea5aa41ce4cf61b45206e388dac5c3e8ce814b/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/22.png?raw=1)
+    ![Ảnh 23](https://github.com/hiiamtu16/InternReport/blob/d1ea5aa41ce4cf61b45206e388dac5c3e8ce814b/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/23.png?raw=1)
 
 ## Tạo Backup Wasabi cho nhiều PBS cùng Backup & Restore
   - Back up:
