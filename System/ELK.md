@@ -167,4 +167,49 @@
     ```
     
 ---
-##
+## Cài Filebeat trên chính máy ELK server:
+  - Cài đặt Filebeat:
+    ```
+    sudo apt-get update
+    sudo apt-get install wget apt-transport-https
+    wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+    sudo sh -c 'echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" > /etc/apt/sources.list.d/elastic-7.x.list'
+    sudo apt-get update
+    sudo apt-get install filebeat
+    ```
+  - Cấu hình Filebeat:
+    ```
+    sudo nano /etc/filebeat/filebeat.yml
+    ```
+    - Cấu hình Elasticsearch output: Tìm phần cấu hình `output.elasticsearch`
+      ```
+      output.elasticsearch:
+        hosts: ["http://localhost:9200"]
+      ```
+    - Tìm phần `filebeat.inputs` và chỉnh sửa:
+      ```
+      filebeat.inputs:
+      - type: log
+        enabled: true
+        paths:
+      - /var/log/*.log  # Theo dõi tất cả các file log trong thư mục /var/log
+      ```
+  - Bật các module của Filebeat:
+    ```
+    sudo filebeat modules enable system
+    ```
+  - Cài đặt và chạy Filebeat
+    - Cài đặt các chỉ mục 
+      ```
+      sudo filebeat setup
+      ```
+    - Khởi động Filebeat
+      ```
+      sudo systemctl start filebeat
+      sudo systemctl enable filebeat
+      ```
+    - Kiểm tra trạng thái của Filebeat:
+      ```
+      sudo systemctl status filebeat
+      ```
+  - 
