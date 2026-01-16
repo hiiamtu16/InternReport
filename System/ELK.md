@@ -162,7 +162,7 @@
   - Kiểm tra chạy OK chưa:
     - Elasticsearch:
       ```
-      curl http://localhost:9200
+      curl -u elastic:Nguyenvantu1102@ http://localhost:9200
       ```
     - Kibana: Mở trình duyệt: `http://localhost:5601`
   - Mở firewall (nếu dùng UFW)
