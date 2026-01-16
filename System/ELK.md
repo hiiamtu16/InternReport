@@ -69,14 +69,12 @@
       ```
       services:
         elasticsearch:
-          image: docker.elastic.co/elasticsearch/elasticsearch:8.12.2
+          image: docker.elastic.co/elasticsearch/elasticsearch:9.2.4
           container_name: elasticsearch
           environment:
             - discovery.type=single-node
-            - xpack.security.enabled=true  
-            - xpack.security.authc.apiKey.enabled=true  
+            - xpack.security.enabled=false
             - ES_JAVA_OPTS=-Xms1g -Xmx1g
-            - ELASTIC_PASSWORD=Nguyenvantu1102@
           ulimits:
             memlock:
               soft: -1
@@ -89,12 +87,10 @@
             - elk
       
         kibana:
-          image: docker.elastic.co/kibana/kibana:8.12.2
+          image: docker.elastic.co/kibana/kibana:9.2.4
           container_name: kibana
           environment:
             - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-            - ELASTICSEARCH_USERNAME=elastic  
-            - ELASTICSEARCH_PASSWORD=Nguyenvantu1102@
           ports:
             - "5601:5601"
           depends_on:
@@ -103,7 +99,7 @@
             - elk
       
         logstash:
-          image: docker.elastic.co/logstash/logstash:8.12.2
+          image: docker.elastic.co/logstash/logstash:9.2.4
           container_name: logstash
           ports:
             - "5044:5044"
@@ -138,8 +134,6 @@
       output {
         elasticsearch {
           hosts => ["http://elasticsearch:9200"]
-          user => "elastic"  # User elastic (hoặc user đã tạo trong Elasticsearch)
-          password => "your_password_here"  # Mật khẩu của user elastic
           index => "logs-%{+YYYY.MM.dd}"
         }
         stdout { codec => rubydebug }
