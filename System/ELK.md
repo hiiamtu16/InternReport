@@ -73,8 +73,10 @@
           container_name: elasticsearch
           environment:
             - discovery.type=single-node
-            - xpack.security.enabled=false
+            - xpack.security.enabled=true  
+            - xpack.security.authc.apiKey.enabled=true  
             - ES_JAVA_OPTS=-Xms1g -Xmx1g
+            - ELASTIC_PASSWORD=Nguyenvantu1102@
           ulimits:
             memlock:
               soft: -1
@@ -91,6 +93,8 @@
           container_name: kibana
           environment:
             - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+            - ELASTICSEARCH_USERNAME=elastic  
+            - ELASTICSEARCH_PASSWORD=Nguyenvantu1102@
           ports:
             - "5601:5601"
           depends_on:
@@ -117,7 +121,6 @@
       networks:
         elk:
           driver: bridge
-
       ```
   - Tạo cấu hình Logstash cơ bản
     - Tạo file `logstash.conf `:
@@ -135,6 +138,8 @@
       output {
         elasticsearch {
           hosts => ["http://elasticsearch:9200"]
+          user => "elastic"  # User elastic (hoặc user đã tạo trong Elasticsearch)
+          password => "your_password_here"  # Mật khẩu của user elastic
           index => "logs-%{+YYYY.MM.dd}"
         }
         stdout { codec => rubydebug }
