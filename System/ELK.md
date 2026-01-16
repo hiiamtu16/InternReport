@@ -19,6 +19,32 @@
       sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
       ```
+    - Nếu bị lỗi:
+      ```
+      Err:1 http://vn.archive.ubuntu.com/ubuntu jammy/universe amd64 pigz amd64 2.6-1 504 Gateway Timeout [IP: 113.161.78.134 80]
+      Err:2 http://vn.archive.ubuntu.com/ubuntu jammy/main amd64 libslirp0 amd64 4.6.1-1build1 504 Gateway Timeout [IP: 113.161.78.134 80]
+      Err:3 http://vn.archive.ubuntu.com/ubuntu jammy/universe amd64 slirp4netns amd64 1.0.1-2 504 Gateway Timeout [IP: 113.161.78.134 80]
+      E: Failed to fetch http://vn.archive.ubuntu.com/ubuntu/pool/universe/p/pigz/pigz_2.6-1_amd64.deb 504 Gateway Timeout [IP: 113.161.78.134 80] E: Failed to fetch http://vn.archive.ubuntu.com/ubuntu/pool/main/libs/libslirp/libslirp0_4.6.1-1build1_amd64.deb 504 Gateway Timeout [IP: 113.161.78.134 80]
+      E: Failed to fetch http://vn.archive.ubuntu.com/ubuntu/pool/universe/s/slirp4netns/slirp4netns_1.0.1-2_amd64.deb 504 Gateway Timeout [IP: 113.161.78.134 80]
+      E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
+      ```
+      - Mở file cấu hình nguồn phần mềm:
+        ```
+        sudo nano /etc/apt/sources.list
+        ```
+      - Thay tất cả các dòng bắt đầu bằng `http://vn.archive.ubuntu.com/ubuntu/` `thành http://archive.ubuntu.com/ubuntu/` (bỏ `vn.` ở đầu url đi)
+      - Lưu file và chạy lại lệnh cập nhật:
+        ```
+        sudo apt update
+        ```
+      - Cập nhật lại gói với tùy chọn:
+        ```
+        sudo apt update --fix-missing
+        ```
+      - Cập nhật hệ thống:
+        ```
+        sudo apt upgrade
+        ```
     - Test Docker:
       ```
       docker version
