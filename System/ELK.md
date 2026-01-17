@@ -264,4 +264,16 @@
       ```
       sudo systemctl status filebeat
       ```
-    -  
+---
+## Cài ELK trên pfSense
+  - Mở pfSense:
+  ![Ảnh 1](?raw=1)
+  ![Ảnh 2](?raw=1)
+  ![Ảnh 3](?raw=1)
+  ![Ảnh 4](?raw=1)
+  - Sửa lại cấu hình `logstash`:
+    - Mở file  
+    ```
+    
+    ```
+  - 
