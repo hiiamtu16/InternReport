@@ -213,3 +213,52 @@
       sudo systemctl status filebeat
       ```
   - 
+
+---
+## Cài đặt Filebeat trên máy khác
+  - Cài đặt Filebeat:
+    ```
+    sudo apt-get update
+    sudo apt-get install wget apt-transport-https
+    wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+    sudo sh -c 'echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" > /etc/apt/sources.list.d/elastic-7.x.list'
+    sudo apt-get update
+    sudo apt-get install filebeat
+    ```
+  - Cấu hình Filebeat
+    - Mở file cấu hình Filebeat:
+      ```
+      sudo nano /etc/filebeat/filebeat.yml
+      ```
+    - Cấu hình Output Elasticsearch: Trong file cấu hình, bạn cần sửa đổi phần `output.elasticsearch`
+      ```
+      output.elasticsearch:
+        hosts: ["http://172.16.20.53:9200"]
+      ```
+    - Cấu hình Input để theo dõi log: Trong file cấu hình, bạn cần sửa đổi phần `filebeat.inputs`
+      ```
+      filebeat.inputs:
+      - type: log
+        enabled: true
+        paths:
+          - /var/log/*.log  # Thư mục chứa log cần theo dõi
+      ```
+    - Bật các module cần thiết
+      ```
+      sudo filebeat modules enable system
+      ```
+  - Khởi động và kiểm tra Filebeat:
+    - Tải các chỉ mục vào Elasticsearch 
+      ```
+      sudo filebeat setup
+      ```
+    - Khởi động Filebeat
+      ```
+      sudo systemctl start filebeat
+      sudo systemctl enable filebeat
+      ```
+    - Kiểm tra trạng thái của Filebeat
+      ```
+      sudo systemctl status filebeat
+      ```
+    -  
