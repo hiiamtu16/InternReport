@@ -386,3 +386,13 @@
 ---
 ## Xem log trên Kibana:
   - Truy cập Kibana qua giao diện web: `172.16.20.53:5601` (ip máy : port 5601)
+  ![Ảnh 5](?raw=1)
+  - Xem log máy Ubuntu qua agent Filebeat:
+  ![Ảnh 6](?raw=1)
+  - Xem log pfSense:
+  ![Ảnh 7](?raw=1)
+
+---
+## Cảnh báo log -rm trong file log `cat /var/log/cmd.log`
+
+
