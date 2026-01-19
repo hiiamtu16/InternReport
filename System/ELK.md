@@ -274,6 +274,115 @@
   - Sửa lại cấu hình `logstash`:
     - Mở file  
     ```
-    
+    cd ~/elk-docker
+    nano logstash.conf
     ```
-  - 
+    - Sửa cấu hình:
+      ```
+      input {
+        beats {
+          port => 5044
+        }
+      
+        udp {
+          port => 514
+          type => "pfsense"
+        }
+      }
+      
+      filter {
+        if [type] == "pfsense" {
+          mutate {
+            add_tag => ["pfsense"]
+          }
+        }
+      }
+      
+      output {
+        if [type] == "pfsense" {
+          elasticsearch {
+            hosts => ["http://elasticsearch:9200"]
+            index => "pfsense-%{+YYYY.MM.dd}"
+          }
+        } else {
+          elasticsearch {
+            hosts => ["http://elasticsearch:9200"]
+            index => "logs-%{+YYYY.MM.dd}"
+          }
+        }
+      
+        stdout { codec => rubydebug }
+      }
+      ```
+    - Mở thêm port 514 lấy log từ pfSense trong `docker-compose.yml`:
+      ```
+      nano docker-compose.yml
+      ```
+      ```
+      services:
+        elasticsearch:
+          image: docker.elastic.co/elasticsearch/elasticsearch:9.2.4
+          container_name: elasticsearch
+          environment:
+            - discovery.type=single-node
+            - xpack.security.enabled=false
+            - ES_JAVA_OPTS=-Xms1g -Xmx1g
+          ulimits:
+            memlock:
+              soft: -1
+              hard: -1
+          volumes:
+            - esdata:/usr/share/elasticsearch/data
+          ports:
+            - "9200:9200"
+          networks:
+            - elk
+      
+        kibana:
+          image: docker.elastic.co/kibana/kibana:9.2.4
+          container_name: kibana
+          environment:
+            - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+            - XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=0123456789abcdef0123456789abcdef
+            - XPACK_SECURITY_ENCRYPTIONKEY=abcdef0123456789abcdef0123456789
+            - XPACK_REPORTING_ENCRYPTIONKEY=11223344556677889900aabbccddeeff
+          ports:
+            - "5601:5601"
+          depends_on:
+            - elasticsearch
+          networks:
+            - elk
+      
+        logstash:
+          image: docker.elastic.co/logstash/logstash:9.2.4
+          container_name: logstash
+          ports:
+            - "5044:5044"
+            - "9600:9600"
+            - "514:514/udp"          # mở port 514 nhận log
+          volumes:
+            - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+          depends_on:
+            - elasticsearch
+          networks:
+            - elk
+      
+      volumes:
+        esdata:
+      
+      networks:
+        elk:
+          driver: bridge
+      ```
+    - Restart docker:
+      ```
+      docker compose up -d
+      docker compose restart logstash
+      ```
+    - Xem log:
+      ```
+      docker logs -f logstash
+      ```
+---
+## Xem log trên Kibana:
+  - Truy cập Kibana qua giao diện web: `172.16.20.53:5601` (ip máy : port 5601)
