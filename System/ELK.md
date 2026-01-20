@@ -176,7 +176,7 @@
     sudo apt-get update
     sudo apt-get install wget apt-transport-https
     wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-    sudo sh -c 'echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" > /etc/apt/sources.list.d/elastic-7.x.list'
+    sudo sh -c 'echo "deb https://artifacts.elastic.co/packages/9.x/apt stable main" > /etc/apt/sources.list.d/elastic-9.x.list'
     sudo apt-get update
     sudo apt-get install filebeat
     ```
@@ -224,7 +224,7 @@
     sudo apt-get update
     sudo apt-get install wget apt-transport-https
     wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-    sudo sh -c 'echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" > /etc/apt/sources.list.d/elastic-7.x.list'
+    sudo sh -c 'echo "deb https://artifacts.elastic.co/packages/9.x/apt stable main" > /etc/apt/sources.list.d/elastic-9.x.list'
     sudo apt-get update
     sudo apt-get install filebeat
     ```
@@ -394,5 +394,75 @@
 
 ---
 ## Cảnh báo log -rm trong file log `cat /var/log/cmd.log`
-
+  - Mở `Filebeat` sửa `input`:
+    - Mở `Filebeat`:
+      ```
+      sudo nano /etc/filebeat/filebeat.yml
+      ```
+    - Thêm input:
+      ```
+      - type: filestream
+        id: cmdlog
+        enabled: true
+        paths:
+          - /var/log/cmd.log
+        fields:
+          log_type: cmdlog
+        fields_under_root: true
+      ```
+    - Restart:
+      ```
+      sudo systemctl restart filebeat
+      ```
+    - Test:
+      ```
+      sudo filebeat test config
+      sudo filebeat test output
+      ```
+    - Kiểm tra log:
+      ```
+      curl -s http://localhost:9200/_cat/indices?v | grep filebeat
+      ```
+    - 
+  - Sửa file Docker-compose:
+    - mở file compose:
+      ```
+      nano docker-compose.yml
+      ```
+    - Tìm service `kibana`, thêm vào phần `enviroment:` dòng:
+      ```
+      - XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=0123456789abcdef0123456789abcdef
+      ```
+    - Thoát và lưu; Restart kibana:
+      ```
+      docker compose restart kibana
+      ```
+  - Tạo BOT Telegram:
+    - Tạo Bot:
+    ![Ảnh 8](?raw=1)
+    - Lấy Chat ID
+      - Cá nhân:
+        ![Ảnh 9](?raw=1)
+      - Group:
+        - Tạo Group Telegram
+        - Add Bot
+        - Cho Bot quyền Admin Group
+        - Nhắn 1 tin nhắn vào Group
+        - Mở trình duyệt gõ (thay bot Token vào) để lấy chat id: 
+          ```
+          https://api.telegram.org/bot<TOKEN>/getUpdates
+          ```
+          ![Ảnh 10](?raw=1)
+  - Tạo Connector Bot Telegram vs Kibana:
+    ![Ảnh 12.5](?raw=1)
+    ![Ảnh 13](?raw=1)
+    ![Ảnh 14](?raw=1)
+    ![Ảnh 15](?raw=1)
+    ![Ảnh 16](?raw=1)  
+  - Tạo Rule bắt log trên Kibana
+  ![Ảnh 11](?raw=1)
+  ![Ảnh 12](?raw=1)
+  ![Ảnh 17](?raw=1)
+  ![Ảnh 18](?raw=1)
+  - 
 
