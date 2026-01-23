@@ -33,96 +33,90 @@
 ## Tạo, cấu hình Auto Backup hằng ngày:
   - Tạo file script:
     ```
-    nano /usr/local/bin/backup_fgt_pw.sh
+    nano /usr/local/bin/backup_fgt_tftp.sh
     ```
   - Script Auto backup:
     ```
     #!/bin/bash
     set -euo pipefail
     
-    # ===== FORTIGATE CONFIG =====       
+    # ===== FORTIGATE CONFIG =====
     FORTI_IP="192.168.254.4"
-    FORTI_USER="backup"  # Dùng tài khoản có quyền sao lưu (backup)
+    FORTI_USER="backup"
     FORTI_PASS="123@123a"
-    USE_GLOBAL="no"
+    FW_NAME="fw-600E"
     # ============================
     
-    # ===== BACKUP SERVER (THIS MACHINE) =====
-    BACKUP_DIR="/backup/fortinet"
-    TFTP_SERVER="172.16.5.11"        # IP máy cài TFTP server
-    TFTP_PATH="/backup/fortinet"     # Đường dẫn lưu file
+    # ===== TFTP SERVER =====
+    TFTP_SERVER="172.16.5.11"
+    # =======================
+    
+    # ===== LOCAL DIR (TFTP ROOT DIR) =====
+    # Thư mục mà TFTP server đang lưu file (để rotate/xem file)
+    TFTP_DIR="/backup/fortinet"
     KEEP=14
-    # ============================
+    # ================================
     
     # ===== TELEGRAM CONFIG =====
-    BOT_TOKEN="8363452772:AAHqUxRL6wmgKjUOR1dQjOQ4r9G4ZbVx7sg"      # Thay token bot khác
-    CHAT_ID="5557990974"                                            # Thay ID chat khác
+    BOT_TOKEN="8363452772:AAHqUxRL6wmgKjUOR1dQjOQ4r9G4ZbVx7sg"
+    CHAT_ID="-5235198580"
+    ENABLE_TELEGRAM="yes"   # yes/no
     # ==========================
-    
-    mkdir -p "$BACKUP_DIR"
-    DATE="$(date +'%Y-%m-%d_%H-%M-%S')"
-    BASENAME="fortigate_${FORTI_IP}_${DATE}.conf"
-    OUT_FILE="${BACKUP_DIR}/${BASENAME}"
-    OUT_GZ="${OUT_FILE}.gz"  # File nén sẽ có đuôi .conf.gz
-    OUT_SHA="${OUT_FILE}.sha256"
     
     send_telegram() {
       local MSG="$1"
+      [[ "$ENABLE_TELEGRAM" != "yes" ]] && return 0
       curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
            -d chat_id="${CHAT_ID}" -d text="${MSG}" >/dev/null || true
     }
     
-    echo "[*] Request FortiGate to backup config to TFTP server ${TFTP_SERVER}..."
+    DATE="$(date +'%Y-%m-%d_%H-%M-%S')"
+    REMOTE_FILE="${FW_NAME}_${DATE}.conf"
     
-    # FortiGate sẽ PUSH file về TFTP server (máy Auto)
-    # Lưu ý: FortiGate sẽ hỏi password của user SCP trên server (backupuser)
-    # => Cách chuẩn nhất là dùng SSH key (khuyến nghị). Nếu chưa dùng key thì sẽ fail.
-    REMOTE_CMD=""
+    echo "[*] Backup FortiGate ${FORTI_IP} -> TFTP ${TFTP_SERVER}"
+    echo "[*] Remote filename: ${REMOTE_FILE}"
     
-    if [[ "$USE_GLOBAL" == "yes" ]]; then
-      REMOTE_CMD=$'config global\n'
-    fi
-    
-    # Lệnh sao lưu vào bộ nhớ flash của FortiGate (đảm bảo tạo ra file cấu hình hợp lệ)
-    REMOTE_CMD+=$"execute backup config tftp ${BASENAME} ${TFTP_SERVER}\n"
-    
-    # chạy lệnh trên FortiGate
-    /usr/bin/sshpass -p "$FORTI_PASS" ssh \
-      -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=15 \
+    # Chạy backup từ FortiGate sang TFTP
+    set +e
+    sshpass -p "$FORTI_PASS" ssh \
+      -o StrictHostKeyChecking=no \
+      -o UserKnownHostsFile=/dev/null \
+      -o ConnectTimeout=15 \
       "${FORTI_USER}@${FORTI_IP}" \
-      "${REMOTE_CMD}" || true
+      "execute backup config tftp ${REMOTE_FILE} ${TFTP_SERVER}"
+    RET=$?
+    set -e
     
-    # Đợi file xuất hiện trên TFTP server (máy Auto)
-    for i in {1..20}; do
-      [[ -s "$OUT_FILE" ]] && break
-      sleep 1
-    done
-    
-    if [[ ! -s "$OUT_FILE" ]]; then
-      send_telegram "⚠️ Fortinet ${FORTI_IP}: backup FAIL lúc $(date '+%Y-%m-%d %H:%M:%S'). Không nhận được file sao lưu từ TFTP."
+    if [[ $RET -ne 0 ]]; then
+      echo "[ERR] Backup failed (FortiGate return code: $RET)"
+      send_telegram "❌ ${FW_NAME} (${FORTI_IP}): BACKUP FAIL lúc $(date '+%Y-%m-%d %H:%M:%S')"
       exit 1
     fi
     
-    # Nén file sao lưu thành định dạng .gz
-    gzip -f "$OUT_FILE"  # Nén file sao lưu
+    echo "[OK] FortiGate sent config to TFTP: ${REMOTE_FILE}"
     
-    # Tạo checksum cho file đã nén
-    sha256sum "$OUT_GZ" > "$OUT_SHA"
+    # Kiểm tra file có xuất hiện trên TFTP server không
+    if [[ -d "$TFTP_DIR" ]]; then
+      if [[ -f "${TFTP_DIR}/${REMOTE_FILE}" ]]; then
+        echo "[OK] File exists on TFTP dir: ${TFTP_DIR}/${REMOTE_FILE}"
+      else
+        echo "[WARN] File not found in ${TFTP_DIR} (TFTP may save elsewhere)"
+      fi
     
-    # rotate giữ KEEP bản
-    ls -t "${BACKUP_DIR}/fortigate_${FORTI_IP}_"*.conf.gz 2>/dev/null | tail -n +$((KEEP+1)) | xargs -r rm -f -- || true
-    ls -t "${BACKUP_DIR}/fortigate_${FORTI_IP}_"*.conf.gz.sha256 2>/dev/null | tail -n +$((KEEP+1)) | xargs -r rm -f -- || true
+      # Rotate giữ KEEP bản (chỉ xóa file đúng pattern fw-600E_*.conf)
+      ls -t "${TFTP_DIR}/${FW_NAME}_"*.conf 2>/dev/null | tail -n +$((KEEP+1)) | xargs -r rm -f -- || true
+    fi
     
-    echo "[OK] Saved $(basename "$OUT_GZ")"
-    send_telegram "✅ Fortinet ${FORTI_IP}: backup OK lúc $(date '+%Y-%m-%d %H:%M:%S'). File: $(basename "$OUT_GZ")."
+    send_telegram "✅ ${FW_NAME} (${FORTI_IP}): backup OK lúc $(date '+%Y-%m-%d %H:%M:%S'). File: ${REMOTE_FILE}"
+    exit 0
     ```
   - Cấp quyền thực thi:
     ```
-    chmod +x nano /usr/local/bin/backup_fgt_pw.sh
+    chmod +x /usr/local/bin/backup_fgt_tftp.sh
     ```
   - Thực thi lệnh:
     ```
-    /usr/local/bin/backup_fgt_pw.sh
+    /usr/local/bin/backup_fgt_tftp.sh
     ```
   - Tạo auto thực thi lệnh:
     - Mở `Crontab`:
@@ -131,7 +125,7 @@
       ```
     - Thêm lệnh:
       ```
-      35 0 * * * /usr/local/bin/backup_fgt_pw.sh >> /var/log/fortinet254_4.log 2>&1
+      35 0 * * * /usr/local/bin/backup_fgt_tftp.sh >> /var/log/fortinet254_4.log 2>&1
       ```
     - Kiểm tra:
       ```
