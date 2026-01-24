@@ -42,8 +42,8 @@
     
     # ===== FORTIGATE CONFIG =====
     FORTI_IP="192.168.254.4"
-    FORTI_USER="backup"
-    FORTI_PASS="123@123a"
+    FORTI_USER="admin"
+    FORTI_PASS="7FrbyM2x^"
     FW_NAME="fw-600E"
     # ============================
     
