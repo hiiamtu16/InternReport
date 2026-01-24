@@ -131,7 +131,4 @@
       ```
       sudo crontab -l
       ```
----
-## Chỉnh tạo user backup trên FortiGate:
-  ![Ảnh 1](?raw=1)
-  ![Ảnh 2](?raw=1)
+
