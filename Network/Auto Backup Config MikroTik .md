@@ -126,7 +126,7 @@ Gửi thông báo Telegram thành công hoặc thất bại
     /usr/local/bin/backup_mikrotik_254_2.sh
     ```
 ## 3. Tạo User Backup trên MikroTik
-![Ảnh 1](?raw=1)
+![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/0385d7bb8d08c3069e7cc1cc6aedc0b9b0ec56a8/Picture%20/Network%20/Auto%20Backup%20MikroTik/1.png?raw=1)
 
 ## 4. Tạo tự động thực thi lệnh:
   - Mở `Crontab`:
