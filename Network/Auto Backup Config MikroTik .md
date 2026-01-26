@@ -128,5 +128,17 @@ Gửi thông báo Telegram thành công hoặc thất bại
 ## 3. Tạo User Backup trên MikroTik
 ![Ảnh 1](?raw=1)
 
-## 4. Tạo thêm bản lưu trên PC local:
+## 4. Tạo tự động thực thi lệnh:
+  - Mở `Crontab`:
+    ```
+    sudo crontab -e
+    ```
+  - Thêm lệnh:
+    ```
+    10 0 * * * /usr/local/bin/backup_mikrotik_254_2.sh >> /var/log/mikrotik2.log 2>&1
+    ```
+  - Kiểm tra:
+    ```
+    sudo crontab -l
+    ```
 
