@@ -267,10 +267,10 @@
 ---
 ## Cài ELK trên pfSense
   - Mở pfSense:
-  ![Ảnh 1](?raw=1)
-  ![Ảnh 2](?raw=1)
-  ![Ảnh 3](?raw=1)
-  ![Ảnh 4](?raw=1)
+  ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/1.png?raw=1)
+  ![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/2.png?raw=1)
+  ![Ảnh 3](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/3.png?raw=1)
+  ![Ảnh 4](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/4.png?raw=1)
   - Sửa lại cấu hình `logstash`:
     - Mở file  
     ```
@@ -386,11 +386,11 @@
 ---
 ## Xem log trên Kibana:
   - Truy cập Kibana qua giao diện web: `172.16.20.53:5601` (ip máy : port 5601)
-  ![Ảnh 5](?raw=1)
+  ![Ảnh 5](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/5.png?raw=1)
   - Xem log máy Ubuntu qua agent Filebeat:
-  ![Ảnh 6](?raw=1)
+  ![Ảnh 6](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/6.png?raw=1)
   - Xem log pfSense:
-  ![Ảnh 7](?raw=1)
+  ![Ảnh 7](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/7.png?raw=1)
 
 ---
 ## Cảnh báo log -rm trong file log `cat /var/log/cmd.log`
@@ -439,10 +439,10 @@
       ```
   - Tạo BOT Telegram:
     - Tạo Bot:
-    ![Ảnh 8](?raw=1)
+    ![Ảnh 8](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/8.png?raw=1)
     - Lấy Chat ID
       - Cá nhân:
-        ![Ảnh 9](?raw=1)
+        ![Ảnh 9](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/9.png?raw=1)
       - Group:
         - Tạo Group Telegram
         - Add Bot
@@ -452,17 +452,17 @@
           ```
           https://api.telegram.org/bot<TOKEN>/getUpdates
           ```
-          ![Ảnh 10](?raw=1)
+          ![Ảnh 10](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/10.png?raw=1)
   - Tạo Connector Bot Telegram vs Kibana:
-    ![Ảnh 12.5](?raw=1)
-    ![Ảnh 13](?raw=1)
-    ![Ảnh 14](?raw=1)
-    ![Ảnh 15](?raw=1)
-    ![Ảnh 16](?raw=1)  
+    ![Ảnh 12.5](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/12.5.png?raw=1)
+    ![Ảnh 13](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/13.png?raw=1)
+    ![Ảnh 14](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/14.png?raw=1)
+    ![Ảnh 15](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/15.png?raw=1)
+    ![Ảnh 16](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/16.png?raw=1)  
   - Tạo Rule bắt log trên Kibana
-  ![Ảnh 11](?raw=1)
-  ![Ảnh 12](?raw=1)
-  ![Ảnh 17](?raw=1)
-  ![Ảnh 18](?raw=1)
+  ![Ảnh 11](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/11.png?raw=1)
+  ![Ảnh 12](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/12.png?raw=1)
+  ![Ảnh 17](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/17.png?raw=1)
+  ![Ảnh 18](https://github.com/hiiamtu16/InternReport/blob/0e0bea89ae6817909670c770f9e06ef52e95fcd7/Picture%20/Service/ELK/18.png?raw=1)
   - 
 
