@@ -57,12 +57,12 @@
  ---
  ## Cấu hình DNS:
    - Tạo thêm bản ghi cho MailCow (dựa trên bản ghi đã có của NextCloud và KeyCloak)
-    ![Ảnh 1](?raw=1)
+    ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/bdc1788022cca68d1a74f19d08a1f702a228a2d7/Picture%20/Service/MailCow/1.png?raw=1)
    - Tạo NAT và Rule cho MailCow
      - Tạo VIPs và mở Port dịch vụ
-     ![Ảnh 2](?raw=1)
+     ![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/bdc1788022cca68d1a74f19d08a1f702a228a2d7/Picture%20/Service/MailCow/2.png?raw=1)
      - Add VIPs vào Rule
-     ![Ảnh 3](?raw=1)
+     ![Ảnh 3](https://github.com/hiiamtu16/InternReport/blob/bdc1788022cca68d1a74f19d08a1f702a228a2d7/Picture%20/Service/MailCow/3.png?raw=1)
      - Kiểm tra:
        ```
        nc -vz mail.cloudnvt.km0.vn 25
@@ -105,16 +105,16 @@
     -d mail2.cloudnvt.km0.vn
   ```
   
-  ![Ảnh 15](?raw=1)
+  ![Ảnh 15](https://github.com/hiiamtu16/InternReport/blob/bdc1788022cca68d1a74f19d08a1f702a228a2d7/Picture%20/Service/MailCow/15.png?raw=1)
   - Tạo bản ghi TXT trên DNS giống với CertBot gửi thông tin
-  ![Ảnh 16](?raw=1)
+  ![Ảnh 16](https://github.com/hiiamtu16/InternReport/blob/bdc1788022cca68d1a74f19d08a1f702a228a2d7/Picture%20/Service/MailCow/16.png?raw=1)
   - Kiểm tra bản ghi TXT trên 1 PuTTY khác (giống, ok ==> quay lại PuTTY xin cert Enter): dig TXT _acme-challenge.mail2.cloudnvt.km0.vn +short
-  ![Ảnh 17](?raw=1)
+  ![Ảnh 17](https://github.com/hiiamtu16/InternReport/blob/bdc1788022cca68d1a74f19d08a1f702a228a2d7/Picture%20/Service/MailCow/17.png?raw=1)
   - Kiểm tra Cert:
     ```
     certbot certificates
     ```
-  ![Ảnh 18](?raw=1)
+  ![Ảnh 18](https://github.com/hiiamtu16/InternReport/blob/bdc1788022cca68d1a74f19d08a1f702a228a2d7/Picture%20/Service/MailCow/18.png?raw=1)
   - Xác nhận cert tồn tại:
     ```
     ls -l /etc/letsencrypt/live/mail.cloudnvt.km0.vn/
@@ -131,14 +131,14 @@
       ```
       openssl rand -hex 32
       ```
-    ![Ảnh 19](?raw=1)
+    ![Ảnh 19](https://github.com/hiiamtu16/InternReport/blob/bdc1788022cca68d1a74f19d08a1f702a228a2d7/Picture%20/Service/MailCow/19.png?raw=1)
     - Mở file cấu hình:
       ```
       nano mailcow.conf
       ```
     - Bấm Ctrl+W để tìm kiếm, tìm từ khoá `API_KEY=`
     - Điền API_KEY vừa tạo, cho phép trên các IP
-    ![Ảnh 20](?raw=1)
+    ![Ảnh 20](https://github.com/hiiamtu16/InternReport/blob/bdc1788022cca68d1a74f19d08a1f702a228a2d7/Picture%20/Service/MailCow/20.png?raw=1)
     - Lưu lại và reload docker
       ```docker compose down
       docker compose up -d
@@ -357,9 +357,9 @@
       main()
   ```
 - Cấp quyền cho MailCow:
-  ![Ảnh 21](?raw=1)
-  ![Ảnh 22](?raw=1)
-  ![Ảnh 23](?raw=1)
+  ![Ảnh 21](https://github.com/hiiamtu16/InternReport/blob/bdc1788022cca68d1a74f19d08a1f702a228a2d7/Picture%20/Service/MailCow/21.png?raw=1)
+  ![Ảnh 22](https://github.com/hiiamtu16/InternReport/blob/bdc1788022cca68d1a74f19d08a1f702a228a2d7/Picture%20/Service/MailCow/22.png?raw=1)
+  ![Ảnh 23](https://github.com/hiiamtu16/InternReport/blob/bdc1788022cca68d1a74f19d08a1f702a228a2d7/Picture%20/Service/MailCow/23.png?raw=1)
 - Chạy thử và chạy thật:
     - Chạy thử không tạo user:
       ```
@@ -368,7 +368,7 @@
       sed -i 's/^DRY_RUN=.*/DRY_RUN=1/' .env
       python3 sync.py
       ```
-      ![Ảnh 24](?raw=1)
+      ![Ảnh 24](https://github.com/hiiamtu16/InternReport/blob/bdc1788022cca68d1a74f19d08a1f702a228a2d7/Picture%20/Service/MailCow/24.png?raw=1)
     - Chạy thật: 
       ```
       sed -i 's/^DRY_RUN=.*/DRY_RUN=0/' .env
