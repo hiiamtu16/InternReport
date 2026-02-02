@@ -49,26 +49,23 @@
         ```
       - Paste nội dung sau: (tự đổi pass khác)
         ```
+        version: "3.8"
+        
         services:
           db:
             image: mariadb:10.11
             container_name: nextcloud_db
             restart: always
+            volumes:
+              - ./db:/var/lib/mysql
             environment:
               MYSQL_ROOT_PASSWORD: rootpassword
               MYSQL_DATABASE: nextcloud
               MYSQL_USER: nextcloud
               MYSQL_PASSWORD: nextcloudpassword
-            volumes:
-              - ./db:/var/lib/mysql
-            healthcheck:
-              test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-              interval: 10s
-              timeout: 5s
-              retries: 5
         
           app:
-            image: nextcloud:29-apache
+            image: nextcloud:latest
             container_name: nextcloud_app
             restart: always
             ports:
@@ -81,8 +78,7 @@
               MYSQL_USER: nextcloud
               MYSQL_PASSWORD: nextcloudpassword
             depends_on:
-              db:
-                condition: service_healthy
+              - db
 
         ```
     - Chạy Nextcloud:
@@ -122,33 +118,33 @@
     - Paste nội dung sau: (tự đổi pass khác)
     ```
     services:
-     postgres:
-      image: postgres:15
-      container_name: keycloak_db
-      restart: always
-      volumes:
-        - ./postgres:/var/lib/postgresql/data
-      environment:
-        POSTGRES_DB: keycloak
-        POSTGRES_USER: keycloak
-        POSTGRES_PASSWORD: keycloakpassword
+      postgres:
+        image: postgres:15
+        container_name: keycloak_db
+        restart: always
+        volumes:
+          - ./postgres:/var/lib/postgresql/data
+        environment:
+          POSTGRES_DB: keycloak
+          POSTGRES_USER: keycloak
+          POSTGRES_PASSWORD: keycloakpassword
     
-     keycloak:
-      image: quay.io/keycloak/keycloak:25.0.6
-      container_name: keycloak
-      restart: always
-      command: start-dev
-      ports:
-        - "8081:8080"      #dùng port 8081 né 8080 của NextCloud
-      environment:
-        KC_DB: postgres
-        KC_DB_URL_HOST: postgres
-        KC_DB_USERNAME: keycloak
-        KC_DB_PASSWORD: keycloakpassword
-        KEYCLOAK_ADMIN: admin
-        KEYCLOAK_ADMIN_PASSWORD: adminpassword
-      depends_on:
-        - postgres
+      keycloak:
+        image: quay.io/keycloak/keycloak:latest
+        container_name: keycloak
+        restart: always
+        command: start-dev
+        ports:
+          - "8081:8080"
+        environment:
+          KC_DB: postgres
+          KC_DB_URL_HOST: postgres
+          KC_DB_USERNAME: keycloak
+          KC_DB_PASSWORD: keycloakpassword
+          KEYCLOAK_ADMIN: admin
+          KEYCLOAK_ADMIN_PASSWORD: adminpassword
+        depends_on:
+          - postgres
     ```
   - Chạy KeyCloak
     ```
