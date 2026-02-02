@@ -49,23 +49,26 @@
         ```
       - Paste nội dung sau: (tự đổi pass khác)
         ```
-        version: "3.8"
-
         services:
           db:
             image: mariadb:10.11
             container_name: nextcloud_db
             restart: always
-            volumes:
-              - ./db:/var/lib/mysql
             environment:
               MYSQL_ROOT_PASSWORD: rootpassword
               MYSQL_DATABASE: nextcloud
               MYSQL_USER: nextcloud
               MYSQL_PASSWORD: nextcloudpassword
+            volumes:
+              - ./db:/var/lib/mysql
+            healthcheck:
+              test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+              interval: 10s
+              timeout: 5s
+              retries: 5
         
           app:
-            image: nextcloud:latest
+            image: nextcloud:29-apache
             container_name: nextcloud_app
             restart: always
             ports:
@@ -78,7 +81,9 @@
               MYSQL_USER: nextcloud
               MYSQL_PASSWORD: nextcloudpassword
             depends_on:
-              - db
+              db:
+                condition: service_healthy
+
         ```
     - Chạy Nextcloud:
       ```
