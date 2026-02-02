@@ -25,9 +25,9 @@
     ![Ảnh 5](?raw=1)
     - Verify backup
     ![Ảnh ](?raw=1)
-  - Restore VM 107:
-    ![Ảnh ](?raw=1)
-    ![Ảnh ](?raw=1)
+  - Restore VM 
+    ![Ảnh 15](?raw=1)
+    ![Ảnh 16](?raw=1)
 
 ---
 # Restore Backup HAPBX-AU
