@@ -108,7 +108,7 @@
   ![Ảnh 15](https://github.com/hiiamtu16/InternReport/blob/bdc1788022cca68d1a74f19d08a1f702a228a2d7/Picture%20/Service/MailCow/15.png?raw=1)
   - Tạo bản ghi TXT trên DNS giống với CertBot gửi thông tin
   ![Ảnh 16](https://github.com/hiiamtu16/InternReport/blob/bdc1788022cca68d1a74f19d08a1f702a228a2d7/Picture%20/Service/MailCow/16.png?raw=1)
-  - Kiểm tra bản ghi TXT trên 1 PuTTY khác (giống, ok ==> quay lại PuTTY xin cert Enter): dig TXT _acme-challenge.mail2.cloudnvt.km0.vn +short
+  - Kiểm tra bản ghi TXT trên 1 PuTTY khác (giống, ok ==> quay lại PuTTY xin cert Enter): `dig TXT _acme-challenge.mail2.cloudnvt.km0.vn +short`
   ![Ảnh 17](https://github.com/hiiamtu16/InternReport/blob/bdc1788022cca68d1a74f19d08a1f702a228a2d7/Picture%20/Service/MailCow/17.png?raw=1)
   - Kiểm tra Cert:
     ```
