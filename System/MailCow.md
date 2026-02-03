@@ -145,14 +145,12 @@
       ```
   - Thêm Domain MailCow vào HAProxy
     - Trên máy HAProxy: `Chỉ mở rộng https_in`
-      -
-        ```
-        acl host_mailcow hdr(host) -i mail.cloudnvt.km0.vn (acl)
-        ```
-      -
-        ```
-        use_backend mailcow_backend if host_mailcow  (rule)
-        ```
+      ```
+      acl host_mailcow hdr(host) -i mail.cloudnvt.km0.vn (acl)
+      ```
+      ```
+      use_backend mailcow_backend if host_mailcow  (rule)
+      ```
   - Tạo BackEnd MailCow:
     - Thêm vào cuối file `haproxy.cfg`:
       ```
