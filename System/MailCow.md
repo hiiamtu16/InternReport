@@ -3,7 +3,8 @@
 ## Cài đặt MailCow trên máy Ubuntu
   - CÀI DOCKER + DEPENDENCIES CHO MAILCOW
     - Update hệ thống:
-      ``` apt update
+      ```
+      apt update
       apt update -y
       ```
     - Cài JQ:
@@ -30,7 +31,8 @@
      docker compose version
      ```
   - CLONE MAILCOW:
-    ``` cd /opt
+    ```
+    cd /opt
     git clone https://github.com/mailcow/mailcow-dockerized
     cd mailcow-dockerized
     ```
@@ -51,7 +53,8 @@
       ```
       (tạm thời bỏ qua DNS)
     - Lưu file rồi chạy Mailcow lần đầu
-      ``` docker compose pull
+      ```
+      docker compose pull
       docker compose up -d
       ```
  ---
@@ -72,27 +75,28 @@
 ---
 ## Cấu hình MailCow
   - Đăng nhập trang quản trị bằng ip private (không cần port)
-    ![Ảnh 25](?raw=1)
-    ![Ảnh 26](?raw=1)
+    ![Ảnh 25](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/25.png?raw=1)
+    ![Ảnh 26](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/26.png?raw=1)
   - Add domain
-    ![Ảnh 27](?raw=1)
+    ![Ảnh 27](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/27.png?raw=1)
   - Tích hợp KeyCloak
     - Trên KeyCloak:
       - Tạo thêm Client cho MailCow
-      ![Ảnh 28](?raw=1)
-      ![Ảnh 29](?raw=1)
-      ![Ảnh 30](?raw=1)
+      ![Ảnh 28](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/28.png?raw=1)
+      ![Ảnh 29](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/29.png?raw=1)
+      ![Ảnh 30](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/30.png?raw=1)
       - Copy Secret
-      ![Ảnh 31](?raw=1)
+      ![Ảnh 31](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/31.png?raw=1)
     - Trên MailCow:
-      ![Ảnh 32](?raw=1)
+      ![Ảnh 32](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/32.png?raw=1)
   - Login bằng Keycloak:
-    ![Ảnh 33](?raw=1)
+    ![Ảnh 33](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/33.png?raw=1)
     
 ---
 ## HTTPS cho MailCow bằng CertBot (LƯU Ý: XIN CERT THỦ CÔNG, PHẢI GIA HẠN CERT THỦ CÔNG SAU 90 NGÀY)
   - Cài Cert Bot:
-    ``` apt update
+    ```
+    apt update
     apt install -y certbot
     Kiểm tra: certbot --version
     ```
