@@ -123,12 +123,21 @@
             ls -l /etc/letsencrypt/live/cloudnvt.km0.vn/
             openssl x509 -in /etc/letsencrypt/live/cloudnvt.km0.vn/fullchain.pem -noout -dates
             ```
+          - Tạo file
+            ```
+            mkdir -p /etc/haproxy/certs
+            ```
           - Ghép cert cho domain:
             ```
             sudo cat \
             /etc/letsencrypt/live/cloudnvt.km0.vn/fullchain.pem \
             /etc/letsencrypt/live/cloudnvt.km0.vn/privkey.pem \
             > /etc/haproxy/certs/cloudnvt.km0.vn.pem
+            ```
+          - Set quyền:
+            ```
+            chmod 600 /etc/haproxy/certs/cloudnvt.km0.vn.pem
+            chown root:root /etc/haproxy/certs/cloudnvt.km0.vn.pem
             ```
            ![Ảnh 35](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/35.png?raw=1)
         -  Tạo file PEM (cert) cho HAProxy:
