@@ -71,21 +71,24 @@
 
 ---
 ## Cấu hình MailCow
-  - Đăng nhập trang quản trị
-
+  - Đăng nhập trang quản trị bằng ip private (không cần port)
+    ![Ảnh 25](?raw=1)
+    ![Ảnh 26](?raw=1)
   - Add domain
-
-  - Tạo MailBox User để test dịch vụ
-
-  - Test gửi và nhận mail
-
+    ![Ảnh 27](?raw=1)
   - Tích hợp KeyCloak
     - Trên KeyCloak:
       - Tạo thêm Client cho MailCow
-     
+      ![Ảnh 28](?raw=1)
+      ![Ảnh 29](?raw=1)
+      ![Ảnh 30](?raw=1)
       - Copy Secret
+      ![Ảnh 31](?raw=1)
     - Trên MailCow:
-
+      ![Ảnh 32](?raw=1)
+  - Login bằng Keycloak:
+    ![Ảnh 33](?raw=1)
+    
 ---
 ## HTTPS cho MailCow bằng CertBot (LƯU Ý: XIN CERT THỦ CÔNG, PHẢI GIA HẠN CERT THỦ CÔNG SAU 90 NGÀY)
   - Cài Cert Bot:
@@ -119,5 +122,4 @@
     ```
     ls -l /etc/letsencrypt/live/mail.cloudnvt.km0.vn/
     ```
-
 ---
