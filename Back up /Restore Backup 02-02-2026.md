@@ -4,11 +4,9 @@
   - Kiểm tra back up:
     - Refresh Backup Wasabi
     ![Ảnh 1](?raw=1)
-    - Verify backup
-    ![Ảnh ](?raw=1)
   - Restore VM:
-    ![Ảnh ](?raw=1)
-    ![Ảnh ](?raw=1)
+    ![Ảnh 17](?raw=1)
+    ![Ảnh 18](?raw=1)
 
 ## Restore Local
   - Kiểm tra back up:
