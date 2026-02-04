@@ -5,7 +5,7 @@
     - Update hệ thống:
       ```
       apt update
-      apt update -y
+      apt upgrade -y
       ```
     - Cài JQ:
       ```
@@ -98,7 +98,7 @@
     ```
     apt update
     apt install -y certbot
-    Kiểm tra: certbot --version
+    certbot --version
     ```
   - Kiểm tra Cert:
     ```
