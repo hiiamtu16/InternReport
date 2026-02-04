@@ -70,28 +70,7 @@
        ```
        nc -vz mail.cloudnvt.km0.vn 25
        ```
-        (thấy success / có thể test các port khác)
-
----
-## Cấu hình MailCow
-  - Đăng nhập trang quản trị bằng ip private (không cần port)
-    ![Ảnh 25](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/25.png?raw=1)
-    ![Ảnh 26](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/26.png?raw=1)
-  - Add domain
-    ![Ảnh 27](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/27.png?raw=1)
-  - Tích hợp KeyCloak
-    - Trên KeyCloak:
-      - Tạo thêm Client cho MailCow
-      ![Ảnh 28](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/28.png?raw=1)
-      ![Ảnh 29](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/29.png?raw=1)
-      ![Ảnh 30](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/30.png?raw=1)
-      - Copy Secret
-      ![Ảnh 31](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/31.png?raw=1)
-    - Trên MailCow:
-      ![Ảnh 32](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/32.png?raw=1)
-  - Login bằng Keycloak:
-    ![Ảnh 33](https://github.com/hiiamtu16/InternReport/blob/0ad5c6aa59b62c930cf47d28ca35fda559b7fcef/Picture%20/Service/MailCow/33.png?raw=1)
-    
+        (thấy success / có thể test các port khác)    
 ---
 ## HTTPS cho MailCow bằng CertBot (LƯU Ý: XIN CERT THỦ CÔNG, PHẢI GIA HẠN CERT THỦ CÔNG SAU 90 NGÀY)
   - Cài Cert Bot:
