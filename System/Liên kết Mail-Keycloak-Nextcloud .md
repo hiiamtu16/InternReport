@@ -61,7 +61,7 @@
 
 - Cấu hình tự động:
   - Tạo bản ghi MX
-  ![Ảnh 24](?raw=1)
+  ![Ảnh 24](https://github.com/hiiamtu16/InternReport/blob/0c29cc1078e117902a8b5e84fa8502403239e697/Picture%20/Service/Li%C3%AAn%20k%E1%BA%BFt%20Mail-Cloud-Keycloak/24.png?raw=1)
   - Login Mail Auto
-  ![Ảnh 25](?raw=1)
-  ![Ảnh 26](?raw=1)
+  ![Ảnh 25](https://github.com/hiiamtu16/InternReport/blob/0c29cc1078e117902a8b5e84fa8502403239e697/Picture%20/Service/Li%C3%AAn%20k%E1%BA%BFt%20Mail-Cloud-Keycloak/25.png?raw=1)
+  ![Ảnh 26](https://github.com/hiiamtu16/InternReport/blob/0c29cc1078e117902a8b5e84fa8502403239e697/Picture%20/Service/Li%C3%AAn%20k%E1%BA%BFt%20Mail-Cloud-Keycloak/26.png?raw=1)
