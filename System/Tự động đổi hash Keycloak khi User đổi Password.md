@@ -83,7 +83,7 @@ FLASK_RUN_HOST=127.0.0.1 FLASK_RUN_PORT=18080 flask run
     -d '{"password":"abcabc"}'
   ```
 
-## 2. Nghe sự kiện đổi Password trong Keycloak
+## 2. Nghe sự kiện đổi Password trong Keycloak (Required Action - LỖI KHÔNG CHẠY ĐC)
 ### 2.1 Tạo Required Action Provider
 - Flow trong Required Action:
     - User đổi password
@@ -354,4 +354,296 @@ docker compose up -d
   - Vào Web GUI Keycloak:
   ![Ảnh 2](?raw=1)
   ![Ảnh 3](?raw=1)
+- 
+
+## 3. Làm Event Listener ( MỚI - THAY CHO ##2)
+### Tạo Project Maven cho Keycloak Provider (trên VM Keycloak)
+- Tạo thư mục
+```
+mkdir -p /root/kc-mailcow-event-listener
+cd /root/kc-mailcow-event-listener
+```
+- Tạo pom.xml
+```
+nano pom.xml
+```
+- Nội dung: 
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>vn.cloudnvt</groupId>
+  <artifactId>kc-mailcow-event-listener</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <keycloak.version>26.5.2</keycloak.version>
+  </properties>
+
+  <dependencies>
+
+    <!-- Keycloak SPI -->
+    <dependency>
+      <groupId>org.keycloak</groupId>
+      <artifactId>keycloak-server-spi</artifactId>
+      <version>${keycloak.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- BẮT BUỘC: chứa org.keycloak.Config -->
+    <dependency>
+      <groupId>org.keycloak</groupId>
+      <artifactId>keycloak-server-spi-private</artifactId>
+      <version>${keycloak.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.keycloak</groupId>
+      <artifactId>keycloak-services</artifactId>
+      <version>${keycloak.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+  </dependencies>
+
+</project>
+```
+- Lưu và thoát.
+
+### Viết Event Listener
+- Tạo thư mục
+```
+mkdir -p /root/kc-mailcow-event-listener
+cd /root/kc-mailcow-event-listener
+```
+- Tạo pom.xml
+```
+nano pom.xml
+```
+- Nội dung:
+```
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>vn.cloudnvt</groupId>
+    <artifactId>kc-mailcow-event-listener</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <keycloak.version>26.5.2</keycloak.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-server-spi</artifactId>
+            <version>${keycloak.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-server-spi-private</artifactId>
+            <version>${keycloak.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-services</artifactId>
+            <version>${keycloak.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>
+```
+- Tạo package + class
+```
+mkdir -p src/main/java/vn/cloudnvt/keycloak/event
+```
+- Tạo `MailcowPasswordEventListener.java`
+```
+nano MailcowPasswordEventListener.java
+```
+- Nội dung:
+```
+package vn.cloudnvt.keycloak.event;
+
+import org.keycloak.events.Event;
+import org.keycloak.events.EventType;
+import org.keycloak.events.EventListenerProvider;
+import org.keycloak.models.KeycloakSession;
+import org.keycloak.models.RealmModel;
+import org.keycloak.models.UserModel;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class MailcowPasswordEventListener implements EventListenerProvider {
+
+    private final KeycloakSession session;
+
+    public MailcowPasswordEventListener(KeycloakSession session) {
+        this.session = session;
+    }
+
+    @Override
+    public void onEvent(Event event) {
+        if (event.getType() != EventType.UPDATE_PASSWORD) {
+            return;
+        }
+
+        RealmModel realm = session.realms().getRealm(event.getRealmId());
+        UserModel user = session.users().getUserById(realm, event.getUserId());
+
+        if (user == null) return;
+
+        String username = user.getUsername();
+        System.out.println("[MAILCOW-EVENT] User updated password: " + username);
+
+        try {
+            String json = "{\"username\":\"" + username + "\"}";
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("http://mailcow-hash-api:18080/hash"))
+                    .header("Content-Type", "application/json")
+                    .header("X-Auth-Token", "CHANGE_ME_SECRET")
+                    .POST(HttpRequest.BodyPublishers.ofString(json))
+                    .build();
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpResponse<String> response =
+                    client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                String hash = response.body();
+                user.setSingleAttribute("mailcow_password", hash);
+                System.out.println("[MAILCOW-EVENT] mailcow_password updated");
+            } else {
+                System.err.println("[MAILCOW-EVENT] API error " + response.statusCode());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void close() {
+    }
+}
+```
+- Tạo `MailcowPasswordEventListenerFactory.java`
+```
+nano MailcowPasswordEventListenerFactory.java
+```
+- Nội dung:
+```
+package vn.cloudnvt.keycloak.event;
+
+import org.keycloak.Config;
+import org.keycloak.events.EventListenerProvider;
+import org.keycloak.events.EventListenerProviderFactory;
+import org.keycloak.models.KeycloakSession;
+import org.keycloak.models.KeycloakSessionFactory;
+
+public class MailcowPasswordEventListenerFactory
+        implements EventListenerProviderFactory {
+
+    @Override
+    public EventListenerProvider create(KeycloakSession session) {
+        return new MailcowPasswordEventListener(session);
+    }
+
+    @Override
+    public void init(Config.Scope config) {
+    }
+
+    @Override
+    public void postInit(KeycloakSessionFactory factory) {
+    }
+
+    @Override
+    public void close() {
+    }
+
+    @Override
+    public String getId() {
+        return "mailcow-password-event";
+    }
+}
+```
+- 
+### Đăng kí SIP
+- Tạo file service loader
+```
+mkdir -p src/main/resources/META-INF/services
+```
+- Tạo file SPI
+```
+nano src/main/resources/META-INF/services/org.keycloak.events.EventListenerProviderFactory
+```
+- Nội dung
+```
+vn.cloudnvt.keycloak.event.MailcowPasswordEventListenerFactory
+```
+- BUILD JAR
+```
+mvn clean package
+```
+- Sau khi xong sẽ có file: `target/kc-mailcow-event-listener-1.0.0.jar`
+
+### CÀI VÀO KEYCLOAK
+- Copy JAR vào Keycloak
+```
+mkdir -p /root/keycloak/providers
+cp /root/kc-mailcow-event-listener/target/kc-mailcow-event-listener-1.0.0.jar \
+   /root/keycloak/providers/
+```
+- Kiểm tra:
+```
+ls -lh /root/keycloak/providers
+```
+- thấy file `.jar`
+- Mount providers vào container Keycloak:
+  - Mở file docker compose của Keycloak: 
+  ```
+  nano /root/keycloak/compose.yml
+  ```
+  ![Ảnh 1](?raw=1)
+- Rebuild Keycloak
+```
+cd /root/keycloak
+docker compose down
+docker compose up -d
+```
+- Vào container build lại:
+```
+docker exec -it keycloak /opt/keycloak/bin/kc.sh build
+docker restart keycloak
+```
+- Xác nhận Keycloak đã load Event Listener
+  - Kiểm tra
+  ```
+  docker logs keycloak | grep mailcow
+  ```
+  - Thấy ` mailcow-password-event-listener ...`
 - 
