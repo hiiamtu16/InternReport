@@ -55,5 +55,13 @@
    ![Ảnh 21](https://github.com/hiiamtu16/InternReport/blob/8c45c3099e248952e48466d1437119bb40ab026e/Picture%20/Service/Li%C3%AAn%20k%E1%BA%BFt%20Mail-Cloud-Keycloak/21.png?raw=1)
 
 ## Cấu hình Mail trên Nextcloud
+- Cấu hình thủ công
    ![Ảnh 22](https://github.com/hiiamtu16/InternReport/blob/8c45c3099e248952e48466d1437119bb40ab026e/Picture%20/Service/Li%C3%AAn%20k%E1%BA%BFt%20Mail-Cloud-Keycloak/22.png?raw=1)
    ![Ảnh 23](https://github.com/hiiamtu16/InternReport/blob/8c45c3099e248952e48466d1437119bb40ab026e/Picture%20/Service/Li%C3%AAn%20k%E1%BA%BFt%20Mail-Cloud-Keycloak/23.png?raw=1)
+
+- Cấu hình tự động:
+  - Tạo bản ghi MX
+  ![Ảnh 24](?raw=1)
+  - Login Mail Auto
+  ![Ảnh 25](?raw=1)
+  ![Ảnh 26](?raw=1)
