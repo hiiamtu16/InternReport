@@ -288,3 +288,13 @@
     exit 1
   fi
   ```
+
+## Auto
+- `crontab -e`:
+  ```
+  0 4 * * * /usr/local/bin/backup_daily.sh
+  0 23 * * 0 /usr/local/bin/backup_weekly.sh
+  */5 * * * * docker exec -u www-data nextcloud-app php -f cron.php
+  40 11 * * * /root/rclone-nextcloud-backup-30d-telegram.sh
+  0 2 * * 0 /root/rclone-nextcloud-full-backup-telegram.sh
+  ```
