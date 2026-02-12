@@ -24,7 +24,8 @@
       | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
      ```
    - Thêm Docker repository:
-     ``` echo \
+     ```
+     echo \
       "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
       https://download.docker.com/linux/ubuntu \
       $(lsb_release -cs) stable" \
