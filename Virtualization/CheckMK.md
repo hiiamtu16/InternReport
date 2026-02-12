@@ -32,11 +32,14 @@
       | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
      ```
    - Cài Docker Engine:
-     ```sudo apt update
+     ```
+     sudo apt update
      sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
      ```
    - Kiểm tra Docker:
-     ``` docker --version ```
+     ```
+     docker --version
+     ```
   ### Cài đặt CheckMK trên máy Ubuntu
    - Link tải CheckMK: https://checkmk.com/download?platform=docker&edition=cce_trial
     ![Ảnh 8](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/8.png?raw=1)
