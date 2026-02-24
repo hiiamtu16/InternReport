@@ -15,11 +15,13 @@
  
   ### Cài đặt Docker trên máy Ubuntu
    - Cài đặt các gói cần thiết:
-     ``` sudo apt update
-      sudo apt install -y ca-certificates curl gnupg lsb-release
+     ```
+     sudo apt update
+     sudo apt install -y ca-certificates curl gnupg lsb-release
      ```
    - Thêm Docker GPG key:
-     ``` sudo mkdir -p /etc/apt/keyrings
+     ```
+     sudo mkdir -p /etc/apt/keyrings
       curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
       | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
      ```
@@ -80,14 +82,16 @@
       (scp "tên file agent" user@"IP Ubuntu":/tmp/)
       ![Ảnh 16](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/16.png?raw1=)
     - Mở PuTTY SSH vào máy Ubuntu, chạy:
-      ``` sudo dpkg -i /tmp/check-mk-agent_2.4.0p18-dd0c018da230719a_all.deb (thay tên file)
+      ```
+      sudo dpkg -i /tmp/check-mk-agent_2.4.0p18-dd0c018da230719a_all.deb (thay tên file)
       sudo apt -f install -y
       ```
     - Kiểm tra agent:
       ```
       systemctl status check-mk-agent.socket
       ```
-      ![Ảnh 17](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/17.png?raw1=)
+  
+  ![Ảnh 17](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/17.png?raw1=)
   - Chạy Monitor trên CheckMK
   ![Ảnh 18](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/18.png?raw1=)
   ![Ảnh 19](https://github.com/hiiamtu16/InternReport/blob/b7d47d9b13fd5d08aebd118cd66c0bf875434a1e/Picture%20/Virtualization/CheckMK/19.png?raw1=)
