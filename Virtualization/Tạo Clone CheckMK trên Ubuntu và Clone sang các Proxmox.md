@@ -29,9 +29,13 @@
   ![Ảnh 11](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/11.png?raw=1)
   - Cấu hình IP tĩnh:
     - Xem card mạng và ip đang chạy: ```ip a```
-    - Mở file netplan: ```sudo nano /etc/netplan/*.yaml```
+    - Mở file netplan:
+      ```
+      sudo nano /etc/netplan/*.yaml
+      ```
     - Đặt IP tĩnh:
-      ```yaml
+      ```
+      yaml
       network:
         version: 2
         renderer: networkd
@@ -50,15 +54,20 @@
       ```
     - Thoát và save file.
     - Áp dụng cấu hình:
-      ```bash
+      ```
+      bash
       sudo netplan apply
       ip a
       ip route
       ```
   - Cho phép SSH từ tài khoản root:
-    - Tạo password cho root: ```sudo passwd root```
+    - Tạo password cho root:
+      ```
+      sudo passwd root
+      ```
     - Cài editor:
-      ```bash
+      ```
+      bash
       sudo apt update
       sudo apt install -y nano
       ```
@@ -67,14 +76,16 @@
         - ```PermitRootLogin yes```
         - ```PasswordAuthentication yes```
       - Test & Restart:
-        ```bash
+        ```
+        bash
         sudo sshd -t
         sudo systemctl restart ssh
         ```
 
 ## 3. Cài CHECK MK
   - Cài Check MK theo yêu cầu:
-    ```bash
+    ```
+    bash
     sudo apt update
     sudo apt install -y ca-certificates curl gnupg lsb-release
     sudo mkdir -p /etc/apt/keyrings
@@ -91,21 +102,25 @@
     sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
     ```
   - Kiểm tra:
-    ```bash
+    ```
+    bash
     docker --version
     docker compose version
     ```
   - Tạo thư mục lưu theo yêu cầu:
-    ```bash
+    ```
+    bash
     sudo mkdir -p /opt/checkmk/data
     cd /opt/checkmk
     ```
   - Tạo file `docker-compose.yml`:
-    ```bash
+    ```
+    bash
     nano docker-compose.yml
     ```
   - Paste vào nội dung:
-    ```yaml
+    ```
+    yaml
     version: '3.8'
       services:
         checkmk:
@@ -125,7 +140,8 @@
             CMK_LIVESTATUS_TCP: "on"
     ```
   - Chạy CheckMK:
-    ```bash
+    ```
+    bash
     docker compose up -d
     ```
 
@@ -134,7 +150,8 @@
     - Tạo S3 endpoint chung để backup & restore  
     ![Ảnh 12](https://github.com/hiiamtu16/InternReport/blob/49906d15f7361a434e45365a68800950d565df10/Picture%20/Virtualization/T%E1%BA%A1o%20Clone%20CheckMK%20tr%C3%AAn%20Ubuntu/12.png?raw=1)
     - Tạo Local Cache (mở SSH PBS):
-      ```bash
+      ```
+      bash
       mkdir -p /var/lib/proxmox-backup/wasabi/clone-checkmk
       chown -R backup:backup /var/lib/proxmox-backup
       chmod 700 /var/lib/proxmox-backup
@@ -161,16 +178,19 @@
 
 ## 6. Tạo Remote Backup trên PBS
   - Tạo thư mục lưu:
-    ```bash
+    ```
+    bash
     sudo mkdir -p /mnt/datastore/clone-vm/
     ```
   - Cấp quyền:
-    ```bash
+    ```
+    bash
     sudo chown -R www-data:www-data /mnt/datastore/
     ```
   - Backing Path copy vào PBS: ```/mnt/datastore/clone-vm/```
   - Lấy IP Public của PBS:
-    ```bash
+    ```
+    bash
     curl ifconfig.me
     ```
   - Tạo remote:   
@@ -179,10 +199,12 @@
 
 ## 7. Tạo Bot gửi thông báo Group
   - Tạo thư mục dưới quyền user cmk:
-    ```bash
+    ```
+    bash
     sudo docker exec -it checkmk bash
     ```
-    ```bash
+    ```
+    bash
     su - cmk
     apt update
     apt install nano -y
@@ -191,7 +213,8 @@
     ```
     
   - Nội dung Script:
-    ```bash
+    ```
+    bash
     #!/bin/bash
 
     # Telegram notification for CheckMK (Vietnamese - Docker version, numeric-state compatible)
@@ -300,7 +323,8 @@
     echo "$(date '+%F %T') - Sent ${STATE}/${TYPE} alert for ${NOTIFY_WHAT}/${NOTIFY_HOSTNAME}" >> "$LOGFILE"
     ```
     - Cập nhật quyền thực thi, quyền ghi file log và khởi động lại omd:
-      ```bash
+      ```
+      bash
       touch /omd/sites/monitoring/var/log/telegram_notify.log
       chmod 666 /omd/sites/monitoring/var/log/telegram_notify.log
       chmod -R 777 /omd/sites/monitoring/var/log/
