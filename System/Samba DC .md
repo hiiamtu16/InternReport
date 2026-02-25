@@ -45,38 +45,38 @@
   ```
   - Nội dung
   ```
-  version: "3.8"
-
-services:
-  samba-dc:
-    image: instantlinux/samba-dc
-    container_name: samba-dc
-    hostname: dc1
-    environment:
-      REALM: OCTOPOOL.LOCAL
-      DOMAIN: OCTOPOOL
-      ADMIN_PASSWORD: Admin@123
-      DNS_FORWARDER: 8.8.8.8
-    volumes:
-      - ./data:/var/lib/samba
-    ports:
-      - "53:53"
-      - "53:53/udp"
-      - "88:88"
-      - "88:88/udp"
-      - "135:135"
-      - "137:137/udp"
-      - "138:138/udp"
-      - "139:139"
-      - "389:389"
-      - "389:389/udp"
-      - "445:445"
-      - "464:464"
-      - "464:464/udp"
-      - "636:636"
-      - "3268:3268"
-      - "3269:3269"
-    restart: unless-stopped
+    version: "3.8"
+  
+  services:
+    samba-dc:
+      image: instantlinux/samba-dc
+      container_name: samba-dc
+      hostname: dc1
+      environment:
+        REALM: OCTOPOOL.LOCAL
+        DOMAIN: OCTOPOOL
+        ADMIN_PASSWORD: Admin@123
+        DNS_FORWARDER: 8.8.8.8
+      volumes:
+        - ./data:/var/lib/samba
+      ports:
+        - "53:53"
+        - "53:53/udp"
+        - "88:88"
+        - "88:88/udp"
+        - "135:135"
+        - "137:137/udp"
+        - "138:138/udp"
+        - "139:139"
+        - "389:389"
+        - "389:389/udp"
+        - "445:445"
+        - "464:464"
+        - "464:464/udp"
+        - "636:636"
+        - "3268:3268"
+        - "3269:3269"
+      restart: unless-stopped
   ```
   ### Chạy Samba DC
   - Up:
