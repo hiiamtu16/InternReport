@@ -1,0 +1,20 @@
+1
+Copy partition table từ sda sang sdb rồi zpool replace để rebuild RAID-1
+
+2
+Chạy sgdisk copy partition table và zpool replace để bắt đầu resilver
+
+3
+Chạy zpool replace và theo dõi resilver progress
+
+4
+Kiểm tra resilver hoàn thành và cài bootloader lên sdb
+
+5
+Cài GRUB bootloader lên sdb để boot được từ ổ mới
+
+6
+Dùng proxmox-boot-tool để cài bootloader lên sdb
+
+7
+Xóa UUID cũ 57AD-B8C8 khỏi proxmox-boot-uuids và verify final statu
