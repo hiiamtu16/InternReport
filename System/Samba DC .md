@@ -213,3 +213,9 @@ sudo samba-tool user create tunv1
 ```
 123@123a
 ```
+
+## Join Domain
+- Trỏ DNS về DC
+- Join domain bằng tài khoản administrator
+- Login bằng tài khoản người dùng
+- Kết quả:
