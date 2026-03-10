@@ -219,3 +219,4 @@ sudo samba-tool user create tunv1
 - Join domain bằng tài khoản administrator
 - Login bằng tài khoản người dùng
 - Kết quả:
+  ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/f6b89423446c5b2b2961e8c03cfd20afcc629c9d/Picture%20/Service/SambaDC/1.png?raw=1)
