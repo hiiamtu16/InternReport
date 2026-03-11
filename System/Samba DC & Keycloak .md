@@ -8,7 +8,7 @@
   ```
   - Test trên DC:
   ```
-  ldapsearch -x -H ldap://127.0.0.1 -b "dc=tunv,dc=local"
+  ldapsearch -x -H ldap://127.0.0.1 -b "dc=tunv,dc=cloudnvt.km0.vn"
   ```
   - Test User:
   ```
