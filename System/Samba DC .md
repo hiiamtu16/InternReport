@@ -8,7 +8,7 @@ sudo apt upgrade -y
 ```
 - Đặt hostname
 ```
-sudo hostnamectl set-hostname tunv-dc
+sudo hostnamectl set-hostname tunv
 ```
 
 ## Cấu hình IP
@@ -24,14 +24,15 @@ network:
     eth0:
       dhcp4: no
       addresses:
-        - 172.16.20.81/24
+        - 172.16.20.84/24
       routes:
         - to: default
           via: 172.16.20.1
       nameservers:
         addresses:
+          - 127.0.0.1
           - 8.8.8.8
-          - 1.1.1.1
+          
 ```
 - Thoát và Lưu cấu hình
 - Apply
@@ -50,7 +51,8 @@ sudo nano /etc/hosts
 ```
 - Thêm dòng
 ```
-172.16.20.81 tunv-dc.tunv.local tunv-dc
+127.0.0.1 localhost
+172.16.20.84 tunv.cloudnvt.km0.vn tunv
 ```
 
 ## Cài Package Samba DC
@@ -61,15 +63,15 @@ sudo apt install samba krb5-config winbind smbclient dnsutils -y
 ```
 - Default realm nhập:
 ```
-TUNV.LOCAL
+CLOUDNVT.KM0.VN
 ```
 - Kerberos servers for your realm nhập:
 ```
-tunv-dc.tunv.local
+tunv.cloudnvt.km0.vn
 ```
 - Administrative server for your Kerberos realm nhập:
 ```
-tunv-dc.tunv.local
+tunv.cloudnvt.km0.vn
 ```
 
 ## Tạo Domain Controller
@@ -86,7 +88,7 @@ sudo samba-tool domain provision
 - Nhập các thông tin sau:
   - Realm:
     ```
-    TUNV.LOCAL
+    CLOUDNVT.KM0.VN
     ```
   - Domain:
    ```
@@ -143,18 +145,19 @@ sudo apt install krb5-user -y
   - Sửa toàn bộ nội dung thành:
   ```
   [libdefaults]
-   default_realm = TUNV.LOCAL
-   dns_lookup_realm = false
-   dns_lookup_kdc = true
+          default_realm = CLOUDNVT.KM0.VN
+          dns_lookup_realm = false
+          dns_lookup_kdc = true
   
   [realms]
-   TUNV.LOCAL = {
-    default_domain = tunv.local
-   }
+  CLOUDNVT.KM0.VN = {
+          default_domain = cloudnvt.km0.vn
+          admin_server = tunv.cloudnvt.km0.vn
+  }
   
   [domain_realm]
-   .tunv.local = TUNV.LOCAL
-   tunv.local = TUNV.LOCAL
+          .cloudnvt.km0.vn = CLOUDNVT.KM0.VN
+          cloudnvt.km0.vn = CLOUDNVT.KM0.VN
   ```
 - Sửa DNS listen IPv4
   - Mở file
@@ -173,7 +176,7 @@ sudo apt install krb5-user -y
    ```
   - Test lại DNS
     ```
-    host -t SRV _ldap._tcp.tunv.local
+    host -t SRV _ldap._tcp.tunv.cloudnvt.km0.vn
     ```
 - Chạy lệnh
 ```
@@ -186,7 +189,7 @@ klist
 ```
 ### Test DNS Domain
 ```
-host -t A tunv.local
+host -t A tunv.cloudnvt.km0.vn
 ```
 
 ### Đổi DNS của server về chính nó
