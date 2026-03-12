@@ -223,3 +223,19 @@ sudo samba-tool user create tunv1
 - Login bằng tài khoản người dùng
 - Kết quả:
   ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/f6b89423446c5b2b2961e8c03cfd20afcc629c9d/Picture%20/Service/SambaDC/1.png?raw=1)
+
+## Tắt hiệu lực pass cũ sau khi đổi pass
+- Mở file config
+```
+sudo nano /etc/samba/smb.conf
+```
+- Thêm vào phần `[global]`:
+```
+ntlm auth = yes
+old password allowed period = 0
+```
+- Giá trị: 0  → không cho password cũ dùng
+- Sau đó restart Samba:
+```
+systemctl restart samba-ad-dc
+```
