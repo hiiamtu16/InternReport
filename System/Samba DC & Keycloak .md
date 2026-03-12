@@ -48,9 +48,9 @@ samba-tool user create ldapbind
   - Lệnh này trả về DN của `ldapbind` là OK
 
 ## Cấu hình trên KeyCloak
-![Ảnh 1](?raw=1)
-![Ảnh 2](?raw=1)
-![Ảnh 3](?raw=1)
-![Ảnh 4](?raw=1)
-![Ảnh 5](?raw=1)
+![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/55e72a4720066422dd31ba818ba8a669aff92285/Picture%20/Service/Samba%20%26%20Keycloak/1.png?raw=1)
+![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/55e72a4720066422dd31ba818ba8a669aff92285/Picture%20/Service/Samba%20%26%20Keycloak/2.png?raw=1)
+![Ảnh 3](https://github.com/hiiamtu16/InternReport/blob/55e72a4720066422dd31ba818ba8a669aff92285/Picture%20/Service/Samba%20%26%20Keycloak/3.png?raw=1)
+![Ảnh 4](https://github.com/hiiamtu16/InternReport/blob/55e72a4720066422dd31ba818ba8a669aff92285/Picture%20/Service/Samba%20%26%20Keycloak/4.png?raw=1)
+![Ảnh 5](https://github.com/hiiamtu16/InternReport/blob/55e72a4720066422dd31ba818ba8a669aff92285/Picture%20/Service/Samba%20%26%20Keycloak/5.png?raw=1)
 
