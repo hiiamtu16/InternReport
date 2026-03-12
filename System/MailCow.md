@@ -196,4 +196,4 @@
       docker compose up -d
       ```
 ## Cấu hình MailCow đăng nhập bằng LDAP Samba DC
-  ![Ảnh 34](?raw=1)
+  ![Ảnh 34](https://github.com/hiiamtu16/InternReport/blob/6054b76e586ba057d3ddd3d6aa4547f4413ae597/Picture%20/Service/MailCow/34.png?raw=1)
