@@ -54,10 +54,42 @@ services:
 ```
 sudo docker-compose up -d
 ```
+
+### Accept iptables
+- kiểm tra:
+```
+sudo iptables -L -n -v
+```
+- accept tất cả:
+```
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+```
+- Kiểm ra Docker:
+```
+sudo iptables -S
+```
+- 
+
 ### Truy cập hệ thống
-- Mở trình duyệt:
+- Mở trình duyệt: (ip máy port 8080)
+```
+http://172.16.20.112:8080 
+```
+- Tạo tài khoản `root`:
+```
+sudo docker exec -it gitlab gitlab-rails console
+```
+- Nhập lần lượt: (tự thay đổi thông tin mật khẩu)
+```
+u = User.find_by_username('root')
+u.password = 'MatKhauMoi123!'
+u.password_confirmation = 'MatKhauMoi123!'
+u.password_automatically_set = false
+u.save!
+exit
 ```
 
-```
 - 
 
