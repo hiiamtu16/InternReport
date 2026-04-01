@@ -90,6 +90,90 @@ u.password_automatically_set = false
 u.save!
 exit
 ```
+- Đăng nhập bằng tài khoản admin:
+![Ảnh 1](?raw=1)
+![Ảnh 2](?raw=1)
+- Tạo tài khoản user
+![Ảnh 3](?raw=1)
+![Ảnh 4](?raw=1)
+- Admin duyệt
+![Ảnh 5](?raw=1)
+- User login bằng username
+![Ảnh 6](?raw=1)
+![Ảnh 7](?raw=1)
+- User login bằng email
+![Ảnh 8](?raw=1)
+![Ảnh 7](?raw=1)
 
+## Lưu Logs hệ thống (GitLab Docker) sang 1 ổ mới
+### Add thêm ổ trên phần cứng
+- Bước 1: format ổ mới
+```
+sudo mkfs.ext4 /dev/sdb
+```
+- Bước 2: tạo mount point
+```
+sudo mkdir -p /mnt/gitlab-data
+```
+- Bước 3: mount thử
+```
+sudo mount /dev/sdb /mnt/gitlab-data
+```
+  - Check:
+  ```
+  df -h
+  ```
+  - phải thấy:
+  ```
+  /dev/sdb  -> /mnt/gitlab-data
+  ```
+- Bước 4: stop GitLab
+```
+sudo docker-compose down
+```
+- Bước 5: copy dữ liệu sang ổ mới
+```
+sudo rsync -av /srv/gitlab/ /mnt/gitlab-data/
+```
+- Bước 6: backup thư mục cũ (phòng lỗi)
+```
+sudo mv /srv/gitlab /srv/gitlab_backup
+```
+- Bước 7: mount lại vào đúng chỗ
+```
+sudo mkdir -p /srv/gitlab
+sudo mount /dev/sdb /srv/gitlab
+```
+- Bước 8: restore data vào mount mới
+```
+sudo rsync -av /mnt/gitlab-data/ /srv/gitlab/
+```
+- Bước 9: set quyền
+```
+sudo chown -R root:root /srv/gitlab
+```
+- Bước 10: bật lại GitLab
+```
+sudo docker-compose up -d
+```
+ - Kiểm tra
+```
+df -h
+```
+ - `/srv/gitlab` phải nằm trên `/dev/sdb`
+
+### Mount tự động khi reboot
+- Lấy UUID:
+```
+sudo blkid /dev/sdb
+```
+- Sửa:
+```
+sudo nano /etc/fstab
+```
+- Thêm dòng (thay xxx-xxx bằng UUID vừa lấy):
+```
+UUID=xxxx-xxxx  /srv/gitlab  ext4  defaults  0  2
+```
 - 
 
