@@ -91,19 +91,19 @@ u.save!
 exit
 ```
 - Đăng nhập bằng tài khoản admin:
-![Ảnh 1](?raw=1)
-![Ảnh 2](?raw=1)
+![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/17f1a8a797a03b8e711356fea26482957b9f6f29/Picture%20/Service/GitLab/1.png?raw=1)
+![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/17f1a8a797a03b8e711356fea26482957b9f6f29/Picture%20/Service/GitLab/2.png?raw=1)
 - Tạo tài khoản user
-![Ảnh 3](?raw=1)
-![Ảnh 4](?raw=1)
+![Ảnh 3](https://github.com/hiiamtu16/InternReport/blob/17f1a8a797a03b8e711356fea26482957b9f6f29/Picture%20/Service/GitLab/3.png?raw=1)
+![Ảnh 4](https://github.com/hiiamtu16/InternReport/blob/17f1a8a797a03b8e711356fea26482957b9f6f29/Picture%20/Service/GitLab/4.png?raw=1)
 - Admin duyệt
-![Ảnh 5](?raw=1)
+![Ảnh 5](https://github.com/hiiamtu16/InternReport/blob/17f1a8a797a03b8e711356fea26482957b9f6f29/Picture%20/Service/GitLab/5.png?raw=1)
 - User login bằng username
-![Ảnh 6](?raw=1)
-![Ảnh 7](?raw=1)
+![Ảnh 6](https://github.com/hiiamtu16/InternReport/blob/17f1a8a797a03b8e711356fea26482957b9f6f29/Picture%20/Service/GitLab/6.png?raw=1)
+![Ảnh 7](https://github.com/hiiamtu16/InternReport/blob/17f1a8a797a03b8e711356fea26482957b9f6f29/Picture%20/Service/GitLab/7.png?raw=1)
 - User login bằng email
-![Ảnh 8](?raw=1)
-![Ảnh 7](?raw=1)
+![Ảnh 8](https://github.com/hiiamtu16/InternReport/blob/17f1a8a797a03b8e711356fea26482957b9f6f29/Picture%20/Service/GitLab/8.png?raw=1)
+![Ảnh 7](https://github.com/hiiamtu16/InternReport/blob/17f1a8a797a03b8e711356fea26482957b9f6f29/Picture%20/Service/GitLab/7.png?raw=1)
 
 ## Lưu Logs hệ thống (GitLab Docker) sang 1 ổ mới
 ### Add thêm ổ trên phần cứng
