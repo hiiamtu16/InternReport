@@ -84,8 +84,8 @@ sudo docker exec -it gitlab gitlab-rails console
 - Nhập lần lượt: (tự thay đổi thông tin mật khẩu)
 ```
 u = User.find_by_username('root')
-u.password = 'MatKhauMoi123!'
-u.password_confirmation = 'MatKhauMoi123!'
+u.password = '123@123a'
+u.password_confirmation = '123@123a'
 u.password_automatically_set = false
 u.save!
 exit
