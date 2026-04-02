@@ -120,6 +120,6 @@ reboot
 - Đổi ngôn ngữ `English`
 - Chọn múi giờ 7+
 - Chuyển sang Static IP, Đặt ip cùng dải với VM HAPBX: `172.16.5.245`
-- Cấu hình Endpoint SIP
+- Cấu hình Endpoint SIP đặt username `gwtunv` , pass `123-123a`
 ![Ảnh 7](?raw=1)
 - 
