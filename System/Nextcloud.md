@@ -60,33 +60,52 @@ nano compose.yml
 - Nội dung file:
 ```
 services:
+
   db:
-    image: mariadb:10.11
-    container_name: nextcloud_db
-    restart: unless-stopped
-    volumes:
-      - ./db:/var/lib/mysql
+    image: postgres:16
+    container_name: nextcloud-db
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: nextcloud
-      MYSQL_USER: nextcloud
-      MYSQL_PASSWORD: nextcloudpassword
+      POSTGRES_DB: nextcloud
+      POSTGRES_USER: ncuser
+      POSTGRES_PASSWORD: ncpass
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: nextcloud-redis
+    restart: always
+    command: >
+      redis-server
+      --save ""
+      --appendonly no
+      --maxmemory 8gb
+      --maxmemory-policy noeviction
+      --hz 50
+      --io-threads 4
+      --io-threads-do-reads yes
 
   app:
     image: nextcloud:latest
-    container_name: nextcloud_app
-    restart: unless-stopped
+    container_name: nextcloud-app
+    restart: always
+    depends_on:
+      - db
+      - redis
+    environment:
+      POSTGRES_DB: nextcloud
+      POSTGRES_USER: ncuser
+      POSTGRES_PASSWORD: ncpass
+      POSTGRES_HOST: db
+      REDIS_HOST: redis
     ports:
       - "8080:80"
     volumes:
-      - ./nextcloud:/var/www/html
-    environment:
-      MYSQL_HOST: db
-      MYSQL_DATABASE: nextcloud
-      MYSQL_USER: nextcloud
-      MYSQL_PASSWORD: nextcloudpassword
-    depends_on:
-      - db
+      - ./nextcloud/html:/var/www/html
+      - ./nextcloud/config:/var/www/html/config
+      - /mnt/nextcloud-data:/var/www/html/data
+      - ./php/php.ini:/usr/local/etc/php/conf.d/php.ini
 ```
 ### 3.3 Khởi động Nextcloud
 ```
@@ -104,11 +123,87 @@ docker ps
 - Đăng nhập lần đầu: ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/efa8f6e07ccc12b230193375c8ca804d043a4381/Picture%20/Service/NextCloud%2C%20KeyCloak%2C%20HAProxy/1.png?raw=1)
 - Đổi pass admin
 
+### 3.6 Xin HTTPS bằng certbot
+- Cài certbot:
+```
+apt update
+apt install -y snapd
+snap install core
+snap refresh core
+snap install --classic certbot
+ln -s /snap/bin/certbot /usr/bin/certbot
+```
+- Tạm dừng certbot:
+```
+systemctl stop haproxy
+```
+- Xin cert
+```
+certbot certonly --standalone -d cloudnvt.km0.vn
+```
+- Gộp chứng chỉ
+```
+mkdir -p /etc/haproxy/certs
+cat /etc/letsencrypt/live/cloudnvt.km0.vn/privkey.pem /etc/letsencrypt/live/cloudnvt.km0.vn/fullchain.pem > /etc/haproxy/certs/cloudnvt.km0.vn.pem
+chmod 600 /etc/haproxy/certs/cloudnvt.km0.vn.pem
+```
+- Sửa HAProxy
+  - Mở file:
+   ```
+   nano /etc/haproxy/haproxy.cfg
+   ```
+  - Nội dung:
+  ```
+  global
+      log /dev/log local0
+      log /dev/log local1 notice
+      maxconn 4096
+  
+  defaults
+      log global
+      mode http
+      option httplog
+      option dontlognull
+      timeout connect 5s
+      timeout client 60s
+      timeout server 60s
+  
+  frontend http_in
+      bind *:80
+      redirect scheme https code 301 if !{ ssl_fc }
+  
+  frontend https_in
+      bind *:443 ssl crt /etc/haproxy/certs/cloudnvt.km0.vn.pem
+  
+      option forwardfor
+      http-request set-header X-Forwarded-Proto https
+      http-request set-header X-Forwarded-Port 443
+      http-request set-header X-Forwarded-Host %[req.hdr(Host)]
+  
+      acl host_nextcloud hdr(host) -i cloudnvt.km0.vn
+      use_backend nextcloud_backend if host_nextcloud
+      default_backend nextcloud_backend
+  
+  backend nextcloud_backend
+      mode http
+      server nextcloud 127.0.0.1:8080 check
+  ```
+  - Kiểm tra:
+   ```
+   haproxy -c -f /etc/haproxy/haproxy.cfg
+   ```
+  - Khởi động lại
+   ```
+   systemctl start haproxy
+   systemctl restart haproxy
+   systemctl status haproxy
+   ```
+  - 
+
 ## 4. Cấu hình Nextcloud khi chạy sau HAProxy HTTPS
 ### 4.1 Sửa file config.php
 ```
-docker exec -it nextcloud_app bash
-nano /var/www/html/config/config.php
+nano /root/nextcloud/nextcloud/config/config.php
 ```
 - Đảm bảo có các cấu hình sau:
   ```
