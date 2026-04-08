@@ -71,7 +71,7 @@ services:
     container_name: aio-talk
     restart: unless-stopped
     ports:
-      - "127.0.0.1:8091:8081"
+      - "8091:8081"
     environment:
       NEXTCLOUD_URL: https://cloudnvt.km0.vn
       NC_DOMAIN: cloudnvt.km0.vn
@@ -179,7 +179,7 @@ services:
     restart: unless-stopped
     shm_size: "2gb"
     ports:
-      - "127.0.0.1:8092:1234"
+      - "8092:1234"
     environment:
       NC_DOMAIN: cloudnvt.km0.vn
       HPB_DOMAIN: meet.cloudnvt.km0.vn
@@ -212,5 +212,100 @@ docker logs talk-recording --tail 50
 ```
 
 ### 5.2 Cấu hình HAProxy trên 172.16.20.35
-- 
+- Xin cert cho `meet` và `record`
+  - Tạm dừng HAProxy
+   ```
+   sudo systemctl stop haproxy
+   ```
+  - Xin Cert
+   ```
+   sudo certbot certonly --standalone \
+    -d cloudnvt.km0.vn \
+    -d meet.cloudnvt.km0.vn \
+    -d record.cloudnvt.km0.vn
+   ```
+  - Ghép Cert
+   ```
+   sudo bash -c 'cat \
+    /etc/letsencrypt/live/cloudnvt.km0.vn/fullchain.pem \
+    /etc/letsencrypt/live/cloudnvt.km0.vn/privkey.pem \
+    > /etc/haproxy/certs/cloudnvt.km0.vn.pem'
+   ```
+  - Set quyền:
+   ```
+   sudo chmod 600 /etc/haproxy/certs/cloudnvt.km0.vn.pem
+   sudo chown root:root /etc/haproxy/certs/cloudnvt.km0.vn.pem
+   ```
+  - Chạy lại HAProxy
+   ```
+   sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+   sudo systemctl start haproxy
+   ```
+  - Kiểm tra cert đã đúng chưa
+   ```
+   curl -I https://cloudnvt.km0.vn
+   curl -I https://meet.cloudnvt.km0.vn
+   curl -I https://record.cloudnvt.km0.vn
+   ```
+- Cấu hình lại HAProxy
+  - Mở file:
+   ```
+   nano /etc/haproxy/haproxy.cfg
+   ```
+  - Nội dung:
+   ```
+   global
+      log /dev/log local0
+      log /dev/log local1 notice
+      maxconn 4096
+
+  defaults
+      log global
+      mode http
+      option httplog
+      option dontlognull
+      timeout connect 5s
+      timeout client 60s
+      timeout server 60s
+  
+  frontend http_in
+      bind *:80
+      redirect scheme https code 301 if !{ ssl_fc }
+  
+  frontend https_in
+      bind *:443 ssl crt /etc/haproxy/certs/cloudnvt.km0.vn.pem
+  
+      option forwardfor
+      http-request set-header X-Forwarded-Proto https
+      http-request set-header X-Forwarded-Port 443
+      http-request set-header X-Forwarded-Host %[req.hdr(Host)]
+  
+      acl host_nextcloud hdr(host) -i cloudnvt.km0.vn
+      acl host_meet hdr(host) -i meet.cloudnvt.km0.vn
+      acl host_record hdr(host) -i record.cloudnvt.km0.vn
+  
+      use_backend nextcloud_backend if host_nextcloud
+      use_backend meet_backend if host_meet
+      use_backend record_backend if host_record
+      default_backend nextcloud_backend
+  
+  backend nextcloud_backend
+      mode http
+      server nextcloud 127.0.0.1:8080 check
+  
+  backend meet_backend
+      mode http
+      option http-server-close
+      timeout connect 10s
+      timeout server 1h
+      timeout tunnel 1h
+      server meet 172.16.20.36:8091 check
+  
+  backend record_backend
+      mode http
+      timeout connect 10s
+      timeout server 300s
+      server record 172.16.20.36:8092 check
+   ```
+  - 
  
