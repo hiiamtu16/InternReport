@@ -307,5 +307,18 @@ docker logs talk-recording --tail 50
       timeout server 300s
       server record 172.16.20.36:8092 check
    ```
-  - 
+  - Áp dụng cấu hình
+   ```
+   sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+   sudo systemctl start haproxy
+   sudo systemctl reload haproxy
+   systemctl status haproxy
+   ```
+  - Test
+   ```
+   curl https://meet.cloudnvt.km0.vn/api/v1/welcome
+   ```
+
+## 6. Cấu hình trên Nextcloud
+
  
