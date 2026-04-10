@@ -95,7 +95,7 @@ docker logs aio-talk --tail 50
 ```
 - Test local:
 ```
-curl http://127.0.0.1:8091/api/v1/welcome
+curl http://127.0.0.1:8081/api/v1/welcome
 ```
 
 ## 3. Cài Coturn bằng Docker
@@ -190,11 +190,12 @@ services:
       INTERNAL_SECRET: 7e8a87a949d20301d2c12a146b20a9317c1ae51fc504bcdec625d3b27265f8b7
       NC_PROTOCOL: https
       HPB_PROTOCOL: https
-      HPB_PATH: /standalone-signaling/
       SKIP_VERIFY: "false"
       ALLOW_ALL: "false"
-    volumes:
-      - ./tmp:/tmp
+    extra_hosts:
+      - "cloudnvt.km0.vn:172.16.20.35"
+      - "meet.cloudnvt.km0.vn:172.16.20.35"
+      - "turn.cloudnvt.km0.vn:172.16.20.36"
 ```
 - Chạy
 ```
@@ -325,9 +326,15 @@ docker logs talk-recording --tail 50
   ```
   sudo nano /etc/hosts
   ```
-- Đổi `127.0.0.1 tunv-meet` thành
+- Đổi `127.0.1.1 tunv-meet` thành
   ```
   172.16.20.36 tunv-meet
+  ```
+- Kiểm tra
+  ```
+  docker exec -it talk-recording sh -c 'getent hosts cloudnvt.km0.vn meet.cloudnvt.km0.vn turn.cloudnvt.km0.vn'
+  curl https://meet.cloudnvt.km0.vn/api/v1/welcome
+  hostname -i
   ```
 - Kiểm tra và restart lại `aoi-talk`
 ```
