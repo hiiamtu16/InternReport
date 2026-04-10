@@ -70,8 +70,7 @@ services:
     image: nextcloud/aio-talk:latest
     container_name: aio-talk
     restart: unless-stopped
-    ports:
-      - "8091:8081"
+    network_mode: host
     environment:
       NEXTCLOUD_URL: https://cloudnvt.km0.vn
       NC_DOMAIN: cloudnvt.km0.vn
@@ -82,6 +81,10 @@ services:
       TURN_SECRET: faf2b3128b05f1ae167dd4794e8004a8ec0d8e9468aca882fd155f5b5a341116
       SIGNALING_SECRET: 0bcc022acfc9383b0aebdaabad809e6ae5b6342ec26e4dc34ae3045e8bb7dce3
       INTERNAL_SECRET: 7e8a87a949d20301d2c12a146b20a9317c1ae51fc504bcdec625d3b27265f8b7
+
+      TALK_MODE: external
+      PUBLIC_WSS_URL: wss://meet.cloudnvt.km0.vn/spreed
+      TRUSTED_PROXIES: 172.16.20.35
 ```
 - Chạy:
 ```
@@ -299,7 +302,7 @@ docker logs talk-recording --tail 50
       timeout connect 10s
       timeout server 1h
       timeout tunnel 1h
-      server meet 172.16.20.36:8091 check
+      server meet 172.16.20.36:8081 check
   
   backend record_backend
       mode http
@@ -318,7 +321,34 @@ docker logs talk-recording --tail 50
    ```
    curl https://meet.cloudnvt.km0.vn/api/v1/welcome
    ```
+- Sửa `/etc/hosts`
+  ```
+  sudo nano /etc/hosts
+  ```
+- Đổi `127.0.0.1 tunv-meet` thành
+  ```
+  172.16.20.36 tunv-meet
+  ```
+- Kiểm tra và restart lại `aoi-talk`
+```
+hostname -i
+getent hosts $(hostname)
+```
+```
+cd /opt/aio-talk
+docker compose down
+docker compose up -d
+docker logs aio-talk --tail 50
+```
 
 ## 6. Cấu hình trên Nextcloud
+![Ảnh 1](?raw=1)
+![Ảnh 2](?raw=1)
+![Ảnh 3](?raw=1)
+![Ảnh 4](?raw=1)
 
- 
+
+
+
+
+
