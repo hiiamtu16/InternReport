@@ -342,10 +342,10 @@ docker logs aio-talk --tail 50
 ```
 
 ## 6. Cấu hình trên Nextcloud
-![Ảnh 1](?raw=1)
-![Ảnh 2](?raw=1)
-![Ảnh 3](?raw=1)
-![Ảnh 4](?raw=1)
+![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/3bb3dea458040bc5c692e849bbbe9ef71a31decc/Picture%20/Service/Nextcloud_Meeting/1.png?raw=1)
+![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/3bb3dea458040bc5c692e849bbbe9ef71a31decc/Picture%20/Service/Nextcloud_Meeting/2.png?raw=1)
+![Ảnh 3](https://github.com/hiiamtu16/InternReport/blob/3bb3dea458040bc5c692e849bbbe9ef71a31decc/Picture%20/Service/Nextcloud_Meeting/3.png?raw=1)
+![Ảnh 4](https://github.com/hiiamtu16/InternReport/blob/3bb3dea458040bc5c692e849bbbe9ef71a31decc/Picture%20/Service/Nextcloud_Meeting/4.png?raw=1)
 
 
 
