@@ -45,6 +45,7 @@
     - Tạo mới cấu hình RouteVina, gộp các đầu số Vina từ cấu hình cũ vào
     - Các đầu Vina đang sử dụng:
       - 081XXXXXXX
+      - 082XXXXXXX
       - 083XXXXXXX
       - 084XXXXXXX
       - 085XXXXXXX
@@ -60,7 +61,6 @@
       - 077XXXXXXX
       - 078XXXXXXX
       - 079XXXXXXX
-      - 082XXXXXXX
       - 089XXXXXXX
       - 090XXXXXXX
       - 093XXXXXXX
