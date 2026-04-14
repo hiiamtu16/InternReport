@@ -202,5 +202,5 @@ services:
    ```
 
 ## Cấu hình trên Nextcloud
-![Ảnh 1](?raw=1)
-![Ảnh 2](?raw=1)
+![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/427ffa1fc8edadd11d4a102a4c72b57c8eb77e29/Picture%20/B%C3%A1o%20c%C3%A1o%20c%C3%B4ng%20vi%E1%BB%87c%20%C4%91%C3%A3%20ho%C3%A0n%20th%C3%A0nh/System/Nextcloud_Meeting_Record/1.png?raw=1)
+![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/427ffa1fc8edadd11d4a102a4c72b57c8eb77e29/Picture%20/B%C3%A1o%20c%C3%A1o%20c%C3%B4ng%20vi%E1%BB%87c%20%C4%91%C3%A3%20ho%C3%A0n%20th%C3%A0nh/System/Nextcloud_Meeting_Record/2.png?raw=1)
