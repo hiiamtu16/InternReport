@@ -1,18 +1,18 @@
 # GHI ÂM CUỘC GỌI VÀ BIND MOUNT SANG NAS
 
-# Bật ghi âm cuộc gọi
+## Bật ghi âm cuộc gọi
 - Bật Trunk record
 - Bật Inbound Route record
 - Bật Outbound Route record
 - Bật Record Extension
   ![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/a86134017d54539224af85a5cc9b3a3b44944c90/Picture%20/B%C3%A1o%20c%C3%A1o%20c%C3%B4ng%20vi%E1%BB%87c%20%C4%91%C3%A3%20ho%C3%A0n%20th%C3%A0nh/VoIP/Record%20voip.apps.vn/1.png?raw=1)
 
-# Tạo Shared Folder trên NAS
+## Tạo Shared Folder trên NAS
 - Server NAS:
   ```https://172.16.6.10:5443/tos/#```
 - Vị trí lưu: `Volume 1/Record-VoIP/`
 
-# Chạy lệnh
+## Chạy lệnh
 - Xác định nơi lưu file record:
 ```
 grep -E 'astspooldir|astvarlibdir' /etc/asterisk/asterisk.conf
@@ -111,6 +111,31 @@ ls -l /mnt/record-voip
   systemctl status asterisk
   ```
 
-# Kết quả
+## Kết quả
   ![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/a86134017d54539224af85a5cc9b3a3b44944c90/Picture%20/B%C3%A1o%20c%C3%A1o%20c%C3%B4ng%20vi%E1%BB%87c%20%C4%91%C3%A3%20ho%C3%A0n%20th%C3%A0nh/VoIP/Record%20voip.apps.vn/2.png?raw=1)
 
+## Nghe ghi âm trực tiếp trên web HAPBX
+- Xác định user đang chạy trên web
+```
+ps -ef | egrep 'apache2|httpd|nginx|php-fpm' | grep -v grep
+```
+- Nếu user `www-data`, test
+  - Cho user vào gr `asterisk`
+   ```
+   usermod -aG asterisk www-data
+   ```
+  - Cho toàn bộ file record hiện tại đọc được theo group
+   ```
+   find /var/spool/asterisk/monitor -type d -exec chmod 775 {} \;
+   find /var/spool/asterisk/monitor -type f -exec chmod 664 {} \;
+   ```
+  - Restart nginx và php fpm
+   ```
+   systemctl restart nginx
+   systemctl restart php8.2-fpm
+   ```
+  - Cho các thư mục sau này vẫn nghe đc
+   ```
+   chgrp -R asterisk /var/spool/asterisk/monitor
+   find /var/spool/asterisk/monitor -type d -exec chmod 2775 {} \;
+   ```
