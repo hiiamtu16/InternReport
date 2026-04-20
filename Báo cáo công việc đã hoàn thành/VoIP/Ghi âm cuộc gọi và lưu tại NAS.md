@@ -135,7 +135,22 @@ ps -ef | egrep 'apache2|httpd|nginx|php-fpm' | grep -v grep
    systemctl restart php8.2-fpm
    ```
   - Cho các thư mục sau này vẫn nghe đc
-   ```
-   chgrp -R asterisk /var/spool/asterisk/monitor
-   find /var/spool/asterisk/monitor -type d -exec chmod 2775 {} \;
-   ```
+    - Script
+     ```
+      cat > /usr/local/bin/fix-monitor-perms.sh <<'EOF'
+      #!/bin/bash
+      find /var/spool/asterisk/monitor -type f -name '*.wav' ! -perm 664 -exec chmod 664 {} \;
+      find /var/spool/asterisk/monitor -type d ! -perm 775 -exec chmod 775 {} \;
+      EOF
+      chmod +x /usr/local/bin/fix-monitor-perms.sh
+     ``` 
+    - Chạy crontab
+      - Mở `crontab`
+       ```
+       crontab -e
+       ```
+      - Thêm dòng:
+       ```
+       * * * * * /usr/local/bin/fix-monitor-perms.sh
+       ```
+
