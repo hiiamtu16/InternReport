@@ -55,7 +55,6 @@
     - Thoát và save file.
     - Áp dụng cấu hình:
       ```
-      bash
       sudo netplan apply
       ip a
       ip route
@@ -67,7 +66,6 @@
       ```
     - Cài editor:
       ```
-      bash
       sudo apt update
       sudo apt install -y nano
       ```
@@ -77,7 +75,6 @@
         - ```PasswordAuthentication yes```
       - Test & Restart:
         ```
-        bash
         sudo sshd -t
         sudo systemctl restart ssh
         ```
@@ -85,7 +82,6 @@
 ## 3. Cài CHECK MK
   - Cài Check MK theo yêu cầu:
     ```
-    bash
     sudo apt update
     sudo apt install -y ca-certificates curl gnupg lsb-release
     sudo mkdir -p /etc/apt/keyrings
@@ -103,19 +99,16 @@
     ```
   - Kiểm tra:
     ```
-    bash
     docker --version
     docker compose version
     ```
   - Tạo thư mục lưu theo yêu cầu:
     ```
-    bash
     sudo mkdir -p /opt/checkmk/data
     cd /opt/checkmk
     ```
   - Tạo file `docker-compose.yml`:
     ```
-    bash
     nano docker-compose.yml
     ```
   - Paste vào nội dung:
@@ -141,7 +134,6 @@
     ```
   - Chạy CheckMK:
     ```
-    bash
     docker compose up -d
     ```
 
@@ -179,18 +171,15 @@
 ## 6. Tạo Remote Backup trên PBS
   - Tạo thư mục lưu:
     ```
-    bash
     sudo mkdir -p /mnt/datastore/clone-vm/
     ```
   - Cấp quyền:
     ```
-    bash
     sudo chown -R www-data:www-data /mnt/datastore/
     ```
   - Backing Path copy vào PBS: ```/mnt/datastore/clone-vm/```
   - Lấy IP Public của PBS:
     ```
-    bash
     curl ifconfig.me
     ```
   - Tạo remote:   
@@ -200,11 +189,9 @@
 ## 7. Tạo Bot gửi thông báo Group
   - Tạo thư mục dưới quyền user cmk:
     ```
-    bash
     sudo docker exec -it checkmk bash
     ```
     ```
-    bash
     su - cmk
     apt update
     apt install nano -y
