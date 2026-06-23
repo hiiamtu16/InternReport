@@ -333,8 +333,8 @@ Received Access-Accept
 
 # 9. Cấu hình RADIUS Profile trên Omada
 - Tạo hồ sơ RADIUS
-![Ảnh 1](?raw=1)
+![Ảnh 1](https://github.com/hiiamtu16/InternReport/blob/16a6673222d69dbd9a915803b74fa32b9ce08579/Picture%20/Network%20/RADIUS/1.png?raw=1)
 - Tạo SSID sử dụng RADIUS
-![Ảnh 2](?raw=1)
+![Ảnh 2](https://github.com/hiiamtu16/InternReport/blob/16a6673222d69dbd9a915803b74fa32b9ce08579/Picture%20/Network%20/RADIUS/2.png?raw=1)
 
   
